@@ -6,157 +6,612 @@
     <title>易彩 · 大乐透智能选号系统</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
-    <script>// 大乐透历史开奖数据（自动生成，含140期真实数据）
-// 数据来源：500.com 天启算法引擎
-// 共 140 期
-window.DRAWS = [
-  {"id":"26044","front":[4, 8, 22, 26, 29],"back":[7, 10],"date":"2026-04-25"},
-  {"id":"26043","front":[8, 12, 14, 19, 22],"back":[11, 12],"date":"2026-04-22"},
-  {"id":"26042","front":[2, 7, 13, 19, 24],"back":[3, 8],"date":"2026-04-20"},
-  {"id":"26041","front":[24, 25, 27, 29, 34],"back":[2, 6],"date":"2026-04-18"},
-  {"id":"26040","front":[6, 12, 13, 21, 34],"back":[8, 9],"date":"2026-04-15"},
-  {"id":"26039","front":[9, 11, 20, 26, 27],"back":[6, 9],"date":"2026-04-13"},
-  {"id":"26038","front":[8, 17, 21, 33, 35],"back":[6, 7],"date":"2026-04-11"},
-  {"id":"26037","front":[7, 12, 13, 28, 32],"back":[6, 8],"date":"2026-04-08"},
-  {"id":"26036","front":[4, 7, 16, 26, 32],"back":[5, 8],"date":"2026-04-06"},
-  {"id":"26035","front":[2, 22, 30, 33, 34],"back":[8, 12],"date":"2026-04-04"},
-  {"id":"26034","front":[11, 12, 25, 26, 27],"back":[8, 11],"date":"2026-04-01"},
-  {"id":"26033","front":[3, 5, 7, 9, 18],"back":[2, 10],"date":"2026-03-30"},
-  {"id":"26032","front":[3, 4, 19, 26, 32],"back":[1, 12],"date":"2026-03-28"},
-  {"id":"26031","front":[6, 8, 22, 29, 34],"back":[5, 7],"date":"2026-03-25"},
-  {"id":"26030","front":[2, 13, 22, 28, 34],"back":[5, 12],"date":"2026-03-23"},
-  {"id":"26029","front":[3, 5, 17, 33, 35],"back":[5, 7],"date":"2026-03-21"},
-  {"id":"26028","front":[15, 27, 29, 30, 34],"back":[1, 10],"date":"2026-03-18"},
-  {"id":"26027","front":[9, 10, 11, 12, 16],"back":[1, 11],"date":"2026-03-16"},
-  {"id":"26026","front":[10, 11, 22, 26, 32],"back":[1, 8],"date":"2026-03-14"},
-  {"id":"26025","front":[3, 15, 24, 28, 29],"back":[3, 7],"date":"2026-03-11"},
-  {"id":"26024","front":[2, 4, 8, 10, 21],"back":[9, 12],"date":"2026-03-09"},
-  {"id":"26023","front":[9, 25, 26, 27, 28],"back":[1, 8],"date":"2026-03-07"},
-  {"id":"26022","front":[5, 9, 10, 18, 26],"back":[5, 6],"date":"2026-03-04"},
-  {"id":"26021","front":[5, 8, 12, 14, 17],"back":[4, 5],"date":"2026-03-02"},
-  {"id":"26020","front":[1, 10, 2, 12, 29],"back":[10, 12],"date":"2026-02-28"},
-  {"id":"26019","front":[12, 13, 14, 16, 31],"back":[4, 12],"date":"2026-02-25"},
-  {"id":"26018","front":[9, 11, 19, 30, 35],"back":[1, 12],"date":"2026-02-11"},
-  {"id":"26017","front":[4, 5, 10, 23, 31],"back":[7, 12],"date":"2026-02-09"},
-  {"id":"26016","front":[8, 9, 12, 19, 24],"back":[1, 6],"date":"2026-02-07"},
-  {"id":"26015","front":[1, 4, 10, 13, 17],"back":[3, 11],"date":"2026-02-04"},
-  {"id":"26014","front":[16, 18, 23, 34, 35],"back":[1, 6],"date":"2026-02-02"},
-  {"id":"26013","front":[3, 5, 6, 23, 26],"back":[1, 4],"date":"2026-01-31"},
-  {"id":"26012","front":[1, 2, 9, 22, 25],"back":[1, 6],"date":"2026-01-28"},
-  {"id":"26011","front":[14, 21, 23, 29, 33],"back":[2, 10],"date":"2026-01-26"},
-  {"id":"26010","front":[2, 3, 13, 18, 26],"back":[2, 9],"date":"2026-01-24"},
-  {"id":"26009","front":[5, 12, 13, 14, 33],"back":[5, 8],"date":"2026-01-21"},
-  {"id":"26008","front":[3, 6, 17, 21, 33],"back":[5, 11],"date":"2026-01-19"},
-  {"id":"26007","front":[1, 3, 13, 20, 26],"back":[3, 10],"date":"2026-01-17"},
-  {"id":"26006","front":[5, 12, 18, 23, 35],"back":[6, 12],"date":"2026-01-14"},
-  {"id":"26005","front":[2, 4, 16, 23, 35],"back":[6, 11],"date":"2026-01-12"},
-  {"id":"26004","front":[5, 18, 23, 25, 32],"back":[5, 9],"date":"2026-01-10"},
-  {"id":"26003","front":[2, 9, 11, 15, 16],"back":[2, 4],"date":"2026-01-07"},
-  {"id":"26002","front":[4, 8, 15, 20, 31],"back":[7, 8],"date":"2026-01-05"},
-  {"id":"26001","front":[7, 9, 23, 27, 32],"back":[2, 8],"date":"2026-01-03"},
-  {"id":"25148","front":[3, 4, 14, 30, 32],"back":[8, 12],"date":"2025-12-27"},
-  {"id":"25147","front":[6, 16, 21, 25, 33],"back":[7, 8],"date":"2025-12-24"},
-  {"id":"25146","front":[6, 11, 13, 16, 22],"back":[2, 3],"date":"2025-12-22"},
-  {"id":"25145","front":[5, 7, 20, 22, 25],"back":[4, 5],"date":"2025-12-20"},
-  {"id":"25144","front":[2, 5, 13, 15, 28],"back":[5, 8],"date":"2025-12-17"},
-  {"id":"25143","front":[3, 4, 18, 24, 29],"back":[7, 12],"date":"2025-12-15"},
-  {"id":"25142","front":[9, 10, 14, 27, 29],"back":[2, 9],"date":"2025-12-13"},
-  {"id":"25141","front":[4, 9, 24, 28, 29],"back":[2, 10],"date":"2025-12-10"},
-  {"id":"25140","front":[4, 5, 13, 18, 34],"back":[2, 8],"date":"2025-12-08"},
-  {"id":"25139","front":[8, 18, 22, 30, 35],"back":[1, 4],"date":"2025-12-06"},
-  {"id":"25138","front":[1, 3, 19, 21, 23],"back":[7, 11],"date":"2025-12-03"},
-  {"id":"25137","front":[7, 8, 9, 11, 22],"back":[5, 11],"date":"2025-12-01"},
-  {"id":"25136","front":[7, 11, 15, 16, 23],"back":[9, 11],"date":"2025-11-29"},
-  {"id":"25135","front":[2, 10, 16, 28, 32],"back":[1, 7],"date":"2025-11-26"},
-  {"id":"25134","front":[7, 12, 18, 27, 33],"back":[9, 10],"date":"2025-11-24"},
-  {"id":"25133","front":[4, 11, 23, 27, 35],"back":[7, 11],"date":"2025-11-22"},
-  {"id":"25132","front":[1, 9, 10, 12, 19],"back":[6, 7],"date":"2025-11-19"},
-  {"id":"25131","front":[3, 8, 25, 29, 32],"back":[9, 12],"date":"2025-11-17"},
-  {"id":"25130","front":[1, 13, 16, 27, 29],"back":[2, 11],"date":"2025-11-15"},
-  {"id":"25129","front":[3, 9, 14, 28, 35],"back":[2, 4],"date":"2025-11-12"},
-  {"id":"25128","front":[3, 6, 26, 30, 33],"back":[11, 12],"date":"2025-11-10"},
-  {"id":"25127","front":[4, 5, 19, 28, 29],"back":[5, 8],"date":"2025-11-08"},
-  {"id":"25126","front":[1, 8, 18, 27, 30],"back":[6, 7],"date":"2025-11-05"},
-  {"id":"25125","front":[10, 11, 13, 19, 35],"back":[4, 11],"date":"2025-11-03"},
-  {"id":"25124","front":[6, 9, 14, 26, 27],"back":[8, 9],"date":"2025-11-01"},
-  {"id":"25123","front":[8, 13, 24, 25, 31],"back":[4, 10],"date":"2025-10-29"},
-  {"id":"25122","front":[2, 3, 6, 16, 17],"back":[4, 5],"date":"2025-10-27"},
-  {"id":"25121","front":[2, 3, 8, 13, 21],"back":[7, 12],"date":"2025-10-25"},
-  {"id":"25120","front":[11, 13, 22, 26, 35],"back":[2, 8],"date":"2025-10-22"},
-  {"id":"25119","front":[8, 15, 27, 29, 31],"back":[1, 7],"date":"2025-10-20"},
-  {"id":"25118","front":[2, 8, 9, 12, 21],"back":[4, 5],"date":"2025-10-18"},
-  {"id":"25117","front":[5, 10, 18, 21, 29],"back":[5, 7],"date":"2025-10-15"},
-  {"id":"25116","front":[2, 6, 16, 22, 29],"back":[8, 12],"date":"2025-10-13"},
-  {"id":"25115","front":[3, 12, 14, 21, 35],"back":[1, 5],"date":"2025-10-11"},
-  {"id":"25114","front":[3, 8, 9, 12, 16],"back":[1, 5],"date":"2025-10-08"},
-  {"id":"25113","front":[1, 14, 18, 28, 35],"back":[2, 3],"date":"2025-10-06"},
-  {"id":"25112","front":[3, 4, 21, 23, 24],"back":[9, 12],"date":"2025-09-29"},
-  {"id":"25111","front":[2, 9, 14, 21, 26],"back":[2, 12],"date":"2025-09-27"},
-  {"id":"25110","front":[1, 15, 22, 30, 31],"back":[2, 8],"date":"2025-09-24"},
-  {"id":"25109","front":[4, 8, 10, 13, 26],"back":[9, 10],"date":"2025-09-22"},
-  {"id":"25108","front":[14, 18, 21, 24, 29],"back":[3, 6],"date":"2025-09-20"},
-  {"id":"25107","front":[5, 7, 8, 15, 33],"back":[6, 10],"date":"2025-09-17"},
-  {"id":"25106","front":[5, 6, 11, 26, 29],"back":[5, 10],"date":"2025-09-15"},
-  {"id":"25105","front":[15, 16, 25, 28, 34],"back":[10, 12],"date":"2025-09-13"},
-  {"id":"25104","front":[2, 6, 9, 22, 34],"back":[2, 8],"date":"2025-09-10"},
-  {"id":"25103","front":[5, 8, 19, 32, 34],"back":[4, 5],"date":"2025-09-08"},
-  {"id":"25102","front":[9, 10, 13, 26, 28],"back":[2, 4],"date":"2025-09-06"},
-  {"id":"25101","front":[5, 7, 19, 26, 32],"back":[8, 9],"date":"2025-09-03"},
-  {"id":"25099","front":[6, 12, 20, 26, 31],"back":[2, 4],"date":"2025-08-30"},
-  {"id":"25098","front":[1, 7, 9, 10, 23],"back":[10, 12],"date":"2025-08-27"},
-  {"id":"25097","front":[5, 24, 25, 32, 34],"back":[1, 9],"date":"2025-08-25"},
-  {"id":"25096","front":[2, 11, 17, 22, 24],"back":[7, 9],"date":"2025-08-23"},
-  {"id":"26044","front":[4, 8, 22, 26, 29],"back":[7, 10],"date":"2026-04-25"},
-  {"id":"26043","front":[8, 12, 14, 19, 22],"back":[11, 12],"date":"2026-04-22"},
-  {"id":"26042","front":[2, 7, 13, 19, 24],"back":[3, 8],"date":"2026-04-20"},
-  {"id":"26041","front":[24, 25, 27, 29, 34],"back":[2, 6],"date":"2026-04-18"},
-  {"id":"26040","front":[6, 12, 13, 21, 34],"back":[8, 9],"date":"2026-04-15"},
-  {"id":"26039","front":[9, 11, 20, 26, 27],"back":[6, 9],"date":"2026-04-13"},
-  {"id":"26038","front":[8, 17, 21, 33, 35],"back":[6, 7],"date":"2026-04-11"},
-  {"id":"26037","front":[7, 12, 13, 28, 32],"back":[6, 8],"date":"2026-04-08"},
-  {"id":"26036","front":[4, 7, 16, 26, 32],"back":[5, 8],"date":"2026-04-06"},
-  {"id":"26035","front":[2, 22, 30, 33, 34],"back":[8, 12],"date":"2026-04-04"},
-  {"id":"26034","front":[11, 12, 25, 26, 27],"back":[8, 11],"date":"2026-04-01"},
-  {"id":"26033","front":[3, 5, 7, 9, 18],"back":[2, 10],"date":"2026-03-30"},
-  {"id":"26032","front":[3, 4, 19, 26, 32],"back":[1, 12],"date":"2026-03-28"},
-  {"id":"26031","front":[6, 8, 22, 29, 34],"back":[5, 7],"date":"2026-03-25"},
-  {"id":"26030","front":[2, 13, 22, 28, 34],"back":[5, 12],"date":"2026-03-23"},
-  {"id":"26029","front":[3, 5, 17, 33, 35],"back":[5, 7],"date":"2026-03-21"},
-  {"id":"26028","front":[15, 27, 29, 30, 34],"back":[1, 10],"date":"2026-03-18"},
-  {"id":"26027","front":[9, 10, 11, 12, 16],"back":[1, 11],"date":"2026-03-16"},
-  {"id":"26026","front":[10, 11, 22, 26, 32],"back":[1, 8],"date":"2026-03-14"},
-  {"id":"26025","front":[3, 15, 24, 28, 29],"back":[3, 7],"date":"2026-03-11"},
-  {"id":"26024","front":[2, 4, 8, 10, 21],"back":[9, 12],"date":"2026-03-09"},
-  {"id":"26023","front":[9, 25, 26, 27, 28],"back":[1, 8],"date":"2026-03-07"},
-  {"id":"26022","front":[5, 9, 10, 18, 26],"back":[5, 6],"date":"2026-03-04"},
-  {"id":"26021","front":[5, 8, 12, 14, 17],"back":[4, 5],"date":"2026-03-02"},
-  {"id":"26020","front":[1, 10, 2, 12, 29],"back":[10, 12],"date":"2026-02-28"},
-  {"id":"26019","front":[12, 13, 14, 16, 31],"back":[4, 12],"date":"2026-02-25"},
-  {"id":"26018","front":[9, 11, 19, 30, 35],"back":[1, 12],"date":"2026-02-11"},
-  {"id":"26017","front":[4, 5, 10, 23, 31],"back":[7, 12],"date":"2026-02-09"},
-  {"id":"26016","front":[8, 9, 12, 19, 24],"back":[1, 6],"date":"2026-02-07"},
-  {"id":"26015","front":[1, 4, 10, 13, 17],"back":[3, 11],"date":"2026-02-04"},
-  {"id":"26014","front":[16, 18, 23, 34, 35],"back":[1, 6],"date":"2026-02-02"},
-  {"id":"26013","front":[3, 5, 6, 23, 26],"back":[1, 4],"date":"2026-01-31"},
-  {"id":"26012","front":[1, 2, 9, 22, 25],"back":[1, 6],"date":"2026-01-28"},
-  {"id":"26011","front":[14, 21, 23, 29, 33],"back":[2, 10],"date":"2026-01-26"},
-  {"id":"26010","front":[2, 3, 13, 18, 26],"back":[2, 9],"date":"2026-01-24"},
-  {"id":"26009","front":[5, 12, 13, 14, 33],"back":[5, 8],"date":"2026-01-21"},
-  {"id":"26008","front":[3, 6, 17, 21, 33],"back":[5, 11],"date":"2026-01-19"},
-  {"id":"26007","front":[1, 3, 13, 20, 26],"back":[3, 10],"date":"2026-01-17"},
-  {"id":"26006","front":[5, 12, 18, 23, 35],"back":[6, 12],"date":"2026-01-14"},
-  {"id":"26005","front":[2, 4, 16, 23, 35],"back":[6, 11],"date":"2026-01-12"},
-  {"id":"26004","front":[5, 18, 23, 25, 32],"back":[5, 9],"date":"2026-01-10"},
-  {"id":"26003","front":[2, 9, 11, 15, 16],"back":[2, 4],"date":"2026-01-07"},
-  {"id":"26002","front":[4, 8, 15, 20, 31],"back":[7, 8],"date":"2026-01-05"},
-  {"id":"26001","front":[7, 9, 23, 27, 32],"back":[2, 8],"date":"2026-01-03"},
-];
+    <script src="draws_data.js"></script>
+    <script src="dlt-engine.js"></script>
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --zhu-hong: #C41E3A;
+        --zhu-hong-dark: #A01830;
+        --jin-se: #D4A574;
+        --jin-se-light: #E8C99B;
+        --jin-se-dim: #B8925E;
+        --deep-blue: #1A1A2E;
+        --deep-blue-light: #2A2A4E;
+        --bg-dark: #0F0F1A;
+        --bg-card: #16162A;
+        --bg-card-hover: #1E1E38;
+        --text-primary: #F0E6D3;
+        --text-secondary: #B8AD9A;
+        --text-muted: #7A7262;
+        --border-color: rgba(212, 165, 116, 0.15);
+        --shadow: 0 4px 20px rgba(0,0,0,0.4);
+        --radius: 12px;
+        --radius-sm: 8px;
+        --wuxing-wood: #4CAF50;
+        --wuxing-fire: #F44336;
+        --wuxing-earth: #FF9800;
+        --wuxing-metal: #FFD700;
+        --wuxing-water: #2196F3;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    a { color: var(--jin-se); text-decoration: none; }
+    a:hover { color: var(--jin-se-light); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--jin-se-dim); border-radius: 3px; }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background:
+            radial-gradient(ellipse at 20% 50%, rgba(196,30,58,0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 20%, rgba(212,165,116,0.04) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 80%, rgba(26,26,46,0.8) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
 
-// 兼容旧版变量名
-window.REAL_DRAWS = window.DRAWS;
+    /* Header */
+    header {
+        background: linear-gradient(135deg, var(--deep-blue), var(--bg-card));
+        border-bottom: 1px solid var(--border-color);
+        padding: 0 20px;
+        position: sticky; top: 0; z-index: 100;
+        backdrop-filter: blur(10px);
+    }
+    .header-inner {
+        max-width: 1200px; margin: 0 auto;
+        display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 700; color: var(--jin-se); }
+    .logo-icon { font-size: 1.5rem; }
+    .logo-sub { font-size: 0.65rem; color: var(--text-muted); font-weight: 400; display: block; line-height: 1; }
+    nav { display: flex; gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    nav a {
+        padding: 8px 13px; font-size: 0.82rem; color: var(--text-secondary);
+        border-radius: var(--radius-sm); transition: all 0.2s;
+        white-space: nowrap; border: 1px solid transparent; cursor: pointer;
+    }
+    nav a:hover, nav a.active { color: var(--jin-se); background: rgba(212,165,116,0.1); border-color: var(--border-color); }
+    nav a.active { color: var(--zhu-hong); border-color: var(--zhu-hong); background: rgba(196,30,58,0.1); }
 
+    /* Container & Section */
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px 60px; position: relative; z-index: 1; }
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .section-title { font-size: 1.4rem; color: var(--jin-se); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+    .section-desc { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; }
 
+    /* Cards */
+    .card {
+        background: var(--bg-card); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 22px; margin-bottom: 18px; transition: all 0.3s;
+    }
+    .card:hover { background: var(--bg-card-hover); box-shadow: var(--shadow); }
+    .card-title { font-size: 1.05rem; color: var(--jin-se); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
 
+    /* Balls */
+    .ball {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px; border-radius: 50%;
+        font-weight: 700; font-size: 0.95rem; margin: 3px;
+    }
+    .ball-front { background: linear-gradient(135deg, #E83D5B, var(--zhu-hong)); color: #fff; box-shadow: 0 2px 8px rgba(196,30,58,0.3); }
+    .ball-back { background: linear-gradient(135deg, #4A90D9, #1A5A8A); color: #fff; box-shadow: 0 2px 8px rgba(26,90,138,0.3); }
+    .ball-sm { width: 32px; height: 32px; font-size: 0.8rem; }
+    .ball-lg { width: 52px; height: 52px; font-size: 1.2rem; }
+
+    /* Buttons */
+    .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 12px 28px; border-radius: var(--radius-sm);
+        font-size: 1rem; font-weight: 600; cursor: pointer;
+        border: none; transition: all 0.3s; font-family: inherit;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--zhu-hong), var(--zhu-hong-dark)); color: #fff; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(196,30,58,0.4); }
+    .btn-gold { background: linear-gradient(135deg, var(--jin-se), var(--jin-se-dim)); color: var(--deep-blue); }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,165,116,0.3); }
+    .btn-outline { background: transparent; border: 1px solid var(--jin-se); color: var(--jin-se); }
+    .btn-outline:hover { background: rgba(212,165,116,0.1); }
+    .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+    .btn-danger { background: rgba(196,30,58,0.2); border: 1px solid var(--zhu-hong); color: #FF6B6B; }
+    .btn-danger:hover { background: rgba(196,30,58,0.3); }
+
+    /* Hero */
+    .hero { text-align: center; padding: 50px 20px 30px; position: relative; }
+    .hero::after { content: '☯'; position: absolute; right: 8%; top: 15%; font-size: 10rem; opacity: 0.03; pointer-events: none; }
+    .hero h1 { font-size: 2.4rem; color: var(--jin-se); margin-bottom: 10px; }
+    .hero p { font-size: 1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 28px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* Features */
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 32px; }
+    .feat-card {
+        background: var(--bg-card); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 24px 18px; text-align: center;
+        transition: all 0.3s; cursor: pointer;
+    }
+    .feat-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); box-shadow: var(--shadow); }
+    .feat-icon { font-size: 2rem; margin-bottom: 10px; }
+    .feat-card h3 { color: var(--jin-se); font-size: 1rem; margin-bottom: 6px; }
+    .feat-card p { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Number Matrix */
+    .num-matrix { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin: 12px 0; }
+    .num-cell {
+        width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+        border-radius: 6px; font-size: 0.85rem; font-weight: 600;
+        border: 1px solid var(--border-color); background: var(--bg-dark);
+        color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+    }
+    .num-cell:hover { border-color: var(--jin-se); }
+    .num-cell.hot { border-color: var(--zhu-hong); color: #FF6B6B; background: rgba(196,30,58,0.1); }
+    .num-cell.cold { border-color: #4A90D9; color: #6BB5FF; background: rgba(74,144,217,0.1); }
+    .num-cell.warm { border-color: var(--jin-se); color: var(--jin-se); background: rgba(212,165,116,0.08); }
+    .num-cell.selected { border-color: #4CAF50; color: #4CAF50; background: rgba(76,175,80,0.15); box-shadow: 0 0 8px rgba(76,175,80,0.2); }
+
+    /* Stats Bar */
+    .stats-bar { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+    .stat-item { flex: 1; min-width: 110px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+    .stat-value { font-size: 1.4rem; font-weight: 700; color: var(--jin-se); }
+    .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-color); margin-bottom: 18px; overflow-x: auto; }
+    .tab { padding: 10px 18px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .tab:hover { color: var(--text-secondary); }
+    .tab.active { color: var(--jin-se); border-bottom-color: var(--jin-se); }
+
+    /* Tags */
+    .tag-hot { display: inline-block; background: rgba(196,30,58,0.2); color: #FF6B6B; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 4px; }
+    .tag-cold { display: inline-block; background: rgba(74,144,217,0.2); color: #6BB5FF; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 4px; }
+    .tag-warm { display: inline-block; background: rgba(212,165,116,0.2); color: var(--jin-se); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 4px; }
+
+    /* Bagua Grid */
+    .bagua-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+    .bagua-item { text-align: center; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px 8px; transition: all 0.3s; cursor: pointer; }
+    .bagua-item:hover { border-color: var(--jin-se); transform: translateY(-2px); }
+    .bagua-item.highlighted { border-color: var(--zhu-hong); background: rgba(196,30,58,0.08); }
+    .bagua-symbol { font-size: 2rem; margin-bottom: 4px; display: block; }
+    .bagua-name { color: var(--jin-se); font-size: 0.85rem; font-weight: 600; }
+    .bagua-meaning { font-size: 0.72rem; color: var(--text-muted); }
+    .bagua-count { font-size: 0.7rem; color: var(--zhu-hong); margin-top: 4px; }
+
+    /* Hexagram Display */
+    .hexagram-display { text-align: center; padding: 20px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius); margin-bottom: 18px; }
+    .hexagram-lines { font-size: 2.5rem; letter-spacing: 4px; }
+    .hexagram-name { font-size: 1.3rem; color: var(--jin-se); margin: 8px 0; }
+    .hexagram-desc { font-size: 0.88rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto; }
+
+    /* Analysis Tags */
+    .analysis-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; justify-content: center; }
+    .analysis-tag { padding: 8px 14px; border-radius: var(--radius-sm); background: var(--bg-dark); border: 1px solid var(--border-color); font-size: 0.82rem; color: var(--text-secondary); }
+    .analysis-tag strong { color: var(--jin-se); }
+
+    /* Pick Result */
+    .pick-result { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; margin: 14px 0; text-align: center; }
+    .pick-result .balls { margin: 12px 0; font-size: 1.5rem; }
+    .pick-meta { font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .pick-history-item {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 8px;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 8px;
+    }
+    .pick-history-item .date { font-size: 0.8rem; color: var(--text-muted); min-width: 70px; }
+    .pick-history-item .method { font-size: 0.8rem; color: var(--jin-se); min-width: 70px; }
+
+    /* Wuxing Bar */
+    .wuxing-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin: 10px 0; }
+    .wuxing-bar div { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: #fff; min-width: 20px; transition: width 0.5s; }
+
+    /* Chart Container */
+    .chart-box { width: 100%; height: 320px; min-height: 260px; }
+    .chart-box-sm { height: 260px; }
+    .chart-box-lg { height: 380px; }
+
+    /* Table */
+    .data-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .data-table th { background: var(--deep-blue); color: var(--jin-se); padding: 10px 10px; text-align: center; font-weight: 600; border-bottom: 2px solid var(--border-color); white-space: nowrap; }
+    .data-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+    .data-table tr:hover td { background: rgba(212,165,116,0.04); }
+
+    /* Favorites */
+    .fav-item {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 10px;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 8px; transition: all 0.2s;
+    }
+    .fav-item:hover { border-color: var(--jin-se); }
+    .fav-item .fav-info { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .fav-item .fav-note { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+    .fav-item .fav-actions { display: flex; gap: 6px; }
+
+    /* Compare Panel */
+    .compare-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 16px; }
+    .compare-card {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 18px; text-align: center;
+    }
+    .compare-card h4 { color: var(--jin-se); margin-bottom: 10px; font-size: 0.95rem; }
+    .compare-diff { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color); }
+    .compare-diff h4 { color: var(--zhu-hong); font-size: 0.9rem; }
+
+    /* Spinner */
+    .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border-color); border-top-color: var(--jin-se); border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Empty State */
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.5; }
+
+    /* Strategy Selector */
+    .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 14px 0; }
+    .strategy-card {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); padding: 14px 10px; text-align: center;
+        cursor: pointer; transition: all 0.2s; font-size: 0.85rem;
+    }
+    .strategy-card:hover { border-color: var(--jin-se); }
+    .strategy-card.active { border-color: var(--zhu-hong); background: rgba(196,30,58,0.08); color: var(--jin-se); }
+    .strategy-card .strat-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+    .strategy-card .strat-name { font-weight: 600; }
+    .strategy-card .strat-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* Yin-Yang Visual */
+    .yinyang-visual { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 16px 0; }
+    .yy-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; }
+    .yy-yang { background: linear-gradient(135deg, #FF6B6B, #C41E3A); color: #fff; }
+    .yy-yin { background: linear-gradient(135deg, #4A90D9, #1A5A8A); color: #fff; }
+    .yy-vs { font-size: 1.2rem; color: var(--jin-se-dim); }
+    .yy-bar { flex: 1; max-width: 200px; height: 12px; border-radius: 6px; background: var(--bg-dark); overflow: hidden; border: 1px solid var(--border-color); }
+    .yy-bar-inner { height: 100%; border-radius: 6px; transition: width 0.5s; }
+
+    /* Flow */
+    .flow { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+    .flow-step { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.82rem; color: var(--text-secondary); text-align: center; min-width: 80px; }
+    .flow-step .step-icon { font-size: 1.2rem; display: block; margin-bottom: 4px; }
+    .flow-step.active { border-color: var(--zhu-hong); color: var(--jin-se); }
+    .flow-arrow { color: var(--jin-se-dim); font-size: 1.2rem; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border-color); padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.78rem; }
+
+    /* Toast */
+    .toast {
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+        background: var(--deep-blue); border: 1px solid var(--jin-se);
+        color: var(--jin-se-light); padding: 12px 24px; border-radius: var(--radius-sm);
+        font-size: 0.88rem; z-index: 9999; opacity: 0; transition: opacity 0.3s;
+        pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .toast.show { opacity: 1; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-inner { flex-direction: column; height: auto; padding: 8px 0; gap: 6px; }
+        nav { width: 100%; justify-content: center; }
+        nav a { font-size: 0.75rem; padding: 6px 8px; }
+        .hero h1 { font-size: 1.6rem; }
+        .hero { padding: 30px 14px 20px; }
+        .container { padding: 14px 10px 40px; }
+        .bagua-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .chart-box { height: 260px; }
+        .ball-lg { width: 44px; height: 44px; font-size: 1rem; }
+        .strategy-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    </style>
+</head>
+<body>
+<div id="_dlt_status" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;
+    text-align:center;padding:6px;font-size:0.7rem;color:var(--text-muted);
+    background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);transition:all 0.4s;">
+    ⏳ 加载中... | 140期历史数据 | 天启算法引擎
+</div>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <span class="logo-icon">☯</span>
+            <div>易彩<span class="logo-sub">大乐透·易经智能选号</span></div>
+        </div>
+        <nav>
+            <a class="active" data-section="home">🏠 首页</a>
+            <a data-section="pick">🎲 选号</a>
+            <a data-section="iching">☯ 易经</a>
+            <a data-section="analysis">📊 分析</a>
+            <a data-section="data">📋 数据</a>
+            <a data-section="fav">⭐ 收藏</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ==================== 首页 ==================== -->
+<div class="container">
+<div class="section active" id="section-home">
+    <div class="hero">
+        <h1>☯ 易彩 · 大乐透智能选号</h1>
+        <p>融合千年易学智慧与现代数据分析，为您开启选号新维度</p>
+        <div class="hero-actions">
+            <button class="btn btn-primary" onclick="navigateTo('pick')">🎲 立即选号</button>
+            <button class="btn btn-gold" onclick="navigateTo('iching')">☯ 易经分析</button>
+            <button class="btn btn-outline" onclick="navigateTo('analysis')">📊 数据洞察</button>
+        </div>
+    </div>
+    <div class="feat-grid">
+        <div class="feat-card" onclick="navigateTo('pick')">
+            <div class="feat-icon">🎲</div>
+            <h3>智能选号</h3>
+            <p>五行八卦多策略，一键生成号码</p>
+        </div>
+        <div class="feat-card" onclick="navigateTo('iching')">
+            <div class="feat-icon">☯</div>
+            <h3>易经解读</h3>
+            <p>五行生克、卦象推演、阴阳调和</p>
+        </div>
+        <div class="feat-card" onclick="navigateTo('analysis')">
+            <div class="feat-icon">📊</div>
+            <h3>数据分析</h3>
+            <p>频率统计、冷热走势、遗漏追踪</p>
+        </div>
+        <div class="feat-card" onclick="navigateTo('fav')">
+            <div class="feat-icon">⭐</div>
+            <h3>收藏对比</h3>
+            <p>心仪号码收藏，多组对比分析</p>
+        </div>
+    </div>
+    <div class="card" style="margin-top:28px;">
+        <div class="card-title">🌀 选号流程</div>
+        <div class="flow">
+            <div class="flow-step active"><span class="step-icon">☯</span>起卦</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">🔥</span>五行</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">📐</span>八卦</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">⚖️</span>阴阳</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">🎲</span>选号</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">✅</span>出单</div>
+        </div>
+    </div>
+    <div class="card" style="margin-top:8px;">
+        <div class="card-title">📢 免责声明</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.8;">
+            本系统基于《易经》传统文化与现代统计学原理，仅供娱乐参考。彩票中奖纯属随机事件，任何分析方法和推荐号码均不构成投资建议。请理性购彩，量力而行。
+        </p>
+    </div>
+</div>
+
+<!-- ==================== 选号页 ==================== -->
+<div class="section" id="section-pick">
+    <h2 class="section-title">🎲 智能选号</h2>
+    <p class="section-desc">选择策略，融合易经智慧生成号码</p>
+
+    <div class="card">
+        <div class="card-title">🎯 选号策略</div>
+        <div class="strategy-grid" id="strategyGrid">
+            <div class="strategy-card active" data-strategy="balanced" onclick="selectStrategy(this)">
+                <span class="strat-icon">⚖️</span>
+                <div class="strat-name">均衡策略</div>
+                <div class="strat-desc">冷热均衡，稳健之选</div>
+            </div>
+            <div class="strategy-card" data-strategy="hot" onclick="selectStrategy(this)">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号，顺势而为</div>
+            </div>
+            <div class="strategy-card" data-strategy="cold" onclick="selectStrategy(this)">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身，出奇制胜</div>
+            </div>
+            <div class="strategy-card" data-strategy="iching" onclick="selectStrategy(this)">
+                <span class="strat-icon">☯</span>
+                <div class="strat-name">易理策略</div>
+                <div class="strat-desc">卦象五行，天人合一</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align:center;margin:16px 0;">
+        <button class="btn btn-primary" onclick="generatePick()" style="font-size:1.1rem;padding:14px 40px;">🎲 生成号码</button>
+        <button class="btn btn-gold btn-sm" onclick="generateMultiPicks(5)" style="margin-left:10px;">连出5注</button>
+    </div>
+
+    <div id="pickResult" style="display:none;">
+        <div class="card" id="pickDisplay"></div>
+        <div class="card" id="pickIChing"></div>
+        <div style="text-align:center;margin:10px 0;">
+            <button class="btn btn-outline btn-sm" onclick="saveCurrentPick()">⭐ 收藏此注</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📜 选号记录</div>
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<!-- ==================== 易经分析页 ==================== -->
+<div class="section" id="section-iching">
+    <h2 class="section-title">☯ 易经分析</h2>
+    <p class="section-desc">基于易经五行、八卦、阴阳原理深度解读号码</p>
+
+    <div class="card">
+        <div class="card-title">🔢 输入号码分析</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:10px;">输入前区5个号码（1-35）和后区2个号码（1-12），或随机生成</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+            <label style="font-size:0.85rem;color:var(--jin-se);">前区：</label>
+            <input id="icFront1" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront2" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront3" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront4" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront5" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+            <label style="font-size:0.85rem;color:var(--jin-se);">后区：</label>
+            <input id="icBack1" type="number" min="1" max="12" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icBack2" type="number" min="1" max="12" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="analyzeInput()">🔍 分析号码</button>
+            <button class="btn btn-gold btn-sm" onclick="randomAndAnalyze()">🎲 随机起卦</button>
+        </div>
+    </div>
+
+    <div id="ichingResult" style="display:none;">
+        <!-- 卦象展示 -->
+        <div class="card" id="hexagramCard"></div>
+        
+        <!-- 五行分析 -->
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-title">🔥 五行分布</div>
+                <div id="wuxingBar" class="wuxing-bar"></div>
+                <div id="wuxingDetail" style="margin-top:10px;"></div>
+                <div id="wuxingChart" class="chart-box chart-box-sm"></div>
+            </div>
+            <div class="card">
+                <div class="card-title">⚖️ 阴阳平衡</div>
+                <div id="yinyangVisual" class="yinyang-visual"></div>
+                <div id="yinyangDetail" style="margin-top:10px;"></div>
+                <div id="yinyangChart" class="chart-box chart-box-sm"></div>
+            </div>
+        </div>
+
+        <!-- 八卦分析 -->
+        <div class="card">
+            <div class="card-title">📐 八卦方位</div>
+            <div id="baguaGridAnalysis" class="bagua-grid"></div>
+            <div id="baguaChart" class="chart-box"></div>
+        </div>
+
+        <!-- 综合建议 -->
+        <div class="card" id="ichingAdvice"></div>
+    </div>
+</div>
+
+<!-- ==================== 数据分析页 ==================== -->
+<div class="section" id="section-analysis">
+    <h2 class="section-title">📊 数据分析</h2>
+    <p class="section-desc">基于真实历史数据的频率统计与走势分析</p>
+
+    <div class="stats-bar" id="analysisStats"></div>
+
+    <div class="tabs" id="analysisTabs">
+        <div class="tab active" data-tab="freq" onclick="switchAnalysisTab(this)">频率统计</div>
+        <div class="tab" data-tab="heatmap" onclick="switchAnalysisTab(this)">冷热图</div>
+        <div class="tab" data-tab="missing" onclick="switchAnalysisTab(this)">遗漏分析</div>
+    </div>
+
+    <div class="tab-content" data-tab="freq">
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-title">🔴 前区号码频率</div>
+                <div id="frontFreqChart" class="chart-box chart-box-lg"></div>
+            </div>
+            <div class="card">
+                <div class="card-title">🔵 后区号码频率</div>
+                <div id="backFreqChart" class="chart-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" data-tab="heatmap" style="display:none;">
+        <div class="card">
+            <div class="card-title">🔥❄️ 前区冷热号码</div>
+            <div id="heatMatrix" class="num-matrix"></div>
+        </div>
+        <div class="card">
+            <div class="card-title">🔥❄️ 后区冷热号码</div>
+            <div id="heatMatrixBack" class="num-matrix"></div>
+        </div>
+        <div class="stats-bar" id="heatStats"></div>
+    </div>
+
+    <div class="tab-content" data-tab="missing" style="display:none;">
+        <div class="card">
+            <div class="card-title">🔍 前区遗漏值（当前遗漏期数）</div>
+            <div id="missingChart" class="chart-box chart-box-lg"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 历史数据页 ==================== -->
+<div class="section" id="section-data">
+    <h2 class="section-title">📋 历史开奖</h2>
+    <p class="section-desc">大乐透近期开奖数据一览</p>
+    <div class="stats-bar" id="dataStats"></div>
+    <div class="card">
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>日期</th><th>前区</th><th>后区</th><th>前区特征</th><th>后区特征</th></tr></thead>
+                <tbody id="dataTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 收藏页 ==================== -->
+<div class="section" id="section-fav">
+    <h2 class="section-title">⭐ 号码收藏</h2>
+    <p class="section-desc">收藏心仪号码，多组对比分析</p>
+
+    <div class="card">
+        <div class="card-title">📥 手动添加</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:8px;">输入前区5个 + 后区2个号码</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+            <label style="font-size:0.82rem;color:var(--jin-se);">前区：</label>
+            <input id="favFront" placeholder="如: 3,8,15,22,34" style="flex:1;min-width:180px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+            <label style="font-size:0.82rem;color:var(--jin-se);">后区：</label>
+            <input id="favBack" placeholder="如: 5,11" style="flex:1;min-width:100px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+            <label style="font-size:0.82rem;color:var(--jin-se);">备注：</label>
+            <input id="favNote" placeholder="可选备注" style="flex:1;min-width:140px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addFavManual()">⭐ 添加收藏</button>
+    </div>
+
+    <div class="card">
+        <div class="card-title">⭐ 收藏列表 <span id="favCount" style="font-size:0.78rem;color:var(--text-muted);font-weight:400;"></span></div>
+        <div id="favList"></div>
+    </div>
+
+    <div class="card" id="compareSection" style="display:none;">
+        <div class="card-title">🔄 对比分析</div>
+        <div id="comparePanel" class="compare-panel"></div>
+    </div>
+</div>
+</div>
+
+<footer>
+    <p>易彩 · 大乐透易经智能选号系统 v2.0 | 仅供娱乐参考，理性购彩</p>
+    <p style="margin-top:4px;">© 2026 白玦团队 · 炙阳开发 ☀️</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
 // ========== 易经知识库（JS版，从易经知识库.json翻译） ==========
 const ICHING_DB = {
     wuxingMap: {
@@ -348,8 +803,8 @@ const IChingAnalyzer = {
 // dlt-engine.js 会自动检测 DRAWS 并加载
 
 // 兼容旧版：确保 DRAWS 已定义
-if (typeof window.DRAWS === 'undefined') {
-    window.DRAWS = [];
+if (typeof DRAWS === 'undefined') {
+    var DRAWS = [];
 }
 
 function loadEmbeddedData() {
@@ -746,7 +1201,6 @@ function generateMultiPicks(n) {
     } catch(e) {
         console.error('[易彩] 多注生成出错:', e.message);
         showToast('⚠️ 尝试备选方案');
-    }
     
     if (pickHistory.length > 50) pickHistory = pickHistory.slice(0, 50);
     try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
@@ -1278,328 +1732,10 @@ document.addEventListener('DOMContentLoaded', function() {
     loadEmbeddedData();
     renderPickHistory();
 });
+</script>
 
 
-/**
- * 大乐透选号系统 - 前端内嵌算法引擎
- * 天启算法完整JS移植版，纯前端无后端依赖
- * 用于GitHub Pages部署
- */
-
-// ========== 引擎配置 ==========
-(function() {
-
-// ================================
-// 1. 彩经分析引擎
-// ================================
-const 彩经引擎 = {
-    /** 前区频率统计 */
-    前区频率(draws) {
-        const freq = new Array(35).fill(0);
-        draws.forEach(d => d.front.forEach(n => freq[n-1]++));
-        return freq;
-    },
-
-    /** 后区频率统计 */
-    后区频率(draws) {
-        const freq = new Array(12).fill(0);
-        draws.forEach(d => d.back.forEach(n => freq[n-1]++));
-        return freq;
-    },
-
-    /** 遗漏值计算 */
-    遗漏值(draws, maxNum, getNums) {
-        const miss = new Array(maxNum).fill(draws.length);
-        for (let i = 0; i < draws.length; i++) {
-            getNums(draws[i]).forEach(n => {
-                if (miss[n-1] === draws.length) miss[n-1] = i;
-            });
-        }
-        return miss.map((v, i) => v === draws.length ? 0 : draws.length - 1 - v);
-    },
-
-    /** 冷热判断 */
-    冷热判断(freq) {
-        const sorted = [...freq].sort((a,b) => a-b);
-        const tHot = sorted[Math.floor(sorted.length * 0.7)] || 4;
-        const tCold = sorted[Math.floor(sorted.length * 0.3)] || 2;
-        return freq.map((v, i) => ({
-            num: i+1, freq: v,
-            status: v >= tHot ? '热' : v <= tCold ? '冷' : '温'
-        }));
-    },
-
-    /** 奇偶分布 */
-    奇偶分析(draws) {
-        const count = {};
-        draws.forEach(d => {
-            const odds = d.front.filter(n => n % 2 === 1).length;
-            const key = odds + ':' + (5-odds);
-            count[key] = (count[key] || 0) + 1;
-        });
-        return Object.entries(count).sort((a,b) => b[1] - a[1]);
-    },
-
-    /** 和值分析 */
-    和值分析(draws) {
-        const vals = draws.map(d => d.front.reduce((s,n) => s + n, 0));
-        const avg = Math.round(vals.reduce((s,v) => s+v, 0) / vals.length);
-        return { 平均和值: avg, 建议范围: (avg-20) + '-' + (avg+20) };
-    }
-};
-
-// ================================
-// 2. 号码推荐引擎
-// ================================
-const 推荐引擎 = {
-    /** 获取最新开奖号码的五行分析 */
-    分析五行(draws) {
-        if (!draws || draws.length === 0) return null;
-        const latest = draws[draws.length - 1];
-        const allNums = [...latest.front, ...latest.back];
-        const wxCount = { "木": 0, "火": 0, "土": 0, "金": 0, "水": 0 };
-        allNums.forEach(n => {
-            const wx = IChingAnalyzer.getWuxing(n);
-            if (wx) wxCount[wx]++;
-        });
-        const sorted = Object.entries(wxCount).sort((a,b) => a[1] - b[1]);
-        const 最缺五行 = sorted.slice(0, 2).map(x => x[0]);
-
-        // 阴阳分析
-        let yang = 0, yin = 0;
-        allNums.forEach(n => {
-            const yy = IChingAnalyzer.getYinYang(n);
-            if (yy === '阳') yang++;
-            else if (yy === '阴') yin++;
-        });
-        const yangRatio = yang / (yang + yin || 1);
-        const 缺失阴阳 = yangRatio > 0.6 ? '阴' : (yangRatio < 0.4 ? '阳' : null);
-
-        return { 最缺五行, 缺失阴阳, 五行分布: wxCount, 阳比例: yangRatio };
-    },
-
-    /** 号码评分 */
-    评分(策略, draws) {
-        const n = draws.length;
-        const frontFreq = 彩经引擎.前区频率(draws);
-        const backFreq = 彩经引擎.后区频率(draws);
-        const frontMiss = 彩经引擎.遗漏值(draws, 35, d => d.front);
-        const backMiss = 彩经引擎.遗漏值(draws, 12, d => d.back);
-        const frontHC = 彩经引擎.冷热判断(frontFreq);
-        const backHC = 彩经引擎.冷热判断(backFreq);
-
-        // 五行分析
-        const 五行 = this.分析五行(draws);
-
-        // 权重
-        const w = {
-            balanced: { 易经: 0.5, 彩经: 0.5 },
-            yijing: { 易经: 0.7, 彩经: 0.3 },
-            caijing: { 易经: 0.3, 彩经: 0.7 },
-            hot: { 易经: 0.3, 彩经: 0.7 },
-            cold: { 易经: 0.3, 彩经: 0.7 }
-        }[策略] || { 易经: 0.5, 彩经: 0.5 };
-
-        const maxFrontFreq = Math.max(...frontFreq, 1);
-        const maxBackFreq = Math.max(...backFreq, 1);
-
-        // 前区评分
-        const frontScores = {};
-        for (let n = 1; n <= 35; n++) {
-            let 彩经分 = frontFreq[n-1] / maxFrontFreq;
-            if (策略 === 'hot' && frontHC[n-1].status === '热') 彩经分 += 0.5;
-            if (策略 === 'cold' && frontHC[n-1].status === '冷') 彩经分 += 0.5;
-            if (策略 === 'cold' && frontMiss[n-1] > 8) 彩经分 += 0.5;
-            else if (策略 === 'cold' && frontMiss[n-1] > 5) 彩经分 += 0.3;
-
-            // 易经分
-            let 易经分 = 0.2;
-            const wx = IChingAnalyzer.getWuxing(n);
-            if (wx && 五行 && 五行.最缺五行.includes(wx)) 易经分 += 0.3;
-            const yy = IChingAnalyzer.getYinYang(n);
-            if (yy && 五行 && 五行.缺失阴阳 && yy === 五行.缺失阴阳) 易经分 += 0.2;
-            易经分 += Math.random() * 0.05;
-
-            frontScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
-        }
-
-        // 后区评分
-        const backScores = {};
-        for (let n = 1; n <= 12; n++) {
-            let 彩经分 = backFreq[n-1] / maxBackFreq;
-            if (策略 === 'hot' && backHC[n-1].status === '热') 彩经分 += 0.5;
-            if (策略 === 'cold' && backHC[n-1].status === '冷') 彩经分 += 0.4;
-            if (策略 === 'cold' && backMiss[n-1] > 6) 彩经分 += 0.4;
-
-            let 易经分 = 0.2 + Math.random() * 0.05;
-            backScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
-        }
-
-        // 归一化
-        const norm = (scores) => {
-            const max = Math.max(...Object.values(scores));
-            if (max > 0) for (const k in scores) scores[k] /= max;
-            return scores;
-        };
-        norm(frontScores);
-        norm(backScores);
-
-        return {
-            前区评分: frontScores,
-            后区评分: backScores,
-            冷热: { 前区: frontHC, 后区: backHC },
-            遗漏: { 前区: frontMiss, 后区: backMiss },
-            五行: 五行,
-            彩经摘要: {
-                前区热号: frontHC.filter(x => x.status === '热').map(x => x.num),
-                前区冷号: frontHC.filter(x => x.status === '冷').map(x => x.num),
-                奇偶最常: 彩经引擎.奇偶分析(draws).slice(0, 3),
-                和值: 彩经引擎.和值分析(draws)
-            }
-        };
-    },
-
-    /** 智能选号 */
-    选号(评分, count) {
-        const candidates = Object.entries(评分).map(([n, s]) => ({ num: parseInt(n), score: s }));
-        candidates.sort((a, b) => b.score - a.score);
-
-        const selected = [];
-        const used = new Set();
-        for (const c of candidates) {
-            if (selected.length >= count) break;
-            if (used.has(c.num)) continue;
-            selected.push(c.num);
-            used.add(c.num);
-        }
-
-        // 如果不够补充
-        if (selected.length < count) {
-            for (const c of candidates) {
-                if (selected.length >= count) break;
-                if (!used.has(c.num)) { selected.push(c.num); used.add(c.num); }
-            }
-        }
-
-        // 奇偶平衡（仅前区）
-        if (count === 5 && selected.length === 5) {
-            const odds = selected.filter(n => n % 2 === 1).length;
-            if (odds === 0 || odds === 5) {
-                // 过于极端，换一个
-                const swapIdx = odds === 0 ? 3 : 1;
-                const old = selected[swapIdx];
-                const alt = Array.from({length: 35}, (_, i) => i+1)
-                    .filter(n => !selected.includes(n) && n % 2 !== old % 2);
-                if (alt.length > 0) {
-                    alt.sort((a, b) => (评分[b] || 0) - (评分[a] || 0));
-                    selected[swapIdx] = alt[0];
-                }
-            }
-        }
-
-        return selected.sort((a, b) => a - b);
-    },
-
-    /** 主推荐 */
-    主推荐(策略, draws) {
-        const 结果 = this.评分(策略, draws);
-        const 前区 = this.选号(结果.前区评分, 5);
-        const 后区 = this.选号(结果.后区评分, 2);
-
-        // 主推荐的易经分析
-        const 分析 = IChingAnalyzer.comprehensiveAnalysis(前区, 后区);
-
-        // 评分排行
-        const 前区排行 = Object.entries(结果.前区评分)
-            .map(([n, s]) => ({ 号码: parseInt(n), 分数: Math.round(s * 10000) / 10000 }))
-            .sort((a, b) => b.分数 - a.分数).slice(0, 15);
-        const 后区排行 = Object.entries(结果.后区评分)
-            .map(([n, s]) => ({ 号码: parseInt(n), 分数: Math.round(s * 10000) / 10000 }))
-            .sort((a, b) => b.分数 - a.分数).slice(0, 6);
-
-        // 彩经摘要文本
-        const 热号 = 结果.彩经摘要.前区热号.slice(0, 5).join(',');
-        const 冷号 = 结果.彩经摘要.前区冷号.slice(0, 5).join(',');
-        const 奇偶 = 结果.彩经摘要.奇偶最常[0] || ['3:2', 0];
-        const 和值 = 结果.彩经摘要.和值;
-        const 摘要 = `前区热号: ${热号} | 冷号: ${冷号} | 最常见奇偶比: ${奇偶[0]}(${奇偶[1]}次) | 建议和值: ${和值.建议范围}`;
-
-        return {
-            策略: 策略,
-            主推荐: { 前区, 后区, 易经分析: 分析 },
-            备选推荐: Array.from({length: 4}, () => {
-                const 备 = this.评分(策略, draws);
-                // 加点随机扰动
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.3);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.3);
-                return { 前区: this.选号(备.前区评分, 5), 后区: this.选号(备.后区评分, 2) };
-            }),
-            前区评分排行: 前区排行,
-            后区评分排行: 后区排行,
-            彩经分析摘要: 摘要,
-            五行提示: 结果.五行 ? {
-                最缺: 结果.五行.最缺五行.join(','),
-                缺失阴阳: 结果.五行.缺失阴阳 || '平衡'
-            } : null,
-            推荐时间: new Date().toLocaleString('zh-CN'),
-            免责声明: "本推荐仅供娱乐参考"
-        };
-    }
-};
-
-// ================================
-// 3. 多注生成（增强版）
-// ================================
-function 天启选号(策略, 组数) {
-    const draws = (typeof window !== 'undefined' && window.DRAWS && window.DRAWS.length > 0) ? window.DRAWS : [];
-    if (draws.length === 0) return [];
-
-    const 策略映射 = { balanced: 'balanced', iching: 'yijing', hot: 'hot', cold: 'cold' };
-    const api策略 = 策略映射[策略] || 'balanced';
-
-    const results = [];
-    for (let i = 0; i < 组数; i++) {
-        const result = 推荐引擎.主推荐(api策略, draws);
-        // 轮流用不同扰动来产生不同号码
-        if (i > 0 && results.length > 0) {
-            // 检查是否与前面的重复
-            const fronts = results.map(r => r.front.join(','));
-            if (fronts.includes(result.主推荐.前区.join(','))) {
-                // 如果重复，再加一次随机扰动
-                const 备 = 推荐引擎.评分(api策略, draws);
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.5);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.5);
-                result.主推荐.前区 = 推荐引擎.选号(备.前区评分, 5);
-                result.主推荐.后区 = 推荐引擎.选号(备.后区评分, 2);
-                result.主推荐.易经分析 = IChingAnalyzer.comprehensiveAnalysis(result.主推荐.前区, result.主推荐.后区);
-            }
-        }
-        results.push({
-            front: result.主推荐.前区,
-            back: result.主推荐.后区,
-            yijing: result.主推荐.易经分析,
-            yijingText: result.主推荐.易经分析?.hexagram?.hexagram?.name + '卦',
-            yijingId: result.主推荐.易经分析?.hexagram?.hexagram?.id
-        });
-    }
-    return results;
-}
-
-// ================================
-// 4. 挂载到window
-// ================================
-window.推荐引擎 = 推荐引擎;
-window.天启选号 = 天启选号;
-window.彩经引擎 = 彩经引擎;
-
-console.log('☯ 易彩 · 算法引擎已加载');
-console.log('  选用window.推荐引擎.主推荐("balanced", DRAWS) 获取推荐');
-console.log('  选用window.天启选号("balanced", 5) 生成5注');
-
-})();
-
-
-
+<script>
 // ========== 移动端安全启动 ==========
 (function() {
     // 显示加载完成标记
