@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>易彩 · 大乐透智能选号系统</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <script src="draws_data.js"></script>
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --zhu-hong: #C41E3A;
+        --zhu-hong-dark: #A01830;
+        --jin-se: #D4A574;
+        --jin-se-light: #E8C99B;
+        --jin-se-dim: #B8925E;
+        --deep-blue: #1A1A2E;
+        --deep-blue-light: #2A2A4E;
+        --bg-dark: #0F0F1A;
+        --bg-card: #16162A;
+        --bg-card-hover: #1E1E38;
+        --text-primary: #F0E6D3;
+        --text-secondary: #B8AD9A;
+        --text-muted: #7A7262;
+        --border-color: rgba(212, 165, 116, 0.15);
+        --shadow: 0 4px 20px rgba(0,0,0,0.4);
+        --radius: 12px;
+        --radius-sm: 8px;
+        --wuxing-wood: #4CAF50;
+        --wuxing-fire: #F44336;
+        --wuxing-earth: #FF9800;
+        --wuxing-metal: #FFD700;
+        --wuxing-water: #2196F3;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    a { color: var(--jin-se); text-decoration: none; }
+    a:hover { color: var(--jin-se-light); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--jin-se-dim); border-radius: 3px; }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background:
+            radial-gradient(ellipse at 20% 50%, rgba(196,30,58,0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 20%, rgba(212,165,116,0.04) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 80%, rgba(26,26,46,0.8) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Header */
+    header {
+        background: linear-gradient(135deg, var(--deep-blue), var(--bg-card));
+        border-bottom: 1px solid var(--border-color);
+        padding: 0 20px;
+        position: sticky; top: 0; z-index: 100;
+        backdrop-filter: blur(10px);
+    }
+    .header-inner {
+        max-width: 1200px; margin: 0 auto;
+        display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 700; color: var(--jin-se); }
+    .logo-icon { font-size: 1.5rem; }
+    .logo-sub { font-size: 0.65rem; color: var(--text-muted); font-weight: 400; display: block; line-height: 1; }
+    nav { display: flex; gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    nav a {
+        padding: 8px 13px; font-size: 0.82rem; color: var(--text-secondary);
+        border-radius: var(--radius-sm); transition: all 0.2s;
+        white-space: nowrap; border: 1px solid transparent; cursor: pointer;
+    }
+    nav a:hover, nav a.active { color: var(--jin-se); background: rgba(212,165,116,0.1); border-color: var(--border-color); }
+    nav a.active { color: var(--zhu-hong); border-color: var(--zhu-hong); background: rgba(196,30,58,0.1); }
+
+    /* Container & Section */
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px 60px; position: relative; z-index: 1; }
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .section-title { font-size: 1.4rem; color: var(--jin-se); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+    .section-desc { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; }
+
+    /* Cards */
+    .card {
+        background: var(--bg-card); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 22px; margin-bottom: 18px; transition: all 0.3s;
+    }
+    .card:hover { background: var(--bg-card-hover); box-shadow: var(--shadow); }
+    .card-title { font-size: 1.05rem; color: var(--jin-se); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+
+    /* Balls */
+    .ball {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px; border-radius: 50%;
+        font-weight: 700; font-size: 0.95rem; margin: 3px;
+    }
+    .ball-front { background: linear-gradient(135deg, #E83D5B, var(--zhu-hong)); color: #fff; box-shadow: 0 2px 8px rgba(196,30,58,0.3); }
+    .ball-back { background: linear-gradient(135deg, #4A90D9, #1A5A8A); color: #fff; box-shadow: 0 2px 8px rgba(26,90,138,0.3); }
+    .ball-sm { width: 32px; height: 32px; font-size: 0.8rem; }
+    .ball-lg { width: 52px; height: 52px; font-size: 1.2rem; }
+
+    /* Buttons */
+    .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 12px 28px; border-radius: var(--radius-sm);
+        font-size: 1rem; font-weight: 600; cursor: pointer;
+        border: none; transition: all 0.3s; font-family: inherit;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--zhu-hong), var(--zhu-hong-dark)); color: #fff; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(196,30,58,0.4); }
+    .btn-gold { background: linear-gradient(135deg, var(--jin-se), var(--jin-se-dim)); color: var(--deep-blue); }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,165,116,0.3); }
+    .btn-outline { background: transparent; border: 1px solid var(--jin-se); color: var(--jin-se); }
+    .btn-outline:hover { background: rgba(212,165,116,0.1); }
+    .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+    .btn-danger { background: rgba(196,30,58,0.2); border: 1px solid var(--zhu-hong); color: #FF6B6B; }
+    .btn-danger:hover { background: rgba(196,30,58,0.3); }
+
+    /* Hero */
+    .hero { text-align: center; padding: 50px 20px 30px; position: relative; }
+    .hero::after { content: '☯'; position: absolute; right: 8%; top: 15%; font-size: 10rem; opacity: 0.03; pointer-events: none; }
+    .hero h1 { font-size: 2.4rem; color: var(--jin-se); margin-bottom: 10px; }
+    .hero p { font-size: 1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 28px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* Features */
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 32px; }
+    .feat-card {
+        background: var(--bg-card); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 24px 18px; text-align: center;
+        transition: all 0.3s; cursor: pointer;
+    }
+    .feat-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); box-shadow: var(--shadow); }
+    .feat-icon { font-size: 2rem; margin-bottom: 10px; }
+    .feat-card h3 { color: var(--jin-se); font-size: 1rem; margin-bottom: 6px; }
+    .feat-card p { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Number Matrix */
+    .num-matrix { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin: 12px 0; }
+    .num-cell {
+        width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+        border-radius: 6px; font-size: 0.85rem; font-weight: 600;
+        border: 1px solid var(--border-color); background: var(--bg-dark);
+        color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+    }
+    .num-cell:hover { border-color: var(--jin-se); }
+    .num-cell.hot { border-color: var(--zhu-hong); color: #FF6B6B; background: rgba(196,30,58,0.1); }
+    .num-cell.cold { border-color: #4A90D9; color: #6BB5FF; background: rgba(74,144,217,0.1); }
+    .num-cell.warm { border-color: var(--jin-se); color: var(--jin-se); background: rgba(212,165,116,0.08); }
+    .num-cell.selected { border-color: #4CAF50; color: #4CAF50; background: rgba(76,175,80,0.15); box-shadow: 0 0 8px rgba(76,175,80,0.2); }
+
+    /* Stats Bar */
+    .stats-bar { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+    .stat-item { flex: 1; min-width: 110px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+    .stat-value { font-size: 1.4rem; font-weight: 700; color: var(--jin-se); }
+    .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-color); margin-bottom: 18px; overflow-x: auto; }
+    .tab { padding: 10px 18px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .tab:hover { color: var(--text-secondary); }
+    .tab.active { color: var(--jin-se); border-bottom-color: var(--jin-se); }
+
+    /* Tags */
+    .tag-hot { display: inline-block; background: rgba(196,30,58,0.2); color: #FF6B6B; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 4px; }
+    .tag-cold { display: inline-block; background: rgba(74,144,217,0.2); color: #6BB5FF; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 4px; }
+    .tag-warm { display: inline-block; background: rgba(212,165,116,0.2); color: var(--jin-se); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 4px; }
+
+    /* Bagua Grid */
+    .bagua-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+    .bagua-item { text-align: center; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px 8px; transition: all 0.3s; cursor: pointer; }
+    .bagua-item:hover { border-color: var(--jin-se); transform: translateY(-2px); }
+    .bagua-item.highlighted { border-color: var(--zhu-hong); background: rgba(196,30,58,0.08); }
+    .bagua-symbol { font-size: 2rem; margin-bottom: 4px; display: block; }
+    .bagua-name { color: var(--jin-se); font-size: 0.85rem; font-weight: 600; }
+    .bagua-meaning { font-size: 0.72rem; color: var(--text-muted); }
+    .bagua-count { font-size: 0.7rem; color: var(--zhu-hong); margin-top: 4px; }
+
+    /* Hexagram Display */
+    .hexagram-display { text-align: center; padding: 20px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius); margin-bottom: 18px; }
+    .hexagram-lines { font-size: 2.5rem; letter-spacing: 4px; }
+    .hexagram-name { font-size: 1.3rem; color: var(--jin-se); margin: 8px 0; }
+    .hexagram-desc { font-size: 0.88rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto; }
+
+    /* Analysis Tags */
+    .analysis-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; justify-content: center; }
+    .analysis-tag { padding: 8px 14px; border-radius: var(--radius-sm); background: var(--bg-dark); border: 1px solid var(--border-color); font-size: 0.82rem; color: var(--text-secondary); }
+    .analysis-tag strong { color: var(--jin-se); }
+
+    /* Pick Result */
+    .pick-result { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; margin: 14px 0; text-align: center; }
+    .pick-result .balls { margin: 12px 0; font-size: 1.5rem; }
+    .pick-meta { font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .pick-history-item {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 8px;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 8px;
+    }
+    .pick-history-item .date { font-size: 0.8rem; color: var(--text-muted); min-width: 70px; }
+    .pick-history-item .method { font-size: 0.8rem; color: var(--jin-se); min-width: 70px; }
+
+    /* Wuxing Bar */
+    .wuxing-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin: 10px 0; }
+    .wuxing-bar div { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: #fff; min-width: 20px; transition: width 0.5s; }
+
+    /* Chart Container */
+    .chart-box { width: 100%; height: 320px; min-height: 260px; }
+    .chart-box-sm { height: 260px; }
+    .chart-box-lg { height: 380px; }
+
+    /* Table */
+    .data-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .data-table th { background: var(--deep-blue); color: var(--jin-se); padding: 10px 10px; text-align: center; font-weight: 600; border-bottom: 2px solid var(--border-color); white-space: nowrap; }
+    .data-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+    .data-table tr:hover td { background: rgba(212,165,116,0.04); }
+
+    /* Favorites */
+    .fav-item {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 10px;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 8px; transition: all 0.2s;
+    }
+    .fav-item:hover { border-color: var(--jin-se); }
+    .fav-item .fav-info { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .fav-item .fav-note { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+    .fav-item .fav-actions { display: flex; gap: 6px; }
+
+    /* Compare Panel */
+    .compare-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 16px; }
+    .compare-card {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 18px; text-align: center;
+    }
+    .compare-card h4 { color: var(--jin-se); margin-bottom: 10px; font-size: 0.95rem; }
+    .compare-diff { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color); }
+    .compare-diff h4 { color: var(--zhu-hong); font-size: 0.9rem; }
+
+    /* Spinner */
+    .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border-color); border-top-color: var(--jin-se); border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Empty State */
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.5; }
+
+    /* Strategy Selector */
+    .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 14px 0; }
+    .strategy-card {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); padding: 14px 10px; text-align: center;
+        cursor: pointer; transition: all 0.2s; font-size: 0.85rem;
+    }
+    .strategy-card:hover { border-color: var(--jin-se); }
+    .strategy-card.active { border-color: var(--zhu-hong); background: rgba(196,30,58,0.08); color: var(--jin-se); }
+    .strategy-card .strat-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+    .strategy-card .strat-name { font-weight: 600; }
+    .strategy-card .strat-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* Yin-Yang Visual */
+    .yinyang-visual { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 16px 0; }
+    .yy-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; }
+    .yy-yang { background: linear-gradient(135deg, #FF6B6B, #C41E3A); color: #fff; }
+    .yy-yin { background: linear-gradient(135deg, #4A90D9, #1A5A8A); color: #fff; }
+    .yy-vs { font-size: 1.2rem; color: var(--jin-se-dim); }
+    .yy-bar { flex: 1; max-width: 200px; height: 12px; border-radius: 6px; background: var(--bg-dark); overflow: hidden; border: 1px solid var(--border-color); }
+    .yy-bar-inner { height: 100%; border-radius: 6px; transition: width 0.5s; }
+
+    /* Flow */
+    .flow { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+    .flow-step { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.82rem; color: var(--text-secondary); text-align: center; min-width: 80px; }
+    .flow-step .step-icon { font-size: 1.2rem; display: block; margin-bottom: 4px; }
+    .flow-step.active { border-color: var(--zhu-hong); color: var(--jin-se); }
+    .flow-arrow { color: var(--jin-se-dim); font-size: 1.2rem; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border-color); padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.78rem; }
+
+    /* Toast */
+    .toast {
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+        background: var(--deep-blue); border: 1px solid var(--jin-se);
+        color: var(--jin-se-light); padding: 12px 24px; border-radius: var(--radius-sm);
+        font-size: 0.88rem; z-index: 9999; opacity: 0; transition: opacity 0.3s;
+        pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .toast.show { opacity: 1; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-inner { flex-direction: column; height: auto; padding: 8px 0; gap: 6px; }
+        nav { width: 100%; justify-content: center; }
+        nav a { font-size: 0.75rem; padding: 6px 8px; }
+        .hero h1 { font-size: 1.6rem; }
+        .hero { padding: 30px 14px 20px; }
+        .container { padding: 14px 10px 40px; }
+        .bagua-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .chart-box { height: 260px; }
+        .ball-lg { width: 44px; height: 44px; font-size: 1rem; }
+        .strategy-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <span class="logo-icon">☯</span>
+            <div>易彩<span class="logo-sub">大乐透·易经智能选号</span></div>
+        </div>
+        <nav>
+            <a class="active" data-section="home">🏠 首页</a>
+            <a data-section="pick">🎲 选号</a>
+            <a data-section="iching">☯ 易经</a>
+            <a data-section="analysis">📊 分析</a>
+            <a data-section="data">📋 数据</a>
+            <a data-section="fav">⭐ 收藏</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ==================== 首页 ==================== -->
+<div class="container">
+<div class="section active" id="section-home">
+    <div class="hero">
+        <h1>☯ 易彩 · 大乐透智能选号</h1>
+        <p>融合千年易学智慧与现代数据分析，为您开启选号新维度</p>
+        <div class="hero-actions">
+            <button class="btn btn-primary" onclick="navigateTo('pick')">🎲 立即选号</button>
+            <button class="btn btn-gold" onclick="navigateTo('iching')">☯ 易经分析</button>
+            <button class="btn btn-outline" onclick="navigateTo('analysis')">📊 数据洞察</button>
+        </div>
+    </div>
+    <div class="feat-grid">
+        <div class="feat-card" onclick="navigateTo('pick')">
+            <div class="feat-icon">🎲</div>
+            <h3>智能选号</h3>
+            <p>五行八卦多策略，一键生成号码</p>
+        </div>
+        <div class="feat-card" onclick="navigateTo('iching')">
+            <div class="feat-icon">☯</div>
+            <h3>易经解读</h3>
+            <p>五行生克、卦象推演、阴阳调和</p>
+        </div>
+        <div class="feat-card" onclick="navigateTo('analysis')">
+            <div class="feat-icon">📊</div>
+            <h3>数据分析</h3>
+            <p>频率统计、冷热走势、遗漏追踪</p>
+        </div>
+        <div class="feat-card" onclick="navigateTo('fav')">
+            <div class="feat-icon">⭐</div>
+            <h3>收藏对比</h3>
+            <p>心仪号码收藏，多组对比分析</p>
+        </div>
+    </div>
+    <div class="card" style="margin-top:28px;">
+        <div class="card-title">🌀 选号流程</div>
+        <div class="flow">
+            <div class="flow-step active"><span class="step-icon">☯</span>起卦</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">🔥</span>五行</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">📐</span>八卦</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">⚖️</span>阴阳</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">🎲</span>选号</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step"><span class="step-icon">✅</span>出单</div>
+        </div>
+    </div>
+    <div class="card" style="margin-top:8px;">
+        <div class="card-title">📢 免责声明</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.8;">
+            本系统基于《易经》传统文化与现代统计学原理，仅供娱乐参考。彩票中奖纯属随机事件，任何分析方法和推荐号码均不构成投资建议。请理性购彩，量力而行。
+        </p>
+    </div>
+</div>
+
+<!-- ==================== 选号页 ==================== -->
+<div class="section" id="section-pick">
+    <h2 class="section-title">🎲 智能选号</h2>
+    <p class="section-desc">选择策略，融合易经智慧生成号码</p>
+
+    <div class="card">
+        <div class="card-title">🎯 选号策略</div>
+        <div class="strategy-grid" id="strategyGrid">
+            <div class="strategy-card active" data-strategy="balanced" onclick="selectStrategy(this)">
+                <span class="strat-icon">⚖️</span>
+                <div class="strat-name">均衡策略</div>
+                <div class="strat-desc">冷热均衡，稳健之选</div>
+            </div>
+            <div class="strategy-card" data-strategy="hot" onclick="selectStrategy(this)">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号，顺势而为</div>
+            </div>
+            <div class="strategy-card" data-strategy="cold" onclick="selectStrategy(this)">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身，出奇制胜</div>
+            </div>
+            <div class="strategy-card" data-strategy="iching" onclick="selectStrategy(this)">
+                <span class="strat-icon">☯</span>
+                <div class="strat-name">易理策略</div>
+                <div class="strat-desc">卦象五行，天人合一</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align:center;margin:16px 0;">
+        <button class="btn btn-primary" onclick="generatePick()" style="font-size:1.1rem;padding:14px 40px;">🎲 生成号码</button>
+        <button class="btn btn-gold btn-sm" onclick="generateMultiPicks(5)" style="margin-left:10px;">连出5注</button>
+    </div>
+
+    <div id="pickResult" style="display:none;">
+        <div class="card" id="pickDisplay"></div>
+        <div class="card" id="pickIChing"></div>
+        <div style="text-align:center;margin:10px 0;">
+            <button class="btn btn-outline btn-sm" onclick="saveCurrentPick()">⭐ 收藏此注</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📜 选号记录</div>
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<!-- ==================== 易经分析页 ==================== -->
+<div class="section" id="section-iching">
+    <h2 class="section-title">☯ 易经分析</h2>
+    <p class="section-desc">基于易经五行、八卦、阴阳原理深度解读号码</p>
+
+    <div class="card">
+        <div class="card-title">🔢 输入号码分析</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:10px;">输入前区5个号码（1-35）和后区2个号码（1-12），或随机生成</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+            <label style="font-size:0.85rem;color:var(--jin-se);">前区：</label>
+            <input id="icFront1" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront2" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront3" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront4" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icFront5" type="number" min="1" max="35" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+            <label style="font-size:0.85rem;color:var(--jin-se);">后区：</label>
+            <input id="icBack1" type="number" min="1" max="12" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+            <input id="icBack2" type="number" min="1" max="12" style="width:52px;padding:6px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);text-align:center;font-size:0.9rem;">
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="analyzeInput()">🔍 分析号码</button>
+            <button class="btn btn-gold btn-sm" onclick="randomAndAnalyze()">🎲 随机起卦</button>
+        </div>
+    </div>
+
+    <div id="ichingResult" style="display:none;">
+        <!-- 卦象展示 -->
+        <div class="card" id="hexagramCard"></div>
+        
+        <!-- 五行分析 -->
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-title">🔥 五行分布</div>
+                <div id="wuxingBar" class="wuxing-bar"></div>
+                <div id="wuxingDetail" style="margin-top:10px;"></div>
+                <div id="wuxingChart" class="chart-box chart-box-sm"></div>
+            </div>
+            <div class="card">
+                <div class="card-title">⚖️ 阴阳平衡</div>
+                <div id="yinyangVisual" class="yinyang-visual"></div>
+                <div id="yinyangDetail" style="margin-top:10px;"></div>
+                <div id="yinyangChart" class="chart-box chart-box-sm"></div>
+            </div>
+        </div>
+
+        <!-- 八卦分析 -->
+        <div class="card">
+            <div class="card-title">📐 八卦方位</div>
+            <div id="baguaGridAnalysis" class="bagua-grid"></div>
+            <div id="baguaChart" class="chart-box"></div>
+        </div>
+
+        <!-- 综合建议 -->
+        <div class="card" id="ichingAdvice"></div>
+    </div>
+</div>
+
+<!-- ==================== 数据分析页 ==================== -->
+<div class="section" id="section-analysis">
+    <h2 class="section-title">📊 数据分析</h2>
+    <p class="section-desc">基于真实历史数据的频率统计与走势分析</p>
+
+    <div class="stats-bar" id="analysisStats"></div>
+
+    <div class="tabs" id="analysisTabs">
+        <div class="tab active" data-tab="freq" onclick="switchAnalysisTab(this)">频率统计</div>
+        <div class="tab" data-tab="heatmap" onclick="switchAnalysisTab(this)">冷热图</div>
+        <div class="tab" data-tab="missing" onclick="switchAnalysisTab(this)">遗漏分析</div>
+    </div>
+
+    <div class="tab-content" data-tab="freq">
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-title">🔴 前区号码频率</div>
+                <div id="frontFreqChart" class="chart-box chart-box-lg"></div>
+            </div>
+            <div class="card">
+                <div class="card-title">🔵 后区号码频率</div>
+                <div id="backFreqChart" class="chart-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" data-tab="heatmap" style="display:none;">
+        <div class="card">
+            <div class="card-title">🔥❄️ 前区冷热号码</div>
+            <div id="heatMatrix" class="num-matrix"></div>
+        </div>
+        <div class="card">
+            <div class="card-title">🔥❄️ 后区冷热号码</div>
+            <div id="heatMatrixBack" class="num-matrix"></div>
+        </div>
+        <div class="stats-bar" id="heatStats"></div>
+    </div>
+
+    <div class="tab-content" data-tab="missing" style="display:none;">
+        <div class="card">
+            <div class="card-title">🔍 前区遗漏值（当前遗漏期数）</div>
+            <div id="missingChart" class="chart-box chart-box-lg"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 历史数据页 ==================== -->
+<div class="section" id="section-data">
+    <h2 class="section-title">📋 历史开奖</h2>
+    <p class="section-desc">大乐透近期开奖数据一览</p>
+    <div class="stats-bar" id="dataStats"></div>
+    <div class="card">
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>日期</th><th>前区</th><th>后区</th><th>前区特征</th><th>后区特征</th></tr></thead>
+                <tbody id="dataTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 收藏页 ==================== -->
+<div class="section" id="section-fav">
+    <h2 class="section-title">⭐ 号码收藏</h2>
+    <p class="section-desc">收藏心仪号码，多组对比分析</p>
+
+    <div class="card">
+        <div class="card-title">📥 手动添加</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:8px;">输入前区5个 + 后区2个号码</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+            <label style="font-size:0.82rem;color:var(--jin-se);">前区：</label>
+            <input id="favFront" placeholder="如: 3,8,15,22,34" style="flex:1;min-width:180px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+            <label style="font-size:0.82rem;color:var(--jin-se);">后区：</label>
+            <input id="favBack" placeholder="如: 5,11" style="flex:1;min-width:100px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+            <label style="font-size:0.82rem;color:var(--jin-se);">备注：</label>
+            <input id="favNote" placeholder="可选备注" style="flex:1;min-width:140px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addFavManual()">⭐ 添加收藏</button>
+    </div>
+
+    <div class="card">
+        <div class="card-title">⭐ 收藏列表 <span id="favCount" style="font-size:0.78rem;color:var(--text-muted);font-weight:400;"></span></div>
+        <div id="favList"></div>
+    </div>
+
+    <div class="card" id="compareSection" style="display:none;">
+        <div class="card-title">🔄 对比分析</div>
+        <div id="comparePanel" class="compare-panel"></div>
+    </div>
+</div>
+</div>
+
+<footer>
+    <p>易彩 · 大乐透易经智能选号系统 v2.0 | 仅供娱乐参考，理性购彩</p>
+    <p style="margin-top:4px;">© 2026 白玦团队 · 炙阳开发 ☀️</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== 易经知识库（JS版，从易经知识库.json翻译） ==========
+const ICHING_DB = {
+    wuxingMap: {
+        "木": [1,2,11,12,21,22,31,32],
+        "火": [3,4,13,14,23,24,33,34],
+        "土": [5,6,15,16,25,26,35],
+        "金": [7,8,17,18,27,28],
+        "水": [9,10,19,20,29,30]
+    },
+    baguaMap: {
+        "乾": [1,9,17,25,33],
+        "兑": [2,10,18,26,34],
+        "离": [3,11,19,27,35],
+        "震": [4,12,20,28],
+        "巽": [5,13,21,29],
+        "坎": [6,14,22,30],
+        "艮": [7,15,23,31],
+        "坤": [8,16,24,32]
+    },
+    yinyangMap: {
+        "阳": [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35],
+        "阴": [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34]
+    },
+    backWuxingMap: {
+        "木": [1,2,11,12],
+        "火": [3,4],
+        "土": [5,6],
+        "金": [7,8],
+        "水": [9,10]
+    },
+    backDizhiMap: {
+        1:"子",2:"丑",3:"寅",4:"卯",5:"辰",6:"巳",
+        7:"午",8:"未",9:"申",10:"酉",11:"戌",12:"亥"
+    },
+    wuxingDesc: {
+        "木": { meaning:"生长、发展、向上", symbol:"春天·东方·绿色", nature:"积极进取、有创造力", lucky:"吉", advice:"适合开始新事物、制定计划", generate:"木生火", restrain:"金克木" },
+        "火": { meaning:"热情、活力、光明", symbol:"夏天·南方·红色", nature:"热情开朗、领导力强", lucky:"吉", advice:"适合展现自我、积极行动", generate:"火生土", restrain:"水克火" },
+        "土": { meaning:"稳定、承载、包容", symbol:"长夏·中央·黄色", nature:"稳重可靠、脚踏实地", lucky:"平", advice:"适合巩固基础、稳定发展", generate:"土生金", restrain:"木克土" },
+        "金": { meaning:"收获、成果、坚定", symbol:"秋天·西方·白色", nature:"果断坚定、追求完美", lucky:"吉", advice:"适合收获成果、做出决策", generate:"金生水", restrain:"火克金" },
+        "水": { meaning:"流动、智慧、变化", symbol:"冬天·北方·黑色", nature:"灵活变通、适应力强", lucky:"平", advice:"适合灵活应变、学习思考", generate:"水生木", restrain:"土克水" }
+    },
+    baguaDesc: {
+        "乾": { fullName:"乾为天", guaci:"元亨利贞", meaning:"天行健，君子以自强不息", symbol:"天·父亲·刚健", nature:"积极进取、领导力", lucky:"大吉", advice:"积极进取，发挥创造力", direction:"西北", wuxing:"金", symbol_char:"☰" },
+        "兑": { fullName:"兑为泽", guaci:"亨，利贞", meaning:"丽泽，兑，君子以朋友讲习", symbol:"泽·少女·喜悦", nature:"善于沟通、乐观开朗", lucky:"吉", advice:"加强沟通合作，保持乐观", direction:"西", wuxing:"金", symbol_char:"☱" },
+        "离": { fullName:"离为火", guaci:"利贞，亨", meaning:"明两作，离，大人以继明照于四方", symbol:"火·中女·光明", nature:"热情开朗、聪明智慧", lucky:"吉", advice:"保持光明正大，发挥智慧", direction:"南", wuxing:"火", symbol_char:"☲" },
+        "震": { fullName:"震为雷", guaci:"亨，震来虩虩", meaning:"洊雷，震，君子以恐惧修省", symbol:"雷·长男·震动", nature:"行动力强、勇于变革", lucky:"平", advice:"谨慎行事，把握时机", direction:"东", wuxing:"木", symbol_char:"☳" },
+        "巽": { fullName:"巽为风", guaci:"小亨，利有攸往", meaning:"随风，巽，君子以申命行事", symbol:"风·长女·顺从", nature:"灵活变通、善于适应", lucky:"平", advice:"顺应时势，灵活应对", direction:"东南", wuxing:"木", symbol_char:"☴" },
+        "坎": { fullName:"坎为水", guaci:"习坎，有孚维心，亨", meaning:"水洊至，习坎，君子以常德行", symbol:"水·中男·险陷", nature:"深沉智慧、坚韧不拔", lucky:"凶", advice:"小心谨慎，保持警惕", direction:"北", wuxing:"水", symbol_char:"☵" },
+        "艮": { fullName:"艮为山", guaci:"艮其背，不获其身", meaning:"兼山，艮，君子以思不出其位", symbol:"山·少男·静止", nature:"稳重踏实、坚守原则", lucky:"平", advice:"守成稳定，坚守岗位", direction:"东北", wuxing:"土", symbol_char:"☶" },
+        "坤": { fullName:"坤为地", guaci:"元亨，利牝马之贞", meaning:"地势坤，君子以厚德载物", symbol:"地·母亲·柔顺", nature:"包容大度、稳重可靠", lucky:"吉", advice:"包容承载，厚德载物", direction:"西南", wuxing:"土", symbol_char:"☷" }
+    },
+    wuxingColors: { "木":"#4CAF50", "火":"#F44336", "土":"#FF9800", "金":"#FFD700", "水":"#2196F3" },
+    wuxingCycle: ["木","火","土","金","水"],
+    hexagrams: [
+        { id:'䷾', name:'既济', desc:'既济，亨小，利贞。初吉终乱。象征事已成，守成之道。', wx:'水火既济', yy:'阳爻居阴位' },
+        { id:'䷀', name:'乾', desc:'乾，元亨利贞。象征天行健，君子以自强不息。', wx:'纯阳之金', yy:'六阳' },
+        { id:'䷁', name:'坤', desc:'坤，元亨，利牝马之贞。象征地势坤，厚德载物。', wx:'纯阴之土', yy:'六阴' },
+        { id:'䷂', name:'屯', desc:'屯，元亨利贞。象征万物初生，艰难中求进。', wx:'水雷屯', yy:'二阳四阴' },
+        { id:'䷄', name:'需', desc:'需，有孚，光亨，贞吉。象征等待时机。', wx:'水天需', yy:'四阳二阴' },
+        { id:'䷒', name:'临', desc:'临，元亨利贞。象征以上临下，敦厚而明智。', wx:'地泽临', yy:'二阳四阴' },
+        { id:'䷡', name:'大壮', desc:'大壮，利贞。象征刚健而盛。', wx:'雷天大壮', yy:'四阳二阴' },
+        { id:'䷶', name:'丰', desc:'丰，亨，王假之。象征丰盛盈满。', wx:'雷火丰', yy:'三阳三阴' },
+        { id:'䷊', name:'泰', desc:'泰，小往大来，吉亨。天地交而万物通。', wx:'地天泰', yy:'三阳三阴' },
+        { id:'䷋', name:'否', desc:'否，不利君子贞。天地不交而万物不通。', wx:'天地否', yy:'三阳三阴' },
+        { id:'䷌', name:'同人', desc:'同人于野，亨。象征志同道合。', wx:'天火同人', yy:'五阳一阴' },
+        { id:'䷍', name:'大有', desc:'大有，元亨。象征丰收盈满。', wx:'火天大有', yy:'五阳一阴' },
+    ]
+};
+
+// ========== 反向查询缓存 ==========
+const NUM_WUXING = {}; // number -> wuxing
+const NUM_BAGUA = {};  // number -> bagua
+const NUM_YINYANG = {}; // number -> yin/yang
+
+(function buildCache() {
+    for (const [wx, nums] of Object.entries(ICHING_DB.wuxingMap)) {
+        nums.forEach(n => NUM_WUXING[n] = wx);
+    }
+    for (const [bg, nums] of Object.entries(ICHING_DB.baguaMap)) {
+        nums.forEach(n => NUM_BAGUA[n] = bg);
+    }
+    for (const [yy, nums] of Object.entries(ICHING_DB.yinyangMap)) {
+        nums.forEach(n => NUM_YINYANG[n] = yy);
+    }
+})();
+
+// ========== 易经分析器（JS版） ==========
+const IChingAnalyzer = {
+    getWuxing(n) { return NUM_WUXING[n] || null; },
+    getBagua(n) { return NUM_BAGUA[n] || null; },
+    getYinYang(n) { return NUM_YINYANG[n] || null; },
+
+    analyzeWuxing(nums) {
+        const count = { "木":0, "火":0, "土":0, "金":0, "水":0 };
+        const details = [];
+        nums.forEach(n => {
+            const wx = this.getWuxing(n);
+            if (wx) { count[wx]++; details.push({ num:n, wuxing:wx }); }
+        });
+        const total = nums.length || 1;
+        const avg = total / 5;
+        const variance = Object.values(count).reduce((s,v) => s + Math.pow(v - avg, 2), 0) / 5;
+        const maxStd = Math.sqrt(Math.pow(total, 2) / 5) || 1;
+        const balance = Math.max(0, Math.min(1, 1 - Math.sqrt(variance) / maxStd));
+        const dominant = Object.entries(count).sort((a,b) => b[1] - a[1])[0][0];
+        return { count, details, balance, dominant, desc: ICHING_DB.wuxingDesc[dominant] };
+    },
+
+    analyzeYinYang(nums) {
+        let yang = 0, yin = 0;
+        const details = [];
+        nums.forEach(n => {
+            const yy = this.getYinYang(n);
+            if (yy === '阳') yang++; else yin++;
+            details.push({ num:n, yinyang:yy });
+        });
+        const total = nums.length || 1;
+        const yangRatio = yang / total;
+        const yinRatio = yin / total;
+        const balance = 1 - Math.abs(yangRatio - 0.5) * 2;
+        return { yang, yin, yangRatio, yinRatio, balance, details };
+    },
+
+    analyzeBagua(nums) {
+        const baguaList = ["乾","兑","离","震","巽","坎","艮","坤"];
+        const count = {};
+        baguaList.forEach(b => count[b] = 0);
+        const details = [];
+        nums.forEach(n => {
+            const bg = this.getBagua(n);
+            if (bg) { count[bg]++; details.push({ num:n, bagua:bg }); }
+        });
+        const dominant = Object.entries(count).sort((a,b) => b[1] - a[1])[0];
+        return { count, details, dominant: dominant ? dominant[0] : null, dominantCount: dominant ? dominant[1] : 0 };
+    },
+
+    generateHexagram(frontNums, backNums) {
+        // 上卦：前区5号中最多的八卦属性
+        const upperStats = {};
+        frontNums.forEach(n => {
+            const bg = this.getBagua(n);
+            if (bg) upperStats[bg] = (upperStats[bg] || 0) + 1;
+        });
+        const upper = Object.entries(upperStats).sort((a,b) => b[1] - a[1])[0];
+        const upperName = upper ? upper[0] : '乾';
+
+        // 下卦：后区2号
+        const lowerStats = {};
+        (backNums || []).forEach(n => {
+            const bg = this.getBagua(n);
+            if (bg) lowerStats[bg] = (lowerStats[bg] || 0) + 1;
+        });
+        const lower = Object.entries(lowerStats).sort((a,b) => b[1] - a[1])[0];
+        const lowerName = lower ? lower[0] : '坤';
+
+        // 匹配卦象
+        const sum = frontNums.reduce((s,n) => s + n, 0) + (backNums || []).reduce((s,n) => s + n, 0);
+        const hex = ICHING_DB.hexagrams[sum % ICHING_DB.hexagrams.length];
+
+        return {
+            upper: upperName, upperDesc: ICHING_DB.baguaDesc[upperName],
+            lower: lowerName, lowerDesc: ICHING_DB.baguaDesc[lowerName],
+            hexagram: hex, fullName: upperName + lowerName
+        };
+    },
+
+    comprehensiveAnalysis(frontNums, backNums) {
+        const allNums = [...frontNums, ...(backNums || [])];
+        const wx = this.analyzeWuxing(allNums);
+        const yy = this.analyzeYinYang(allNums);
+        const bg = this.analyzeBagua(allNums);
+        const hex = this.generateHexagram(frontNums, backNums);
+
+        // 生成建议
+        const advice = [];
+        if (wx.balance < 0.7) advice.push('五行分布不够平衡（平衡度' + wx.balance.toFixed(2) + '），建议调整号码使五行更均衡');
+        if (wx.dominant) advice.push('主导五行「' + wx.dominant + '」：' + wx.desc.advice);
+        if (yy.balance < 0.6) advice.push('阴阳比例失衡（平衡度' + yy.balance.toFixed(2) + '），建议调整阴阳号码比例');
+        if (yy.yangRatio > 0.6) advice.push('阳数偏多（' + (yy.yangRatio*100).toFixed(0) + '%），可适当增加阴数号码');
+        else if (yy.yangRatio < 0.4) advice.push('阴数偏多（' + (yy.yinRatio*100).toFixed(0) + '%），可适当增加阳数号码');
+        if (bg.dominant) advice.push('主导八卦「' + bg.dominant + '」：' + ICHING_DB.baguaDesc[bg.dominant].advice);
+
+        return { wuxing: wx, yinyang: yy, bagua: bg, hexagram: hex, advice };
+    }
+};
+
+// ========== 历史数据（从大乐透历史数据.json嵌入） ==========
+let DRAWS = [];
+
+// 加载内嵌历史数据
+function loadEmbeddedData() {
+    // 优先使用外部真实数据，回退到内嵌示例数据
+    DRAWS = (typeof REAL_DRAWS !== 'undefined' && REAL_DRAWS.length > 0) ? REAL_DRAWS : EMBEDDED_DRAWS;
+}
+
+// 内嵌示例数据（最近50期）
+const EMBEDDED_DRAWS = [
+    {id:"25143",date:"2025-12-15",front:[3,4,18,24,29],back:[7,12]},
+    {id:"25142",date:"2025-12-13",front:[9,10,14,27,29],back:[2,9]},
+    {id:"25141",date:"2025-12-10",front:[4,9,24,28,29],back:[2,10]},
+    {id:"25140",date:"2025-12-08",front:[2,5,11,22,28],back:[4,5]},
+    {id:"25139",date:"2025-12-06",front:[5,8,9,18,23],back:[5,8]},
+    {id:"25138",date:"2025-12-03",front:[1,9,17,27,32],back:[3,10]},
+    {id:"25137",date:"2025-12-01",front:[7,10,22,24,27],back:[6,11]},
+    {id:"25136",date:"2025-11-29",front:[3,8,15,20,30],back:[2,8]},
+    {id:"25135",date:"2025-11-26",front:[6,14,18,23,35],back:[1,12]},
+    {id:"25134",date:"2025-11-24",front:[2,7,12,19,31],back:[4,9]},
+    {id:"25133",date:"2025-11-22",front:[1,15,22,25,33],back:[3,7]},
+    {id:"25132",date:"2025-11-19",front:[4,11,16,28,34],back:[5,10]},
+    {id:"25131",date:"2025-11-17",front:[8,13,21,27,30],back:[2,6]},
+    {id:"25130",date:"2025-11-15",front:[5,10,17,24,35],back:[1,8]},
+    {id:"25129",date:"2025-11-12",front:[3,9,14,20,26],back:[4,11]},
+    {id:"25128",date:"2025-11-10",front:[7,16,23,29,32],back:[3,9]},
+    {id:"25127",date:"2025-11-08",front:[1,6,15,22,34],back:[2,7]},
+    {id:"25126",date:"2025-11-05",front:[4,12,18,25,33],back:[5,12]},
+    {id:"25125",date:"2025-11-03",front:[2,8,19,27,31],back:[1,6]},
+    {id:"25124",date:"2025-11-01",front:[5,11,17,24,30],back:[3,10]},
+    {id:"25123",date:"2025-10-29",front:[3,7,14,21,35],back:[4,8]},
+    {id:"25122",date:"2025-10-27",front:[6,13,20,28,34],back:[2,9]},
+    {id:"25121",date:"2025-10-25",front:[1,9,16,23,32],back:[5,11]},
+    {id:"25120",date:"2025-10-22",front:[4,10,15,26,33],back:[1,7]},
+    {id:"25119",date:"2025-10-20",front:[2,8,17,25,29],back:[3,6]},
+    {id:"25118",date:"2025-10-18",front:[5,12,19,24,31],back:[4,10]},
+    {id:"25117",date:"2025-10-15",front:[7,11,18,27,35],back:[2,8]},
+    {id:"25116",date:"2025-10-13",front:[3,6,14,22,30],back:[5,9]},
+    {id:"25115",date:"2025-10-11",front:[1,8,15,23,34],back:[1,12]},
+    {id:"25114",date:"2025-10-08",front:[4,9,16,28,33],back:[3,7]},
+    {id:"25113",date:"2025-10-06",front:[2,7,13,21,32],back:[4,11]},
+    {id:"25112",date:"2025-10-04",front:[5,10,17,26,35],back:[2,6]},
+    {id:"25111",date:"2025-10-01",front:[3,8,14,24,31],back:[5,10]},
+    {id:"25110",date:"2025-09-29",front:[6,11,19,27,34],back:[1,8]},
+    {id:"25109",date:"2025-09-27",front:[1,7,15,22,30],back:[3,9]},
+    {id:"25108",date:"2025-09-24",front:[4,12,18,25,33],back:[2,7]},
+    {id:"25107",date:"2025-09-22",front:[2,9,16,23,35],back:[4,12]},
+    {id:"25106",date:"2025-09-20",front:[5,8,13,20,32],back:[1,6]},
+    {id:"25105",date:"2025-09-17",front:[3,10,17,24,31],back:[5,11]},
+    {id:"25104",date:"2025-09-15",front:[6,11,14,27,34],back:[2,8]},
+    {id:"25103",date:"2025-09-13",front:[1,7,19,26,33],back:[3,10]},
+    {id:"25102",date:"2025-09-10",front:[4,8,15,22,30],back:[4,9]},
+    {id:"25101",date:"2025-09-08",front:[2,5,12,21,35],back:[1,7]},
+    {id:"25100",date:"2025-09-06",front:[3,9,16,24,32],back:[5,12]},
+    {id:"25099",date:"2025-09-03",front:[7,13,18,27,34],back:[2,6]},
+    {id:"25098",date:"2025-09-01",front:[1,6,14,23,31],back:[3,11]},
+    {id:"25097",date:"2025-08-30",front:[4,10,17,25,33],back:[4,8]},
+    {id:"25096",date:"2025-08-27",front:[2,8,15,20,30],back:[1,9]},
+    {id:"25095",date:"2025-08-25",front:[5,11,19,28,35],back:[5,10]},
+    {id:"25094",date:"2025-08-23",front:[3,7,13,22,34],back:[2,7]},
+];
+
+// ========== 全局状态 ==========
+let currentStrategy = 'balanced';
+let pickHistory = JSON.parse(localStorage.getItem('dltPickHistory') || '[]');
+let favorites = JSON.parse(localStorage.getItem('dltFavorites') || '[]');
+let currentPick = null;
+let chartInstances = {};
+
+// ========== 工具函数 ==========
+function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function pad2(n) { return String(n).padStart(2, '0'); }
+function getBallHTML(num, type, size) {
+    const cls = type === 'front' ? 'ball-front' : 'ball-back';
+    const sz = size === 'lg' ? ' ball-lg' : size === 'sm' ? ' ball-sm' : '';
+    return '<span class="ball ' + cls + sz + '">' + pad2(num) + '</span>';
+}
+function getBallsHTML(arr, type, size) { return arr.map(n => getBallHTML(n, type, size)).join(''); }
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function calcFrequency(area, maxNum) {
+    const counts = new Array(maxNum + 1).fill(0);
+    DRAWS.forEach(d => {
+        const nums = area === 'front' ? d.front : d.back;
+        nums.forEach(n => counts[n]++);
+    });
+    return counts.slice(1);
+}
+
+function calcMissing(area, maxNum) {
+    // 计算每个号码当前遗漏期数
+    const missing = new Array(maxNum + 1).fill(DRAWS.length);
+    for (let i = 0; i < DRAWS.length; i++) {
+        const nums = area === 'front' ? DRAWS[i].front : DRAWS[i].back;
+        nums.forEach(n => { if (missing[n] === DRAWS.length) missing[n] = i; });
+    }
+    return missing.slice(1);
+}
+
+function getHotCold(freq) {
+    const sorted = [...freq].sort((a,b) => a-b);
+    const tHot = sorted[Math.floor(sorted.length * 0.7)] || 4;
+    const tCold = sorted[Math.floor(sorted.length * 0.3)] || 2;
+    return freq.map((v,i) => ({
+        num: i+1, status: v >= tHot ? 'hot' : v <= tCold ? 'cold' : 'warm'
+    }));
+}
+
+function getEChartsTheme() {
+    return {
+        textStyle: { color: '#B8AD9A', fontFamily: '-apple-system, BlinkMacSystemFont, PingFang SC, sans-serif' },
+        title: { textStyle: { color: '#D4A574' } },
+        legend: { textStyle: { color: '#B8AD9A' } },
+        tooltip: {
+            backgroundColor: '#1A1A2E', borderColor: 'rgba(212,165,116,0.3)',
+            textStyle: { color: '#F0E6D3' }
+        }
+    };
+}
+
+function disposeChart(key) {
+    if (chartInstances[key]) { chartInstances[key].dispose(); delete chartInstances[key]; }
+}
+
+// ========== 导航 ==========
+function navigateTo(section) {
+    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+    const link = document.querySelector('nav a[data-section="' + section + '"]');
+    if (link) link.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('section-' + section);
+    if (target) target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (section === 'analysis') initAnalysis();
+    if (section === 'iching') initIChingPage();
+    if (section === 'data') initDataTable();
+    if (section === 'fav') renderFavorites();
+}
+
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) { e.preventDefault(); navigateTo(this.dataset.section); });
+});
+
+// ========== 选号策略 ==========
+function selectStrategy(el) {
+    document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    currentStrategy = el.dataset.strategy;
+}
+
+// ========== 选号核心 ==========
+// ========== API选号引擎 ==========
+const DLT_API = 'http://127.0.0.1:3456';
+
+function generatePick() {
+    document.getElementById('pickResult').style.display = 'block';
+    document.getElementById('pickDisplay').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ 正在计算...</div>';
+    document.getElementById('pickIChing').innerHTML = '';
+    document.getElementById('pickBackups').innerHTML = '';
+
+    const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
+    const apiStrategy = strategyMap[currentStrategy] || 'balanced';
+
+    fetch(DLT_API + '/api/recommend?strategy=' + apiStrategy + '&periods=50')
+        .then(r => r.json())
+        .then(res => {
+            const data = res.data;
+            const frontNums = data.主推荐.前区;
+            const backNums = data.主推荐.后区;
+            currentPick = { front: frontNums, back: backNums, strategy: apiStrategy, engineData: data };
+            renderPickResult(frontNums, backNums, data);
+            renderBackups(data.备选推荐);
+        })
+        .catch(err => {
+            console.warn('API调用失败，使用本地引擎:', err);
+            localGeneratePick();
+        });
+}
+
+function localGeneratePick() {
+    const frontFreq = calcFrequency('front', 35);
+    const backFreq = calcFrequency('back', 12);
+    let frontNums, backNums;
+    if (currentStrategy === 'iching') {
+        frontNums = ichingPick(5, 35, frontFreq);
+        backNums = ichingPick(2, 12, backFreq);
+    } else if (currentStrategy === 'hot') {
+        frontNums = weightedPick(frontFreq, 5, 'hot');
+        backNums = weightedPick(backFreq, 2, 'hot');
+    } else if (currentStrategy === 'cold') {
+        frontNums = weightedPick(frontFreq, 5, 'cold');
+        backNums = weightedPick(backFreq, 2, 'cold');
+    } else {
+        frontNums = weightedPick(frontFreq, 5, 'balanced');
+        backNums = weightedPick(backFreq, 2, 'balanced');
+    }
+    frontNums.sort((a,b) => a - b);
+    backNums.sort((a,b) => a - b);
+    currentPick = { front: frontNums, back: backNums, strategy: currentStrategy };
+    renderPickResult(frontNums, backNums, null);
+}
+
+function weightedPick(freq, count, mode) {
+    const weights = freq.map((f, i) => {
+        if (mode === 'hot') return f + 2;
+        if (mode === 'cold') return Math.max(1, freq.length - f);
+        return f + 1;
+    });
+    return sampleByWeight(weights, count);
+}
+
+function ichingPick(count, maxNum, freq) {
+    const selected = [];
+    const wuxingCount = { "木":0, "火":0, "土":0, "金":0, "水":0 };
+    const baguaSet = new Set();
+    const used = new Set();
+
+    for (let i = 0; i < count; i++) {
+        const candidates = [];
+        for (let n = 1; n <= maxNum; n++) {
+            if (used.has(n)) continue;
+            const wx = IChingAnalyzer.getWuxing(n);
+            const bg = IChingAnalyzer.getBagua(n);
+            // 评分：五行越少越优先 + 八卦越新越优先 + 频率权重
+            let score = (5 - wuxingCount[wx]) * 3 + (baguaSet.has(bg) ? 0 : 2) + freq[n-1] * 0.5 + Math.random() * 2;
+            candidates.push({ num: n, score });
+        }
+        candidates.sort((a,b) => b.score - a.score);
+        const pick = candidates[0].num;
+        selected.push(pick);
+        used.add(pick);
+        const wx = IChingAnalyzer.getWuxing(pick);
+        if (wx) wuxingCount[wx]++;
+        const bg = IChingAnalyzer.getBagua(pick);
+        if (bg) baguaSet.add(bg);
+    }
+    return selected.sort((a,b) => a - b);
+}
+
+function sampleByWeight(weights, count) {
+    const selected = [];
+    const used = new Set();
+    for (let i = 0; i < count; i++) {
+        const candidates = Array.from({length: weights.length}, (_, i) => i).filter(p => !used.has(p));
+        const total = candidates.reduce((s,c) => s + weights[c], 0);
+        let r = Math.random() * total;
+        for (const c of candidates) {
+            r -= weights[c];
+            if (r <= 0) { selected.push(c + 1); used.add(c); break; }
+        }
+    }
+    return selected;
+}
+
+function renderPickResult(frontNums, backNums) {
+    const analysis = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums);
+    const hex = analysis.hexagram.hexagram;
+    const frontSum = frontNums.reduce((s,n) => s + n, 0);
+    const backSum = backNums.reduce((s,n) => s + n, 0);
+
+    // 主号码展示
+    const display = document.getElementById('pickDisplay');
+    display.innerHTML =
+        '<div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;">🎲 ' + new Date().toLocaleString('zh-CN') + ' · ' + getStrategyName(currentStrategy) + '</div>' +
+        '<div style="margin:16px 0;text-align:center;">' +
+        '<strong style="color:var(--jin-se);font-size:0.95rem;">前区</strong><br>' +
+        frontNums.map(n => getBallHTML(n, 'front', 'lg')).join(' ') +
+        '<div style="margin:10px 0;color:var(--jin-se-dim);font-size:1.2rem;">+</div>' +
+        '<strong style="color:var(--jin-se);font-size:0.95rem;">后区</strong><br>' +
+        backNums.map(n => getBallHTML(n, 'back', 'lg')).join(' ') +
+        '</div>' +
+        '<div class="pick-meta">' +
+        '<span>前区和值：' + frontSum + '</span>' +
+        '<span>后区和值：' + backSum + '</span>' +
+        '<span>跨度：' + (frontNums[4] - frontNums[0]) + '</span>' +
+        '<span>奇偶比：' + frontNums.filter(n => n%2===1).length + ':' + frontNums.filter(n => n%2===0).length + '</span>' +
+        '</div>';
+
+    // 卦象 & 易经信息
+    const ic = document.getElementById('pickIChing');
+    ic.innerHTML =
+        '<div class="hexagram-display" style="margin-bottom:0;">' +
+        '<div class="hexagram-lines">' + hex.id + '</div>' +
+        '<div class="hexagram-name">' + hex.name + '卦 · ' + hex.wx + '</div>' +
+        '<div class="hexagram-desc">' + hex.desc + '</div>' +
+        '</div>' +
+        '<div class="analysis-row" style="margin-top:14px;">' +
+        '<div class="analysis-tag"><strong>上卦：</strong>' + analysis.hexagram.upper + '（' + analysis.hexagram.upperDesc.direction + '方·' + analysis.hexagram.upperDesc.wuxing + '）</div>' +
+        '<div class="analysis-tag"><strong>下卦：</strong>' + analysis.hexagram.lower + '（' + analysis.hexagram.lowerDesc.direction + '方·' + analysis.hexagram.lowerDesc.wuxing + '）</div>' +
+        '</div>' +
+        '<div class="analysis-row">' +
+        '<div class="analysis-tag"><strong>主导五行：</strong>' + analysis.wuxing.dominant + '（平衡度' + analysis.wuxing.balance.toFixed(2) + '）</div>' +
+        '<div class="analysis-tag"><strong>阴阳：</strong>阳' + analysis.yinyang.yang + ' 阴' + analysis.yinyang.yin + '（平衡度' + analysis.yinyang.balance.toFixed(2) + '）</div>' +
+        '<div class="analysis-tag"><strong>主导八卦：</strong>' + (analysis.bagua.dominant || '无') + '</div>' +
+        '</div>';
+
+    document.getElementById('pickResult').style.display = 'block';
+
+    // 保存历史
+    const record = {
+        id: Date.now(), date: new Date().toLocaleDateString('zh-CN'),
+        front: frontNums, back: backNums, strategy: currentStrategy,
+        hexagram: hex.name, hexagramId: hex.id
+    };
+    pickHistory.unshift(record);
+    if (pickHistory.length > 50) pickHistory.pop();
+    try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
+    renderPickHistory();
+}
+
+function getStrategyName(s) {
+    return { balanced:'均衡策略', hot:'热号策略', cold:'冷号策略', iching:'易理策略' }[s] || s;
+}
+
+function generateMultiPicks(n) {
+    pickHistory = pickHistory.filter(r => !r._multi);
+    for (let i = 0; i < n; i++) {
+        const frontFreq = calcFrequency('front', 35);
+        const backFreq = calcFrequency('back', 12);
+        let frontNums, backNums;
+        if (currentStrategy === 'iching') { frontNums = ichingPick(5, 35, frontFreq); backNums = ichingPick(2, 12, backFreq); }
+        else { frontNums = weightedPick(frontFreq, 5, currentStrategy); backNums = weightedPick(backFreq, 2, currentStrategy); }
+        frontNums.sort((a,b) => a-b); backNums.sort((a,b) => a-b);
+
+        const hex = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums).hexagram.hexagram;
+        pickHistory.unshift({
+            id: Date.now() + i, date: new Date().toLocaleDateString('zh-CN'),
+            front: frontNums, back: backNums, strategy: currentStrategy,
+            hexagram: hex.name, hexagramId: hex.id, _multi: true
+        });
+    }
+    if (pickHistory.length > 50) pickHistory = pickHistory.slice(0, 50);
+    try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
+    renderPickHistory();
+    showToast('已生成 ' + n + ' 注号码');
+}
+
+function renderPickHistory() {
+    const c = document.getElementById('historyList');
+    if (!c) return;
+    if (pickHistory.length === 0) {
+        c.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>暂无选号记录</p></div>';
+        return;
+    }
+    c.innerHTML = pickHistory.slice(0, 30).map(r =>
+        '<div class="pick-history-item">' +
+        '<span class="date">' + r.date + '</span>' +
+        '<span>' + getBallsHTML(r.front, 'front', 'sm') + ' <span style="color:var(--jin-se-dim);margin:0 4px;">+</span> ' + getBallsHTML(r.back, 'back', 'sm') + '</span>' +
+        '<span class="method">☯ ' + (r.hexagram || '') + ' · ' + getStrategyName(r.strategy || 'balanced') + '</span>' +
+        '<button class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:0.75rem;" onclick="addFavFromHistory(' + r.id + ')">⭐</button>' +
+        '</div>'
+    ).join('');
+}
+
+function saveCurrentPick() {
+    if (!currentPick) return;
+    const f = currentPick.front, b = currentPick.back;
+    addFavorite(f, b, getStrategyName(currentPick.strategy));
+    showToast('⭐ 已收藏');
+}
+
+// ========== 易经分析页 ==========
+function initIChingPage() {}
+
+function analyzeInput() {
+    const frontNums = [], backNums = [];
+    for (let i = 1; i <= 5; i++) {
+        const v = parseInt(document.getElementById('icFront' + i).value);
+        if (v >= 1 && v <= 35 && !frontNums.includes(v)) frontNums.push(v);
+    }
+    for (let i = 1; i <= 2; i++) {
+        const v = parseInt(document.getElementById('icBack' + i).value);
+        if (v >= 1 && v <= 12 && !backNums.includes(v)) backNums.push(v);
+    }
+    if (frontNums.length < 5 || backNums.length < 2) {
+        showToast('请输入完整的前区5个和后区2个号码');
+        return;
+    }
+    frontNums.sort((a,b) => a-b);
+    backNums.sort((a,b) => a-b);
+    renderIChingAnalysis(frontNums, backNums);
+}
+
+function randomAndAnalyze() {
+    const frontNums = [], backNums = [];
+    while (frontNums.length < 5) { const n = randomInt(1,35); if (!frontNums.includes(n)) frontNums.push(n); }
+    while (backNums.length < 2) { const n = randomInt(1,12); if (!backNums.includes(n)) backNums.push(n); }
+    frontNums.sort((a,b) => a-b); backNums.sort((a,b) => a-b);
+    // 填入输入框
+    for (let i = 0; i < 5; i++) document.getElementById('icFront' + (i+1)).value = frontNums[i];
+    for (let i = 0; i < 2; i++) document.getElementById('icBack' + (i+1)).value = backNums[i];
+    renderIChingAnalysis(frontNums, backNums);
+}
+
+function renderIChingAnalysis(frontNums, backNums) {
+    const allNums = [...frontNums, ...backNums];
+    const result = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums);
+    document.getElementById('ichingResult').style.display = 'block';
+
+    // 卦象
+    const hex = result.hexagram;
+    const hexData = hex.hexagram;
+    document.getElementById('hexagramCard').innerHTML =
+        '<div class="hexagram-display">' +
+        '<div class="hexagram-lines">' + hexData.id + '</div>' +
+        '<div class="hexagram-name">' + hexData.name + '卦 · ' + hexData.wx + '</div>' +
+        '<div class="hexagram-desc">' + hexData.desc + '</div>' +
+        '</div>' +
+        '<div class="analysis-row">' +
+        '<div class="analysis-tag"><strong>上卦：</strong>' + hex.upper + ' ☰ ' + hex.upperDesc.direction + '方 · ' + hex.upperDesc.wuxing + '</div>' +
+        '<div class="analysis-tag"><strong>下卦：</strong>' + hex.lower + ' ☷ ' + hex.lowerDesc.direction + '方 · ' + hex.lowerDesc.wuxing + '</div>' +
+        '</div>' +
+        '<div style="text-align:center;margin-top:10px;">' +
+        '<span style="font-size:0.85rem;color:var(--text-secondary);">号码：</span>' +
+        getBallsHTML(frontNums, 'front') + ' <span style="color:var(--jin-se-dim);margin:0 6px;">+</span> ' + getBallsHTML(backNums, 'back') +
+        '</div>';
+
+    // 五行
+    renderWuxing(result.wuxing);
+    // 阴阳
+    renderYinYang(result.yinyang);
+    // 八卦
+    renderBagua(result.bagua, allNums);
+    // 建议
+    renderAdvice(result.advice);
+}
+
+function renderWuxing(wx) {
+    const total = Object.values(wx.count).reduce((s,v) => s+v, 0) || 1;
+    // 五行条
+    const bar = document.getElementById('wuxingBar');
+    bar.innerHTML = ICHING_DB.wuxingCycle.map(w => {
+        const pct = (wx.count[w] / total * 100);
+        return '<div style="width:' + Math.max(pct, 2) + '%;background:' + ICHING_DB.wuxingColors[w] + ';">' + (pct > 8 ? w + wx.count[w] : '') + '</div>';
+    }).join('');
+
+    // 详情
+    const detail = document.getElementById('wuxingDetail');
+    detail.innerHTML = ICHING_DB.wuxingCycle.map(w => {
+        const d = ICHING_DB.wuxingDesc[w];
+        const isDom = w === wx.dominant;
+        return '<div style="display:flex;align-items:center;gap:8px;margin:6px 0;padding:8px;border-radius:6px;' +
+            (isDom ? 'background:rgba(212,165,116,0.08);border:1px solid var(--border-color);' : '') + '">' +
+            '<span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:' + ICHING_DB.wuxingColors[w] + ';"></span>' +
+            '<strong style="color:' + ICHING_DB.wuxingColors[w] + ';">' + w + '</strong>' +
+            '<span style="color:var(--text-secondary);">' + wx.count[w] + '个</span>' +
+            '<span style="font-size:0.78rem;color:var(--text-muted);">' + d.generate + ' · ' + d.restrain + '</span>' +
+            '</div>';
+    }).join('') +
+    '<div style="margin-top:8px;font-size:0.85rem;color:var(--jin-se);">五行平衡度：' + wx.balance.toFixed(2) + (wx.balance >= 0.7 ? ' ✅ 良好' : wx.balance >= 0.5 ? ' ⚠️ 一般' : ' ❌ 失衡') + '</div>';
+
+    // ECharts 雷达图
+    disposeChart('wuxing');
+    const el = document.getElementById('wuxingChart');
+    const chart = echarts.init(el);
+    chartInstances['wuxing'] = chart;
+    chart.setOption({
+        radar: {
+            indicator: ICHING_DB.wuxingCycle.map(w => ({ name: w, max: Math.max(...Object.values(wx.count), 1) })),
+            axisName: { color: ICHING_DB.wuxingCycle.map(w => ICHING_DB.wuxingColors[w]) },
+            splitArea: { areaStyle: { color: ['rgba(212,165,116,0.02)', 'rgba(212,165,116,0.04)'] } },
+            axisLine: { lineStyle: { color: 'rgba(212,165,116,0.15)' } },
+            splitLine: { lineStyle: { color: 'rgba(212,165,116,0.1)' } }
+        },
+        series: [{
+            type: 'radar',
+            data: [{
+                value: ICHING_DB.wuxingCycle.map(w => wx.count[w]),
+                name: '五行分布',
+                areaStyle: { color: 'rgba(212,165,116,0.15)' },
+                lineStyle: { color: '#D4A574' },
+                itemStyle: { color: '#D4A574' }
+            }]
+        }],
+        tooltip: { backgroundColor: '#1A1A2E', borderColor: 'rgba(212,165,116,0.3)', textStyle: { color: '#F0E6D3' } }
+    });
+}
+
+function renderYinYang(yy) {
+    // 视觉
+    const visual = document.getElementById('yinyangVisual');
+    visual.innerHTML =
+        '<div class="yy-circle yy-yang">阳<br>' + yy.yang + '</div>' +
+        '<div class="yy-bar"><div class="yy-bar-inner" style="width:' + (yy.yangRatio * 100) + '%;background:linear-gradient(90deg,#FF6B6B,#C41E3A);"></div></div>' +
+        '<div style="color:var(--text-muted);font-size:0.85rem;">' + (yy.yangRatio*100).toFixed(0) + '% : ' + (yy.yinRatio*100).toFixed(0) + '%</div>' +
+        '<div class="yy-bar"><div class="yy-bar-inner" style="width:' + (yy.yinRatio * 100) + '%;background:linear-gradient(90deg,#4A90D9,#1A5A8A);"></div></div>' +
+        '<div class="yy-circle yy-yin">阴<br>' + yy.yin + '</div>';
+
+    const detail = document.getElementById('yinyangDetail');
+    detail.innerHTML =
+        '<div style="font-size:0.85rem;color:var(--jin-se);margin-bottom:6px;">阴阳平衡度：' + yy.balance.toFixed(2) + (yy.balance >= 0.6 ? ' ✅ 平衡' : yy.balance >= 0.4 ? ' ⚠️ 偏斜' : ' ❌ 失衡') + '</div>' +
+        '<div style="font-size:0.82rem;color:var(--text-muted);">理想范围：阳数比例40%-60%</div>' +
+        '<div style="font-size:0.82rem;color:var(--text-muted);">最佳平衡：阳数比例50%-55%</div>';
+
+    // ECharts 饼图
+    disposeChart('yinyang');
+    const el = document.getElementById('yinyangChart');
+    const chart = echarts.init(el);
+    chartInstances['yinyang'] = chart;
+    chart.setOption({
+        series: [{
+            type: 'pie', radius: ['40%', '70%'],
+            data: [
+                { value: yy.yang, name: '阳（奇数）', itemStyle: { color: '#C41E3A' } },
+                { value: yy.yin, name: '阴（偶数）', itemStyle: { color: '#4A90D9' } }
+            ],
+            label: { color: '#B8AD9A', formatter: '{b}: {c}个 ({d}%)' },
+            emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.5)' } }
+        }],
+        tooltip: { backgroundColor: '#1A1A2E', borderColor: 'rgba(212,165,116,0.3)', textStyle: { color: '#F0E6D3' } }
+    });
+}
+
+function renderBagua(bg, allNums) {
+    const grid = document.getElementById('baguaGridAnalysis');
+    const baguaList = ["乾","兑","离","震","巽","坎","艮","坤"];
+    grid.innerHTML = baguaList.map(b => {
+        const d = ICHING_DB.baguaDesc[b];
+        const cnt = bg.count[b] || 0;
+        return '<div class="bagua-item' + (b === bg.dominant ? ' highlighted' : '') + '">' +
+            '<span class="bagua-symbol">' + d.symbol_char + '</span>' +
+            '<div class="bagua-name">' + b + '</div>' +
+            '<div class="bagua-meaning">' + d.direction + ' · ' + d.wuxing + '</div>' +
+            '<div class="bagua-count">' + cnt + '个号码</div></div>';
+    }).join('');
+
+    // ECharts 八卦雷达
+    disposeChart('bagua');
+    const el = document.getElementById('baguaChart');
+    const chart = echarts.init(el);
+    chartInstances['bagua'] = chart;
+    chart.setOption({
+        radar: {
+            indicator: baguaList.map(b => ({ name: b + '(' + ICHING_DB.baguaDesc[b].symbol_char + ')', max: Math.max(...Object.values(bg.count), 1) })),
+            axisName: { color: '#D4A574', fontSize: 11 },
+            splitArea: { areaStyle: { color: ['rgba(212,165,116,0.02)', 'rgba(212,165,116,0.04)'] } },
+            axisLine: { lineStyle: { color: 'rgba(212,165,116,0.15)' } },
+            splitLine: { lineStyle: { color: 'rgba(212,165,116,0.1)' } },
+            shape: 'circle'
+        },
+        series: [{
+            type: 'radar',
+            data: [{
+                value: baguaList.map(b => bg.count[b]),
+                name: '八卦分布',
+                areaStyle: { color: 'rgba(196,30,58,0.15)' },
+                lineStyle: { color: '#C41E3A' },
+                itemStyle: { color: '#C41E3A' }
+            }]
+        }],
+        tooltip: { backgroundColor: '#1A1A2E', borderColor: 'rgba(212,165,116,0.3)', textStyle: { color: '#F0E6D3' } }
+    });
+}
+
+function renderAdvice(advice) {
+    const el = document.getElementById('ichingAdvice');
+    el.innerHTML =
+        '<div class="card-title">💡 综合建议</div>' +
+        (advice.length > 0 ?
+            advice.map((a, i) => '<div style="display:flex;gap:8px;align-items:flex-start;margin:8px 0;">' +
+                '<span style="color:var(--zhu-hong);font-weight:600;min-width:24px;">' + (i+1) + '.</span>' +
+                '<span style="color:var(--text-secondary);font-size:0.88rem;">' + a + '</span></div>').join('') :
+            '<div style="color:var(--text-muted);font-size:0.88rem;">✅ 当前号码易经属性良好，无特别调整建议</div>');
+}
+
+// ========== 数据分析页 ==========
+let analysisInitialized = false;
+
+function initAnalysis() {
+    if (analysisInitialized) return;
+    analysisInitialized = true;
+    renderAnalysisStats();
+    renderFreqCharts();
+}
+
+function switchAnalysisTab(el) {
+    document.querySelectorAll('#analysisTabs .tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    const target = el.dataset.tab;
+    document.querySelectorAll('#section-analysis .tab-content').forEach(c => c.style.display = 'none');
+    document.querySelector('.tab-content[data-tab="' + target + '"]').style.display = 'block';
+    if (target === 'heatmap') renderHeatmap();
+    if (target === 'missing') renderMissingChart();
+    // 重新调整图表尺寸
+    setTimeout(() => Object.values(chartInstances).forEach(c => c.resize()), 100);
+}
+
+function renderAnalysisStats() {
+    const frontFreq = calcFrequency('front', 35);
+    const backFreq = calcFrequency('back', 12);
+    const hotFront = frontFreq.filter(f => f >= frontFreq.sort((a,b) => b-a)[Math.floor(35*0.3)]).length;
+    document.getElementById('analysisStats').innerHTML =
+        '<div class="stat-item"><div class="stat-value">' + DRAWS.length + '</div><div class="stat-label">统计期数</div></div>' +
+        '<div class="stat-item"><div class="stat-value" style="color:#FF6B6B;">' + frontFreq.filter(f => f >= 5).length + '</div><div class="stat-label">🔥 前区热号</div></div>' +
+        '<div class="stat-item"><div class="stat-value" style="color:#6BB5FF;">' + frontFreq.filter(f => f <= 2).length + '</div><div class="stat-label">❄️ 前区冷号</div></div>' +
+        '<div class="stat-item"><div class="stat-value">' + Math.max(...frontFreq) + '</div><div class="stat-label">最高频率</div></div>';
+}
+
+function renderFreqCharts() {
+    const frontFreq = calcFrequency('front', 35);
+    const backFreq = calcFrequency('back', 12);
+
+    // 前区
+    disposeChart('frontFreq');
+    const fEl = document.getElementById('frontFreqChart');
+    const fChart = echarts.init(fEl);
+    chartInstances['frontFreq'] = fChart;
+    fChart.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: '#1A1A2E', borderColor: 'rgba(212,165,116,0.3)', textStyle: { color: '#F0E6D3' } },
+        grid: { left: 40, right: 16, top: 20, bottom: 30 },
+        xAxis: { type: 'category', data: Array.from({length:35},(_,i)=>pad2(i+1)), axisLabel: { color: '#7A7262', fontSize: 10 }, axisLine: { lineStyle: { color: 'rgba(212,165,116,0.15)' } } },
+        yAxis: { type: 'value', axisLabel: { color: '#7A7262' }, splitLine: { lineStyle: { color: 'rgba(212,165,116,0.06)' } } },
+        series: [{
+            type: 'bar', data: frontFreq.map(v => ({
+                value: v,
+                itemStyle: { color: v >= 5 ? '#C41E3A' : v >= 3 ? '#D4A574' : '#4A90D9', borderRadius: [4,4,0,0] }
+            })),
+            barWidth: '60%'
+        }]
+    });
+
+    // 后区
+    disposeChart('backFreq');
+    const bEl = document.getElementById('backFreqChart');
+    const bChart = echarts.init(bEl);
+    chartInstances['backFreq'] = bChart;
+    bChart.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: '#1A1A2E', borderColor: 'rgba(212,165,116,0.3)', textStyle: { color: '#F0E6D3' } },
+        grid: { left: 40, right: 16, top: 20, bottom: 30 },
+        xAxis: { type: 'category', data: Array.from({length:12},(_,i)=>pad2(i+1)), axisLabel: { color: '#7A7262' }, axisLine: { lineStyle: { color: 'rgba(212,165,116,0.15)' } } },
+        yAxis: { type: 'value', axisLabel: { color: '#7A7262' }, splitLine: { lineStyle: { color: 'rgba(212,165,116,0.06)' } } },
+        series: [{
+            type: 'bar', data: backFreq.map(v => ({
+                value: v,
+                itemStyle: { color: v >= 5 ? '#C41E3A' : v >= 3 ? '#D4A574' : '#4A90D9', borderRadius: [4,4,0,0] }
+            })),
+            barWidth: '50%'
+        }]
+    });
+}
+
+function renderHeatmap() {
+    const frontFreq = calcFrequency('front', 35);
+    const backFreq = calcFrequency('back', 12);
+    const frontHC = getHotCold(frontFreq);
+    const backHC = getHotCold(backFreq);
+
+    document.getElementById('heatMatrix').innerHTML = frontHC.map(d =>
+        '<div class="num-cell ' + d.status + '" title="出现' + frontFreq[d.num-1] + '次">' + pad2(d.num) + '</div>'
+    ).join('');
+    document.getElementById('heatMatrixBack').innerHTML = backHC.map(d =>
+        '<div class="num-cell ' + d.status + '" title="出现' + backFreq[d.num-1] + '次">' + pad2(d.num) + '</div>'
+    ).join('');
+
+    const hotC = frontHC.filter(d => d.status === 'hot').length;
+    const coldC = frontHC.filter(d => d.status === 'cold').length;
+    const warmC = frontHC.filter(d => d.status === 'warm').length;
+    document.getElementById('heatStats').innerHTML =
+        '<div class="stat-item"><div class="stat-value" style="color:#FF6B6B;">' + hotC + '</div><div class="stat-label">🔥 热号</div></div>' +
+        '<div class="stat-item"><div class="stat-value" style="color:var(--jin-se);">' + warmC + '</div><div class="stat-label">⭐ 温号</div></div>' +
+        '<div class="stat-item"><div class="stat-value" style="color:#6BB5FF;">' + coldC + '</div><div class="stat-label">❄️ 冷号</div></div>';
+}
+
+function renderMissingChart() {
+    const missing = calcMissing('front', 35);
+    disposeChart('missing');
+    const el = document.getElementById('missingChart');
+    const chart = echarts.init(el);
+    chartInstances['missing'] = chart;
+    chart.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: '#1A1A2E', borderColor: 'rgba(212,165,116,0.3)', textStyle: { color: '#F0E6D3' }, formatter: function(p) { return '号码' + p[0].name + '：遗漏' + p[0].value + '期'; } },
+        grid: { left: 40, right: 16, top: 20, bottom: 30 },
+        xAxis: { type: 'category', data: Array.from({length:35},(_,i)=>pad2(i+1)), axisLabel: { color: '#7A7262', fontSize: 10 }, axisLine: { lineStyle: { color: 'rgba(212,165,116,0.15)' } } },
+        yAxis: { type: 'value', axisLabel: { color: '#7A7262' }, splitLine: { lineStyle: { color: 'rgba(212,165,116,0.06)' } }, name: '遗漏期数', nameTextStyle: { color: '#7A7262' } },
+        series: [{
+            type: 'bar', data: missing.map(v => ({
+                value: v,
+                itemStyle: { color: v >= 10 ? '#FF6B6B' : v >= 5 ? '#FF9800' : '#4CAF50', borderRadius: [4,4,0,0] }
+            })),
+            barWidth: '60%'
+        }]
+    });
+}
+
+// ========== 历史数据表 ==========
+let dataTableInitialized = false;
+
+function initDataTable() {
+    if (dataTableInitialized) return;
+    dataTableInitialized = true;
+    const tbody = document.getElementById('dataTableBody');
+    const frontFreq = calcFrequency('front', 35);
+    const backFreq = calcFrequency('back', 12);
+
+    DRAWS.forEach(d => {
+        const tr = document.createElement('tr');
+        tr.innerHTML =
+            '<td><strong style="color:var(--jin-se);">' + d.id + '</strong></td>' +
+            '<td style="color:var(--text-muted);">' + d.date + '</td>' +
+            '<td>' + getBallsHTML(d.front, 'front', 'sm') + '</td>' +
+            '<td>' + getBallsHTML(d.back, 'back', 'sm') + '</td>' +
+            '<td style="font-size:0.75rem;">' + d.front.map(n => IChingAnalyzer.getWuxing(n)).join(' ') + '</td>' +
+            '<td style="font-size:0.75rem;">' + d.back.map(n => IChingAnalyzer.getWuxing(n) || '').join(' ') + '</td>';
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('dataStats').innerHTML =
+        '<div class="stat-item"><div class="stat-value">' + DRAWS.length + '</div><div class="stat-label">展示期数</div></div>' +
+        '<div class="stat-item"><div class="stat-value" style="color:#FF6B6B;">' + frontFreq.filter(f => f >= 5).length + '</div><div class="stat-label">🔥 前区热号</div></div>' +
+        '<div class="stat-item"><div class="stat-value" style="color:#6BB5FF;">' + frontFreq.filter(f => f <= 2).length + '</div><div class="stat-label">❄️ 前区冷号</div></div>' +
+        '<div class="stat-item"><div class="stat-value">' + new Set(DRAWS.flatMap(d => d.front)).size + '</div><div class="stat-label">前区号码种类</div></div>';
+}
+
+// ========== 收藏功能 ==========
+function addFavorite(front, back, note) {
+    const fav = {
+        id: Date.now(),
+        date: new Date().toLocaleDateString('zh-CN'),
+        front, back, note: note || ''
+    };
+    favorites.unshift(fav);
+    if (favorites.length > 30) favorites.pop();
+    try { localStorage.setItem('dltFavorites', JSON.stringify(favorites)); } catch(e) {}
+    renderFavorites();
+}
+
+function addFavManual() {
+    const frontStr = document.getElementById('favFront').value.trim();
+    const backStr = document.getElementById('favBack').value.trim();
+    const note = document.getElementById('favNote').value.trim();
+    const front = frontStr.split(/[,，\s]+/).map(Number).filter(n => n >= 1 && n <= 35);
+    const back = backStr.split(/[,，\s]+/).map(Number).filter(n => n >= 1 && n <= 12);
+    if (front.length !== 5 || new Set(front).size !== 5) { showToast('前区需5个不重复号码（1-35）'); return; }
+    if (back.length !== 2 || new Set(back).size !== 2) { showToast('后区需2个不重复号码（1-12）'); return; }
+    front.sort((a,b) => a-b); back.sort((a,b) => a-b);
+    addFavorite(front, back, note);
+    document.getElementById('favFront').value = '';
+    document.getElementById('favBack').value = '';
+    document.getElementById('favNote').value = '';
+    showToast('⭐ 已添加收藏');
+}
+
+function addFavFromHistory(id) {
+    const record = pickHistory.find(r => r.id === id);
+    if (!record) return;
+    addFavorite(record.front, record.back, record.hexagram ? '☯ ' + record.hexagram : '');
+    showToast('⭐ 已收藏');
+}
+
+function removeFavorite(id) {
+    favorites = favorites.filter(f => f.id !== id);
+    try { localStorage.setItem('dltFavorites', JSON.stringify(favorites)); } catch(e) {}
+    renderFavorites();
+}
+
+function renderFavorites() {
+    const c = document.getElementById('favList');
+    document.getElementById('favCount').textContent = '(' + favorites.length + '/30)';
+
+    if (favorites.length === 0) {
+        c.innerHTML = '<div class="empty-state"><div class="icon">⭐</div><p>暂无收藏号码</p><p style="font-size:0.78rem;margin-top:6px;">选号后点击收藏，或手动输入添加</p></div>';
+        document.getElementById('compareSection').style.display = 'none';
+        return;
+    }
+
+    c.innerHTML = favorites.map(f => {
+        const analysis = IChingAnalyzer.comprehensiveAnalysis(f.front, f.back);
+        return '<div class="fav-item">' +
+            '<div class="fav-info">' +
+            '<span style="font-size:0.78rem;color:var(--text-muted);">' + f.date + '</span>' +
+            getBallsHTML(f.front, 'front', 'sm') + ' <span style="color:var(--jin-se-dim);margin:0 4px;">+</span> ' + getBallsHTML(f.back, 'back', 'sm') +
+            '<span style="font-size:0.75rem;color:var(--jin-se);">☯ ' + analysis.hexagram.hexagram.name + '</span>' +
+            '</div>' +
+            (f.note ? '<div class="fav-note">' + f.note + '</div>' : '') +
+            '<div class="fav-actions">' +
+            '<button class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:0.75rem;" onclick="analyzeFav(' + f.id + ')">🔍 分析</button>' +
+            '<button class="btn btn-danger btn-sm" style="padding:4px 10px;font-size:0.75rem;" onclick="removeFavorite(' + f.id + ')">✕</button>' +
+            '</div></div>';
+    }).join('');
+
+    // 对比面板
+    if (favorites.length >= 2) {
+        document.getElementById('compareSection').style.display = 'block';
+        renderCompare();
+    } else {
+        document.getElementById('compareSection').style.display = 'none';
+    }
+}
+
+function analyzeFav(id) {
+    const fav = favorites.find(f => f.id === id);
+    if (!fav) return;
+    // 跳转到易经分析页并填入号码
+    navigateTo('iching');
+    setTimeout(() => {
+        for (let i = 0; i < 5; i++) document.getElementById('icFront' + (i+1)).value = fav.front[i];
+        for (let i = 0; i < 2; i++) document.getElementById('icBack' + (i+1)).value = fav.back[i];
+        analyzeInput();
+    }, 100);
+}
+
+function renderCompare() {
+    const panel = document.getElementById('comparePanel');
+    const favs = favorites.slice(0, 4); // 最多对比4组
+    panel.innerHTML = favs.map((f, idx) => {
+        const a = IChingAnalyzer.comprehensiveAnalysis(f.front, f.back);
+        return '<div class="compare-card">' +
+            '<h4>第' + (idx+1) + '组</h4>' +
+            '<div style="margin:8px 0;">' + getBallsHTML(f.front, 'front', 'sm') + ' + ' + getBallsHTML(f.back, 'back', 'sm') + '</div>' +
+            '<div style="font-size:0.82rem;color:var(--text-secondary);">☯ ' + a.hexagram.hexagram.name + '卦 · ' + a.hexagram.hexagram.wx + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--text-muted);margin-top:6px;">五行平衡：' + a.wuxing.balance.toFixed(2) + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--text-muted);">阴阳平衡：' + a.yinyang.balance.toFixed(2) + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--text-muted);">主导五行：' + a.wuxing.dominant + ' · 主导八卦：' + (a.bagua.dominant || '无') + '</div>' +
+            '</div>';
+    }).join('');
+
+    // 差异分析
+    if (favs.length >= 2) {
+        const analyses = favs.map(f => IChingAnalyzer.comprehensiveAnalysis(f.front, f.back));
+        let diffHtml = '<div class="compare-diff"><h4>🔄 差异对比</h4>';
+        // 找出平衡度最高的一组
+        const bestWx = analyses.reduce((best, a, i) => a.wuxing.balance > analyses[best].wuxing.balance ? i : best, 0);
+        const bestYy = analyses.reduce((best, a, i) => a.yinyang.balance > analyses[best].yinyang.balance ? i : best, 0);
+        diffHtml += '<div style="font-size:0.85rem;color:var(--text-secondary);margin:8px 0;">🏆 五行最平衡：第' + (bestWx+1) + '组（' + analyses[bestWx].wuxing.balance.toFixed(2) + '）</div>';
+        diffHtml += '<div style="font-size:0.85rem;color:var(--text-secondary);margin:8px 0;">⚖️ 阴阳最平衡：第' + (bestYy+1) + '组（' + analyses[bestYy].yinyang.balance.toFixed(2) + '）</div>';
+
+        // 共同号码
+        const commonFront = favs[0].front.filter(n => favs.slice(1).every(f => f.front.includes(n)));
+        const commonBack = favs[0].back.filter(n => favs.slice(1).every(f => f.back.includes(n)));
+        if (commonFront.length > 0 || commonBack.length > 0) {
+            diffHtml += '<div style="font-size:0.85rem;color:var(--jin-se);margin:8px 0;">共同号码：' + commonFront.concat(commonBack).map(n => pad2(n)).join(', ') + '</div>';
+        } else {
+            diffHtml += '<div style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">无共同号码</div>';
+        }
+        diffHtml += '</div>';
+        panel.innerHTML += '<div class="compare-card" style="grid-column: 1 / -1;">' + diffHtml + '</div>';
+    }
+}
+
+// ========== 窗口resize ==========
+window.addEventListener('resize', () => {
+    Object.values(chartInstances).forEach(c => { try { c.resize(); } catch(e) {} });
+});
+
+// ========== 初始化 ==========
+document.addEventListener('DOMContentLoaded', function() {
+    loadEmbeddedData();
+    renderPickHistory();
+});
+</script>
+
+</body>
+</html>
