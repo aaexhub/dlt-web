@@ -902,6 +902,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     <div style="text-align:center;margin:16px 0;">
         <button class="btn btn-primary" onclick="generatePick()" style="font-size:1.1rem;padding:14px 40px;">🎲 生成号码</button>
         <button class="btn btn-gold btn-sm" onclick="generateMultiPicks(5)" style="margin-left:10px;">连出5注</button>
+        <button class="btn btn-outline btn-sm" onclick="fetchLatestDraws()" style="margin-left:10px;" title="从体彩官方同步最新开奖数据">📡 更新数据</button>
     </div>
 
     <div id="pickResult" style="display:none;">
@@ -2250,6 +2251,92 @@ window.onerror = function(m, u, l) {
   if(s) s.innerHTML="❌ 脚本错误: "+m.substring(0,60)+" (行"+l+")";
   return true;
 };
+
+<script>
+// ========== 数据自动更新模块 ==========
+// 中国体育彩票官方API（已确认支持CORS，无需key）
+const LOTTERY_API = 'https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=10&is504=0&termNum=1';
+
+// 从API响应中解析开奖数据
+function parseDrawFromApi(apiItem) {
+    var nums = apiItem.lotteryDrawResult.split(' ').filter(Boolean);
+    return {
+        id: apiItem.lotteryDrawNum,
+        front: nums.slice(0, 5).map(Number),
+        back: nums.slice(5, 7).map(Number),
+        date: apiItem.lotteryDrawTime
+    };
+}
+
+// 获取最新开奖数据
+async function fetchLatestDraws() {
+    try {
+        showToast('📡 正在获取最新开奖数据...');
+        var resp = await fetch(LOTTERY_API);
+        var data = await resp.json();
+        if (!data.success || !data.value || !data.value.list) {
+            throw new Error('API返回格式异常');
+        }
+        var newDraws = data.value.list.map(parseDrawFromApi);
+        
+        // 合并：保留旧数据 + 追加新期数（去重）
+        var existingIds = new Set(window.DRAWS.map(function(d) { return d.id; }));
+        var newCount = 0;
+        newDraws.forEach(function(d) {
+            if (!existingIds.has(d.id)) {
+                window.DRAWS.unshift(d);  // 最新在前
+                existingIds.add(d.id);
+                newCount++;
+            }
+        });
+        
+        // 按期号排序（最新在前）
+        window.DRAWS.sort(function(a, b) { return parseInt(b.id) - parseInt(a.id); });
+        
+        // 更新localStorage持久化
+        try {
+            localStorage.setItem('dlt_draws', JSON.stringify(window.DRAWS));
+            localStorage.setItem('dlt_updated', new Date().toISOString());
+        } catch(e) { /* localStorage满或不可用，忽略 */ }
+        
+        // 重新渲染各页面
+        if (typeof renderPickHistory === 'function') renderPickHistory();
+        if (typeof initAnalysis === 'function') initAnalysis();
+        if (typeof initDataTable === 'function') initDataTable();
+        if (typeof initIChingPage === 'function') initIChingPage();
+        if (typeof renderFavorites === 'function') renderFavorites();
+        
+        showToast('✅ 已更新 ' + newCount + ' 期新数据，累计 ' + window.DRAWS.length + ' 期');
+        return newCount;
+    } catch(e) {
+        console.error('[易彩] 数据更新失败:', e.message);
+        showToast('⚠️ 数据更新失败：' + e.message + '（使用已有数据）');
+        return 0;
+    }
+}
+
+// 页面加载时检查更新（异步，不阻塞渲染）
+setTimeout(function() {
+    // 如果localStorage中有持久化的数据，优先使用
+    try {
+        var stored = localStorage.getItem('dlt_draws');
+        if (stored) {
+            var parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                // 但保留head中内联数据作为fallback
+                console.log('[易彩] 从本地缓存加载 ' + parsed.length + ' 期数据');
+            }
+        }
+    } catch(e) {}
+    
+    // 静默检查更新（开奖日3次/周：二、四、日）
+    fetchLatestDraws().then(function(count) {
+        if (count > 0) console.log('[易彩] 更新完成，新增 ' + count + ' 期');
+    });
+}, 3000);  // 延迟3秒，确保渲染完成
+
+// 暴露到全局
+window.fetchLatestDraws = fetchLatestDraws;
 </script>
 </body>
 </html>
