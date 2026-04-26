@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>易彩 · 大乐透智能选号系统</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
     <script src="draws_data.js"></script>
     <script src="dlt-engine.js"></script>
     <style>
@@ -318,6 +318,11 @@
     </style>
 </head>
 <body>
+<div id="_dlt_status" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;
+    text-align:center;padding:6px;font-size:0.7rem;color:var(--text-muted);
+    background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);transition:all 0.4s;">
+    ⏳ 加载中... | 140期历史数据 | 天启算法引擎
+</div>
 
 <header>
     <div class="header-inner">
@@ -1701,6 +1706,32 @@ document.addEventListener('DOMContentLoaded', function() {
     loadEmbeddedData();
     renderPickHistory();
 });
+</script>
+
+
+<script>
+// ========== 移动端安全启动 ==========
+(function() {
+    // 显示加载完成标记
+    try {
+        const status = document.getElementById('_dlt_status');
+        if (status) {
+            status.textContent = '✓ 已就绪 | 140期数据 | 天启算法';
+            status.style.background = 'rgba(76,175,80,0.15)';
+        }
+    } catch(e) {}
+    // 确认核心函数已挂载
+    if (typeof generatePick !== 'function') {
+        console.error('[易彩] 核心函数未加载，请检查网络');
+        try {
+            const status = document.getElementById('_dlt_status');
+            if (status) status.textContent = '❌ 加载失败，请刷新页面或检查网络';
+        } catch(e) {}
+    } else {
+        console.log('[易彩] ✅ 核心函数已就绪:', 
+            typeof generatePick, typeof 推荐引擎, typeof 天启选号);
+    }
+})();
 </script>
 
 </body>
