@@ -971,7 +971,7 @@ function generatePick() {
     const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
     const apiStrategy = strategyMap[currentStrategy] || 'balanced';
 
-    if (typeof 推荐引擎 !== 'undefined' && DRAWS.length >= 50) {
+    if (typeof 推荐引擎 !== 'undefined' && typeof DRAWS !== 'undefined' && DRAWS && DRAWS.length >= 50) {
         // 使用天启算法引擎
         const result = 推荐引擎.主推荐(apiStrategy, DRAWS);
         const frontNums = result.主推荐.前区;
@@ -1156,7 +1156,7 @@ function renderBackups(backups) {
 function generateMultiPicks(n) {
     pickHistory = pickHistory.filter(r => !r._multi);
     
-    if (typeof 天启选号 !== 'undefined' && DRAWS.length >= 50) {
+    if (typeof 天启选号 !== 'undefined' && typeof DRAWS !== 'undefined' && DRAWS && DRAWS.length >= 50) {
         // 天启引擎版
         const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
         const apiStrategy = strategyMap[currentStrategy] || 'balanced';
