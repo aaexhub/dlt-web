@@ -1407,6 +1407,8 @@ function navigateTo(section) {
     document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
     const link = document.querySelector('nav a[data-section="' + section + '"]');
     if (link) link.classList.add('active');
+    const sectionEl = document.getElementById('section-' + section);
+    if (!link || !sectionEl) { console.warn('[易彩] 无效页面:', section); return; }
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     const target = document.getElementById('section-' + section);
     if (target) target.classList.add('active');
@@ -1432,6 +1434,7 @@ function selectStrategy(el) {
 // ========== 选号核心 ==========
 // ========== 天启算法引擎选号 ==========
 function generatePick() {
+    if (!document.getElementById('pickResult')) { console.warn('[易彩] 页面元素未就绪'); return; }
     document.getElementById('pickResult').style.display = 'block';
     document.getElementById('pickDisplay').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ 算法计算中...</div>';
     document.getElementById('pickIChing').innerHTML = '';
@@ -1921,7 +1924,8 @@ function switchAnalysisTab(el) {
     el.classList.add('active');
     const target = el.dataset.tab;
     document.querySelectorAll('#section-analysis .tab-content').forEach(c => c.style.display = 'none');
-    document.querySelector('.tab-content[data-tab="' + target + '"]').style.display = 'block';
+    var tabContent = document.querySelector('.tab-content[data-tab="' + target + '"]');
+    if (tabContent) tabContent.style.display = 'block';
     if (target === 'heatmap') renderHeatmap();
     if (target === 'missing') renderMissingChart();
     // 重新调整图表尺寸
