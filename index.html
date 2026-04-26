@@ -971,16 +971,26 @@ function generatePick() {
     const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
     const apiStrategy = strategyMap[currentStrategy] || 'balanced';
 
-    if (typeof 推荐引擎 !== 'undefined' && typeof DRAWS !== 'undefined' && DRAWS && DRAWS.length >= 50) {
-        // 使用天启算法引擎
-        const result = 推荐引擎.主推荐(apiStrategy, DRAWS);
-        const frontNums = result.主推荐.前区;
-        const backNums = result.主推荐.后区;
-        currentPick = { front: frontNums, back: backNums, strategy: apiStrategy, engineData: result };
-        renderPickResult(frontNums, backNums, result);
-        renderBackups(result.备选推荐);
-    } else {
-        // fallback到原有简单算法
+    try {
+        if (typeof 推荐引擎 !== 'undefined' && typeof DRAWS !== 'undefined' && DRAWS && DRAWS.length >= 50) {
+            // 使用天启算法引擎
+            const result = 推荐引擎.主推荐(apiStrategy, DRAWS);
+            if (result && result.主推荐 && result.主推荐.前区 && result.主推荐.后区) {
+                const frontNums = result.主推荐.前区;
+                const backNums = result.主推荐.后区;
+                currentPick = { front: frontNums, back: backNums, strategy: apiStrategy, engineData: result };
+                renderPickResult(frontNums, backNums, result);
+                if (result.备选推荐) renderBackups(result.备选推荐);
+            } else {
+                throw new Error('推荐引擎返回格式异常');
+            }
+        } else {
+            // fallback到原有简单算法
+            localGeneratePick();
+        }
+    } catch(e) {
+        console.error('[易彩] 天启算法出错:', e.message);
+        showToast('⚠️ 推荐引擎异常，切换为经典算法');
         localGeneratePick();
     }
 }
@@ -1156,37 +1166,41 @@ function renderBackups(backups) {
 function generateMultiPicks(n) {
     pickHistory = pickHistory.filter(r => !r._multi);
     
-    if (typeof 天启选号 !== 'undefined' && typeof DRAWS !== 'undefined' && DRAWS && DRAWS.length >= 50) {
-        // 天启引擎版
-        const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
-        const apiStrategy = strategyMap[currentStrategy] || 'balanced';
-        const results = 天启选号(strategyMap[currentStrategy] || 'balanced', n);
-        results.forEach(r => {
-            pickHistory.unshift({
-                id: Date.now() + pickHistory.filter(x=>x._multi).length,
-                date: new Date().toLocaleDateString('zh-CN'),
-                front: r.front, back: r.back,
-                strategy: currentStrategy,
-                hexagram: r.yijingText || '卦',
-                hexagramId: r.yijingId || '☰', _multi: true
+    try {
+        if (typeof 天启选号 !== 'undefined' && typeof DRAWS !== 'undefined' && DRAWS && DRAWS.length >= 50) {
+            // 天启引擎版
+            const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
+            const apiStrategy = strategyMap[currentStrategy] || 'balanced';
+            const results = 天启选号(strategyMap[currentStrategy] || 'balanced', n);
+            results.forEach(r => {
+                pickHistory.unshift({
+                    id: Date.now() + pickHistory.filter(x=>x._multi).length,
+                    date: new Date().toLocaleDateString('zh-CN'),
+                    front: r.front, back: r.back,
+                    strategy: currentStrategy,
+                    hexagram: r.yijingText || '卦',
+                    hexagramId: r.yijingId || '☰', _multi: true
+                });
             });
-        });
-    } else {
-        for (let i = 0; i < n; i++) {
-            const frontFreq = calcFrequency('front', 35);
-            const backFreq = calcFrequency('back', 12);
-            let frontNums, backNums;
-            if (currentStrategy === 'iching') { frontNums = ichingPick(5, 35, frontFreq); backNums = ichingPick(2, 12, backFreq); }
-            else { frontNums = weightedPick(frontFreq, 5, currentStrategy); backNums = weightedPick(backFreq, 2, currentStrategy); }
-            frontNums.sort((a,b) => a-b); backNums.sort((a,b) => a-b);
-            const hex = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums).hexagram.hexagram;
-            pickHistory.unshift({
-                id: Date.now() + i, date: new Date().toLocaleDateString('zh-CN'),
-                front: frontNums, back: backNums, strategy: currentStrategy,
-                hexagram: hex.name, hexagramId: hex.id, _multi: true
-            });
+        } else {
+            for (let i = 0; i < n; i++) {
+                const frontFreq = calcFrequency('front', 35);
+                const backFreq = calcFrequency('back', 12);
+                let frontNums, backNums;
+                if (currentStrategy === 'iching') { frontNums = ichingPick(5, 35, frontFreq); backNums = ichingPick(2, 12, backFreq); }
+                else { frontNums = weightedPick(frontFreq, 5, currentStrategy); backNums = weightedPick(backFreq, 2, currentStrategy); }
+                frontNums.sort((a,b) => a-b); backNums.sort((a,b) => a-b);
+                const hex = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums).hexagram.hexagram;
+                pickHistory.unshift({
+                    id: Date.now() + i, date: new Date().toLocaleDateString('zh-CN'),
+                    front: frontNums, back: backNums, strategy: currentStrategy,
+                    hexagram: hex.name, hexagramId: hex.id, _multi: true
+                });
+            }
         }
-    }
+    } catch(e) {
+        console.error('[易彩] 多注生成出错:', e.message);
+        showToast('⚠️ 尝试备选方案');
     
     if (pickHistory.length > 50) pickHistory = pickHistory.slice(0, 50);
     try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
@@ -1700,6 +1714,18 @@ function renderCompare() {
 window.addEventListener('resize', () => {
     Object.values(chartInstances).forEach(c => { try { c.resize(); } catch(e) {} });
 });
+
+// ========== 初始化 ==========
+// ========== 全局错误捕获（移动端调试辅助） ==========
+window.onerror = function(msg, url, line, col, err) {
+    console.error('[易彩全局错误]', msg, line);
+    const el = document.createElement('div');
+    el.style.cssText = 'position:fixed;bottom:50px;left:10px;right:10px;z-index:8888;background:rgba(196,30,58,0.9);color:#fff;padding:10px 14px;border-radius:8px;font-size:0.75rem;word-break:break-all;';
+    el.textContent = '⚠️ ' + String(msg).slice(0, 100);
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+    return true;
+};
 
 // ========== 初始化 ==========
 document.addEventListener('DOMContentLoaded', function() {
