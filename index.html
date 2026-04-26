@@ -907,6 +907,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     <div id="pickResult" style="display:none;">
         <div class="card" id="pickDisplay"></div>
         <div class="card" id="pickIChing"></div>
+        <div class="card" id="pickBackups" style="display:none;"></div>
         <div style="text-align:center;margin:10px 0;">
             <button class="btn btn-outline btn-sm" onclick="saveCurrentPick()">⭐ 收藏此注</button>
         </div>
@@ -1434,18 +1435,21 @@ function selectStrategy(el) {
 // ========== 选号核心 ==========
 // ========== 天启算法引擎选号 ==========
 function generatePick() {
-    if (!document.getElementById('pickResult')) { console.warn('[易彩] 页面元素未就绪'); return; }
-    document.getElementById('pickResult').style.display = 'block';
-    document.getElementById('pickDisplay').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ 算法计算中...</div>';
-    document.getElementById('pickIChing').innerHTML = '';
-    document.getElementById('pickBackups').innerHTML = '';
+    var el_pickResult = document.getElementById('pickResult');
+    if (!el_pickResult) { console.warn('[易彩] pickResult不存在'); return; }
+    el_pickResult.style.display = 'block';
+    var el_display = document.getElementById('pickDisplay');
+    if (el_display) el_display.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ 算法计算中...</div>';
+    var el_iching = document.getElementById('pickIChing');
+    if (el_iching) el_iching.innerHTML = '';
+    var el_backups = document.getElementById('pickBackups');
+    if (el_backups) el_backups.innerHTML = '';
 
     const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
     const apiStrategy = strategyMap[currentStrategy] || 'balanced';
 
     try {
         if (typeof 推荐引擎 !== 'undefined' && typeof DRAWS !== 'undefined' && DRAWS && DRAWS.length >= 50) {
-            // 使用天启算法引擎
             const result = 推荐引擎.主推荐(apiStrategy, DRAWS);
             if (result && result.主推荐 && result.主推荐.前区 && result.主推荐.后区) {
                 const frontNums = result.主推荐.前区;
@@ -1457,7 +1461,6 @@ function generatePick() {
                 throw new Error('推荐引擎返回格式异常');
             }
         } else {
-            // fallback到原有简单算法
             localGeneratePick();
         }
     } catch(e) {
