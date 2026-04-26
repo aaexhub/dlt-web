@@ -6,8 +6,477 @@
     <title>易彩 · 大乐透智能选号系统</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
-    
-    
+    <script defer>
+// 大乐透历史开奖数据（自动生成，含140期真实数据）
+// 数据来源：500.com 天启算法引擎
+// 共 140 期
+window.DRAWS = [
+  {"id":"26044","front":[4, 8, 22, 26, 29],"back":[7, 10],"date":"2026-04-25"},
+  {"id":"26043","front":[8, 12, 14, 19, 22],"back":[11, 12],"date":"2026-04-22"},
+  {"id":"26042","front":[2, 7, 13, 19, 24],"back":[3, 8],"date":"2026-04-20"},
+  {"id":"26041","front":[24, 25, 27, 29, 34],"back":[2, 6],"date":"2026-04-18"},
+  {"id":"26040","front":[6, 12, 13, 21, 34],"back":[8, 9],"date":"2026-04-15"},
+  {"id":"26039","front":[9, 11, 20, 26, 27],"back":[6, 9],"date":"2026-04-13"},
+  {"id":"26038","front":[8, 17, 21, 33, 35],"back":[6, 7],"date":"2026-04-11"},
+  {"id":"26037","front":[7, 12, 13, 28, 32],"back":[6, 8],"date":"2026-04-08"},
+  {"id":"26036","front":[4, 7, 16, 26, 32],"back":[5, 8],"date":"2026-04-06"},
+  {"id":"26035","front":[2, 22, 30, 33, 34],"back":[8, 12],"date":"2026-04-04"},
+  {"id":"26034","front":[11, 12, 25, 26, 27],"back":[8, 11],"date":"2026-04-01"},
+  {"id":"26033","front":[3, 5, 7, 9, 18],"back":[2, 10],"date":"2026-03-30"},
+  {"id":"26032","front":[3, 4, 19, 26, 32],"back":[1, 12],"date":"2026-03-28"},
+  {"id":"26031","front":[6, 8, 22, 29, 34],"back":[5, 7],"date":"2026-03-25"},
+  {"id":"26030","front":[2, 13, 22, 28, 34],"back":[5, 12],"date":"2026-03-23"},
+  {"id":"26029","front":[3, 5, 17, 33, 35],"back":[5, 7],"date":"2026-03-21"},
+  {"id":"26028","front":[15, 27, 29, 30, 34],"back":[1, 10],"date":"2026-03-18"},
+  {"id":"26027","front":[9, 10, 11, 12, 16],"back":[1, 11],"date":"2026-03-16"},
+  {"id":"26026","front":[10, 11, 22, 26, 32],"back":[1, 8],"date":"2026-03-14"},
+  {"id":"26025","front":[3, 15, 24, 28, 29],"back":[3, 7],"date":"2026-03-11"},
+  {"id":"26024","front":[2, 4, 8, 10, 21],"back":[9, 12],"date":"2026-03-09"},
+  {"id":"26023","front":[9, 25, 26, 27, 28],"back":[1, 8],"date":"2026-03-07"},
+  {"id":"26022","front":[5, 9, 10, 18, 26],"back":[5, 6],"date":"2026-03-04"},
+  {"id":"26021","front":[5, 8, 12, 14, 17],"back":[4, 5],"date":"2026-03-02"},
+  {"id":"26020","front":[1, 10, 2, 12, 29],"back":[10, 12],"date":"2026-02-28"},
+  {"id":"26019","front":[12, 13, 14, 16, 31],"back":[4, 12],"date":"2026-02-25"},
+  {"id":"26018","front":[9, 11, 19, 30, 35],"back":[1, 12],"date":"2026-02-11"},
+  {"id":"26017","front":[4, 5, 10, 23, 31],"back":[7, 12],"date":"2026-02-09"},
+  {"id":"26016","front":[8, 9, 12, 19, 24],"back":[1, 6],"date":"2026-02-07"},
+  {"id":"26015","front":[1, 4, 10, 13, 17],"back":[3, 11],"date":"2026-02-04"},
+  {"id":"26014","front":[16, 18, 23, 34, 35],"back":[1, 6],"date":"2026-02-02"},
+  {"id":"26013","front":[3, 5, 6, 23, 26],"back":[1, 4],"date":"2026-01-31"},
+  {"id":"26012","front":[1, 2, 9, 22, 25],"back":[1, 6],"date":"2026-01-28"},
+  {"id":"26011","front":[14, 21, 23, 29, 33],"back":[2, 10],"date":"2026-01-26"},
+  {"id":"26010","front":[2, 3, 13, 18, 26],"back":[2, 9],"date":"2026-01-24"},
+  {"id":"26009","front":[5, 12, 13, 14, 33],"back":[5, 8],"date":"2026-01-21"},
+  {"id":"26008","front":[3, 6, 17, 21, 33],"back":[5, 11],"date":"2026-01-19"},
+  {"id":"26007","front":[1, 3, 13, 20, 26],"back":[3, 10],"date":"2026-01-17"},
+  {"id":"26006","front":[5, 12, 18, 23, 35],"back":[6, 12],"date":"2026-01-14"},
+  {"id":"26005","front":[2, 4, 16, 23, 35],"back":[6, 11],"date":"2026-01-12"},
+  {"id":"26004","front":[5, 18, 23, 25, 32],"back":[5, 9],"date":"2026-01-10"},
+  {"id":"26003","front":[2, 9, 11, 15, 16],"back":[2, 4],"date":"2026-01-07"},
+  {"id":"26002","front":[4, 8, 15, 20, 31],"back":[7, 8],"date":"2026-01-05"},
+  {"id":"26001","front":[7, 9, 23, 27, 32],"back":[2, 8],"date":"2026-01-03"},
+  {"id":"25148","front":[3, 4, 14, 30, 32],"back":[8, 12],"date":"2025-12-27"},
+  {"id":"25147","front":[6, 16, 21, 25, 33],"back":[7, 8],"date":"2025-12-24"},
+  {"id":"25146","front":[6, 11, 13, 16, 22],"back":[2, 3],"date":"2025-12-22"},
+  {"id":"25145","front":[5, 7, 20, 22, 25],"back":[4, 5],"date":"2025-12-20"},
+  {"id":"25144","front":[2, 5, 13, 15, 28],"back":[5, 8],"date":"2025-12-17"},
+  {"id":"25143","front":[3, 4, 18, 24, 29],"back":[7, 12],"date":"2025-12-15"},
+  {"id":"25142","front":[9, 10, 14, 27, 29],"back":[2, 9],"date":"2025-12-13"},
+  {"id":"25141","front":[4, 9, 24, 28, 29],"back":[2, 10],"date":"2025-12-10"},
+  {"id":"25140","front":[4, 5, 13, 18, 34],"back":[2, 8],"date":"2025-12-08"},
+  {"id":"25139","front":[8, 18, 22, 30, 35],"back":[1, 4],"date":"2025-12-06"},
+  {"id":"25138","front":[1, 3, 19, 21, 23],"back":[7, 11],"date":"2025-12-03"},
+  {"id":"25137","front":[7, 8, 9, 11, 22],"back":[5, 11],"date":"2025-12-01"},
+  {"id":"25136","front":[7, 11, 15, 16, 23],"back":[9, 11],"date":"2025-11-29"},
+  {"id":"25135","front":[2, 10, 16, 28, 32],"back":[1, 7],"date":"2025-11-26"},
+  {"id":"25134","front":[7, 12, 18, 27, 33],"back":[9, 10],"date":"2025-11-24"},
+  {"id":"25133","front":[4, 11, 23, 27, 35],"back":[7, 11],"date":"2025-11-22"},
+  {"id":"25132","front":[1, 9, 10, 12, 19],"back":[6, 7],"date":"2025-11-19"},
+  {"id":"25131","front":[3, 8, 25, 29, 32],"back":[9, 12],"date":"2025-11-17"},
+  {"id":"25130","front":[1, 13, 16, 27, 29],"back":[2, 11],"date":"2025-11-15"},
+  {"id":"25129","front":[3, 9, 14, 28, 35],"back":[2, 4],"date":"2025-11-12"},
+  {"id":"25128","front":[3, 6, 26, 30, 33],"back":[11, 12],"date":"2025-11-10"},
+  {"id":"25127","front":[4, 5, 19, 28, 29],"back":[5, 8],"date":"2025-11-08"},
+  {"id":"25126","front":[1, 8, 18, 27, 30],"back":[6, 7],"date":"2025-11-05"},
+  {"id":"25125","front":[10, 11, 13, 19, 35],"back":[4, 11],"date":"2025-11-03"},
+  {"id":"25124","front":[6, 9, 14, 26, 27],"back":[8, 9],"date":"2025-11-01"},
+  {"id":"25123","front":[8, 13, 24, 25, 31],"back":[4, 10],"date":"2025-10-29"},
+  {"id":"25122","front":[2, 3, 6, 16, 17],"back":[4, 5],"date":"2025-10-27"},
+  {"id":"25121","front":[2, 3, 8, 13, 21],"back":[7, 12],"date":"2025-10-25"},
+  {"id":"25120","front":[11, 13, 22, 26, 35],"back":[2, 8],"date":"2025-10-22"},
+  {"id":"25119","front":[8, 15, 27, 29, 31],"back":[1, 7],"date":"2025-10-20"},
+  {"id":"25118","front":[2, 8, 9, 12, 21],"back":[4, 5],"date":"2025-10-18"},
+  {"id":"25117","front":[5, 10, 18, 21, 29],"back":[5, 7],"date":"2025-10-15"},
+  {"id":"25116","front":[2, 6, 16, 22, 29],"back":[8, 12],"date":"2025-10-13"},
+  {"id":"25115","front":[3, 12, 14, 21, 35],"back":[1, 5],"date":"2025-10-11"},
+  {"id":"25114","front":[3, 8, 9, 12, 16],"back":[1, 5],"date":"2025-10-08"},
+  {"id":"25113","front":[1, 14, 18, 28, 35],"back":[2, 3],"date":"2025-10-06"},
+  {"id":"25112","front":[3, 4, 21, 23, 24],"back":[9, 12],"date":"2025-09-29"},
+  {"id":"25111","front":[2, 9, 14, 21, 26],"back":[2, 12],"date":"2025-09-27"},
+  {"id":"25110","front":[1, 15, 22, 30, 31],"back":[2, 8],"date":"2025-09-24"},
+  {"id":"25109","front":[4, 8, 10, 13, 26],"back":[9, 10],"date":"2025-09-22"},
+  {"id":"25108","front":[14, 18, 21, 24, 29],"back":[3, 6],"date":"2025-09-20"},
+  {"id":"25107","front":[5, 7, 8, 15, 33],"back":[6, 10],"date":"2025-09-17"},
+  {"id":"25106","front":[5, 6, 11, 26, 29],"back":[5, 10],"date":"2025-09-15"},
+  {"id":"25105","front":[15, 16, 25, 28, 34],"back":[10, 12],"date":"2025-09-13"},
+  {"id":"25104","front":[2, 6, 9, 22, 34],"back":[2, 8],"date":"2025-09-10"},
+  {"id":"25103","front":[5, 8, 19, 32, 34],"back":[4, 5],"date":"2025-09-08"},
+  {"id":"25102","front":[9, 10, 13, 26, 28],"back":[2, 4],"date":"2025-09-06"},
+  {"id":"25101","front":[5, 7, 19, 26, 32],"back":[8, 9],"date":"2025-09-03"},
+  {"id":"25099","front":[6, 12, 20, 26, 31],"back":[2, 4],"date":"2025-08-30"},
+  {"id":"25098","front":[1, 7, 9, 10, 23],"back":[10, 12],"date":"2025-08-27"},
+  {"id":"25097","front":[5, 24, 25, 32, 34],"back":[1, 9],"date":"2025-08-25"},
+  {"id":"25096","front":[2, 11, 17, 22, 24],"back":[7, 9],"date":"2025-08-23"},
+  {"id":"26044","front":[4, 8, 22, 26, 29],"back":[7, 10],"date":"2026-04-25"},
+  {"id":"26043","front":[8, 12, 14, 19, 22],"back":[11, 12],"date":"2026-04-22"},
+  {"id":"26042","front":[2, 7, 13, 19, 24],"back":[3, 8],"date":"2026-04-20"},
+  {"id":"26041","front":[24, 25, 27, 29, 34],"back":[2, 6],"date":"2026-04-18"},
+  {"id":"26040","front":[6, 12, 13, 21, 34],"back":[8, 9],"date":"2026-04-15"},
+  {"id":"26039","front":[9, 11, 20, 26, 27],"back":[6, 9],"date":"2026-04-13"},
+  {"id":"26038","front":[8, 17, 21, 33, 35],"back":[6, 7],"date":"2026-04-11"},
+  {"id":"26037","front":[7, 12, 13, 28, 32],"back":[6, 8],"date":"2026-04-08"},
+  {"id":"26036","front":[4, 7, 16, 26, 32],"back":[5, 8],"date":"2026-04-06"},
+  {"id":"26035","front":[2, 22, 30, 33, 34],"back":[8, 12],"date":"2026-04-04"},
+  {"id":"26034","front":[11, 12, 25, 26, 27],"back":[8, 11],"date":"2026-04-01"},
+  {"id":"26033","front":[3, 5, 7, 9, 18],"back":[2, 10],"date":"2026-03-30"},
+  {"id":"26032","front":[3, 4, 19, 26, 32],"back":[1, 12],"date":"2026-03-28"},
+  {"id":"26031","front":[6, 8, 22, 29, 34],"back":[5, 7],"date":"2026-03-25"},
+  {"id":"26030","front":[2, 13, 22, 28, 34],"back":[5, 12],"date":"2026-03-23"},
+  {"id":"26029","front":[3, 5, 17, 33, 35],"back":[5, 7],"date":"2026-03-21"},
+  {"id":"26028","front":[15, 27, 29, 30, 34],"back":[1, 10],"date":"2026-03-18"},
+  {"id":"26027","front":[9, 10, 11, 12, 16],"back":[1, 11],"date":"2026-03-16"},
+  {"id":"26026","front":[10, 11, 22, 26, 32],"back":[1, 8],"date":"2026-03-14"},
+  {"id":"26025","front":[3, 15, 24, 28, 29],"back":[3, 7],"date":"2026-03-11"},
+  {"id":"26024","front":[2, 4, 8, 10, 21],"back":[9, 12],"date":"2026-03-09"},
+  {"id":"26023","front":[9, 25, 26, 27, 28],"back":[1, 8],"date":"2026-03-07"},
+  {"id":"26022","front":[5, 9, 10, 18, 26],"back":[5, 6],"date":"2026-03-04"},
+  {"id":"26021","front":[5, 8, 12, 14, 17],"back":[4, 5],"date":"2026-03-02"},
+  {"id":"26020","front":[1, 10, 2, 12, 29],"back":[10, 12],"date":"2026-02-28"},
+  {"id":"26019","front":[12, 13, 14, 16, 31],"back":[4, 12],"date":"2026-02-25"},
+  {"id":"26018","front":[9, 11, 19, 30, 35],"back":[1, 12],"date":"2026-02-11"},
+  {"id":"26017","front":[4, 5, 10, 23, 31],"back":[7, 12],"date":"2026-02-09"},
+  {"id":"26016","front":[8, 9, 12, 19, 24],"back":[1, 6],"date":"2026-02-07"},
+  {"id":"26015","front":[1, 4, 10, 13, 17],"back":[3, 11],"date":"2026-02-04"},
+  {"id":"26014","front":[16, 18, 23, 34, 35],"back":[1, 6],"date":"2026-02-02"},
+  {"id":"26013","front":[3, 5, 6, 23, 26],"back":[1, 4],"date":"2026-01-31"},
+  {"id":"26012","front":[1, 2, 9, 22, 25],"back":[1, 6],"date":"2026-01-28"},
+  {"id":"26011","front":[14, 21, 23, 29, 33],"back":[2, 10],"date":"2026-01-26"},
+  {"id":"26010","front":[2, 3, 13, 18, 26],"back":[2, 9],"date":"2026-01-24"},
+  {"id":"26009","front":[5, 12, 13, 14, 33],"back":[5, 8],"date":"2026-01-21"},
+  {"id":"26008","front":[3, 6, 17, 21, 33],"back":[5, 11],"date":"2026-01-19"},
+  {"id":"26007","front":[1, 3, 13, 20, 26],"back":[3, 10],"date":"2026-01-17"},
+  {"id":"26006","front":[5, 12, 18, 23, 35],"back":[6, 12],"date":"2026-01-14"},
+  {"id":"26005","front":[2, 4, 16, 23, 35],"back":[6, 11],"date":"2026-01-12"},
+  {"id":"26004","front":[5, 18, 23, 25, 32],"back":[5, 9],"date":"2026-01-10"},
+  {"id":"26003","front":[2, 9, 11, 15, 16],"back":[2, 4],"date":"2026-01-07"},
+  {"id":"26002","front":[4, 8, 15, 20, 31],"back":[7, 8],"date":"2026-01-05"},
+  {"id":"26001","front":[7, 9, 23, 27, 32],"back":[2, 8],"date":"2026-01-03"},
+];
+
+// 兼容旧版变量名
+const REAL_DRAWS = DRAWS;
+
+    </script>
+    <script defer>
+/**
+ * 大乐透选号系统 - 前端内嵌算法引擎
+ * 天启算法完整JS移植版，纯前端无后端依赖
+ * 用于GitHub Pages部署
+ */
+
+// ========== 引擎配置 ==========
+(function() {
+
+// ================================
+// 1. 彩经分析引擎
+// ================================
+const 彩经引擎 = {
+    /** 前区频率统计 */
+    前区频率(draws) {
+        const freq = new Array(35).fill(0);
+        draws.forEach(d => d.front.forEach(n => freq[n-1]++));
+        return freq;
+    },
+
+    /** 后区频率统计 */
+    后区频率(draws) {
+        const freq = new Array(12).fill(0);
+        draws.forEach(d => d.back.forEach(n => freq[n-1]++));
+        return freq;
+    },
+
+    /** 遗漏值计算 */
+    遗漏值(draws, maxNum, getNums) {
+        const miss = new Array(maxNum).fill(draws.length);
+        for (let i = 0; i < draws.length; i++) {
+            getNums(draws[i]).forEach(n => {
+                if (miss[n-1] === draws.length) miss[n-1] = i;
+            });
+        }
+        return miss.map((v, i) => v === draws.length ? 0 : draws.length - 1 - v);
+    },
+
+    /** 冷热判断 */
+    冷热判断(freq) {
+        const sorted = [...freq].sort((a,b) => a-b);
+        const tHot = sorted[Math.floor(sorted.length * 0.7)] || 4;
+        const tCold = sorted[Math.floor(sorted.length * 0.3)] || 2;
+        return freq.map((v, i) => ({
+            num: i+1, freq: v,
+            status: v >= tHot ? '热' : v <= tCold ? '冷' : '温'
+        }));
+    },
+
+    /** 奇偶分布 */
+    奇偶分析(draws) {
+        const count = {};
+        draws.forEach(d => {
+            const odds = d.front.filter(n => n % 2 === 1).length;
+            const key = odds + ':' + (5-odds);
+            count[key] = (count[key] || 0) + 1;
+        });
+        return Object.entries(count).sort((a,b) => b[1] - a[1]);
+    },
+
+    /** 和值分析 */
+    和值分析(draws) {
+        const vals = draws.map(d => d.front.reduce((s,n) => s + n, 0));
+        const avg = Math.round(vals.reduce((s,v) => s+v, 0) / vals.length);
+        return { 平均和值: avg, 建议范围: (avg-20) + '-' + (avg+20) };
+    }
+};
+
+// ================================
+// 2. 号码推荐引擎
+// ================================
+const 推荐引擎 = {
+    /** 获取最新开奖号码的五行分析 */
+    分析五行(draws) {
+        if (!draws || draws.length === 0) return null;
+        const latest = draws[draws.length - 1];
+        const allNums = [...latest.front, ...latest.back];
+        const wxCount = { "木": 0, "火": 0, "土": 0, "金": 0, "水": 0 };
+        allNums.forEach(n => {
+            const wx = IChingAnalyzer.getWuxing(n);
+            if (wx) wxCount[wx]++;
+        });
+        const sorted = Object.entries(wxCount).sort((a,b) => a[1] - b[1]);
+        const 最缺五行 = sorted.slice(0, 2).map(x => x[0]);
+
+        // 阴阳分析
+        let yang = 0, yin = 0;
+        allNums.forEach(n => {
+            const yy = IChingAnalyzer.getYinYang(n);
+            if (yy === '阳') yang++;
+            else if (yy === '阴') yin++;
+        });
+        const yangRatio = yang / (yang + yin || 1);
+        const 缺失阴阳 = yangRatio > 0.6 ? '阴' : (yangRatio < 0.4 ? '阳' : null);
+
+        return { 最缺五行, 缺失阴阳, 五行分布: wxCount, 阳比例: yangRatio };
+    },
+
+    /** 号码评分 */
+    评分(策略, draws) {
+        const n = draws.length;
+        const frontFreq = 彩经引擎.前区频率(draws);
+        const backFreq = 彩经引擎.后区频率(draws);
+        const frontMiss = 彩经引擎.遗漏值(draws, 35, d => d.front);
+        const backMiss = 彩经引擎.遗漏值(draws, 12, d => d.back);
+        const frontHC = 彩经引擎.冷热判断(frontFreq);
+        const backHC = 彩经引擎.冷热判断(backFreq);
+
+        // 五行分析
+        const 五行 = this.分析五行(draws);
+
+        // 权重
+        const w = {
+            balanced: { 易经: 0.5, 彩经: 0.5 },
+            yijing: { 易经: 0.7, 彩经: 0.3 },
+            caijing: { 易经: 0.3, 彩经: 0.7 },
+            hot: { 易经: 0.3, 彩经: 0.7 },
+            cold: { 易经: 0.3, 彩经: 0.7 }
+        }[策略] || { 易经: 0.5, 彩经: 0.5 };
+
+        const maxFrontFreq = Math.max(...frontFreq, 1);
+        const maxBackFreq = Math.max(...backFreq, 1);
+
+        // 前区评分
+        const frontScores = {};
+        for (let n = 1; n <= 35; n++) {
+            let 彩经分 = frontFreq[n-1] / maxFrontFreq;
+            if (策略 === 'hot' && frontHC[n-1].status === '热') 彩经分 += 0.5;
+            if (策略 === 'cold' && frontHC[n-1].status === '冷') 彩经分 += 0.5;
+            if (策略 === 'cold' && frontMiss[n-1] > 8) 彩经分 += 0.5;
+            else if (策略 === 'cold' && frontMiss[n-1] > 5) 彩经分 += 0.3;
+
+            // 易经分
+            let 易经分 = 0.2;
+            const wx = IChingAnalyzer.getWuxing(n);
+            if (wx && 五行 && 五行.最缺五行.includes(wx)) 易经分 += 0.3;
+            const yy = IChingAnalyzer.getYinYang(n);
+            if (yy && 五行 && 五行.缺失阴阳 && yy === 五行.缺失阴阳) 易经分 += 0.2;
+            易经分 += Math.random() * 0.05;
+
+            frontScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
+        }
+
+        // 后区评分
+        const backScores = {};
+        for (let n = 1; n <= 12; n++) {
+            let 彩经分 = backFreq[n-1] / maxBackFreq;
+            if (策略 === 'hot' && backHC[n-1].status === '热') 彩经分 += 0.5;
+            if (策略 === 'cold' && backHC[n-1].status === '冷') 彩经分 += 0.4;
+            if (策略 === 'cold' && backMiss[n-1] > 6) 彩经分 += 0.4;
+
+            let 易经分 = 0.2 + Math.random() * 0.05;
+            backScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
+        }
+
+        // 归一化
+        const norm = (scores) => {
+            const max = Math.max(...Object.values(scores));
+            if (max > 0) for (const k in scores) scores[k] /= max;
+            return scores;
+        };
+        norm(frontScores);
+        norm(backScores);
+
+        return {
+            前区评分: frontScores,
+            后区评分: backScores,
+            冷热: { 前区: frontHC, 后区: backHC },
+            遗漏: { 前区: frontMiss, 后区: backMiss },
+            五行: 五行,
+            彩经摘要: {
+                前区热号: frontHC.filter(x => x.status === '热').map(x => x.num),
+                前区冷号: frontHC.filter(x => x.status === '冷').map(x => x.num),
+                奇偶最常: 彩经引擎.奇偶分析(draws).slice(0, 3),
+                和值: 彩经引擎.和值分析(draws)
+            }
+        };
+    },
+
+    /** 智能选号 */
+    选号(评分, count) {
+        const candidates = Object.entries(评分).map(([n, s]) => ({ num: parseInt(n), score: s }));
+        candidates.sort((a, b) => b.score - a.score);
+
+        const selected = [];
+        const used = new Set();
+        for (const c of candidates) {
+            if (selected.length >= count) break;
+            if (used.has(c.num)) continue;
+            selected.push(c.num);
+            used.add(c.num);
+        }
+
+        // 如果不够补充
+        if (selected.length < count) {
+            for (const c of candidates) {
+                if (selected.length >= count) break;
+                if (!used.has(c.num)) { selected.push(c.num); used.add(c.num); }
+            }
+        }
+
+        // 奇偶平衡（仅前区）
+        if (count === 5 && selected.length === 5) {
+            const odds = selected.filter(n => n % 2 === 1).length;
+            if (odds === 0 || odds === 5) {
+                // 过于极端，换一个
+                const swapIdx = odds === 0 ? 3 : 1;
+                const old = selected[swapIdx];
+                const alt = Array.from({length: 35}, (_, i) => i+1)
+                    .filter(n => !selected.includes(n) && n % 2 !== old % 2);
+                if (alt.length > 0) {
+                    alt.sort((a, b) => (评分[b] || 0) - (评分[a] || 0));
+                    selected[swapIdx] = alt[0];
+                }
+            }
+        }
+
+        return selected.sort((a, b) => a - b);
+    },
+
+    /** 主推荐 */
+    主推荐(策略, draws) {
+        const 结果 = this.评分(策略, draws);
+        const 前区 = this.选号(结果.前区评分, 5);
+        const 后区 = this.选号(结果.后区评分, 2);
+
+        // 主推荐的易经分析
+        const 分析 = IChingAnalyzer.comprehensiveAnalysis(前区, 后区);
+
+        // 评分排行
+        const 前区排行 = Object.entries(结果.前区评分)
+            .map(([n, s]) => ({ 号码: parseInt(n), 分数: Math.round(s * 10000) / 10000 }))
+            .sort((a, b) => b.分数 - a.分数).slice(0, 15);
+        const 后区排行 = Object.entries(结果.后区评分)
+            .map(([n, s]) => ({ 号码: parseInt(n), 分数: Math.round(s * 10000) / 10000 }))
+            .sort((a, b) => b.分数 - a.分数).slice(0, 6);
+
+        // 彩经摘要文本
+        const 热号 = 结果.彩经摘要.前区热号.slice(0, 5).join(',');
+        const 冷号 = 结果.彩经摘要.前区冷号.slice(0, 5).join(',');
+        const 奇偶 = 结果.彩经摘要.奇偶最常[0] || ['3:2', 0];
+        const 和值 = 结果.彩经摘要.和值;
+        const 摘要 = `前区热号: ${热号} | 冷号: ${冷号} | 最常见奇偶比: ${奇偶[0]}(${奇偶[1]}次) | 建议和值: ${和值.建议范围}`;
+
+        return {
+            策略: 策略,
+            主推荐: { 前区, 后区, 易经分析: 分析 },
+            备选推荐: Array.from({length: 4}, () => {
+                const 备 = this.评分(策略, draws);
+                // 加点随机扰动
+                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.3);
+                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.3);
+                return { 前区: this.选号(备.前区评分, 5), 后区: this.选号(备.后区评分, 2) };
+            }),
+            前区评分排行: 前区排行,
+            后区评分排行: 后区排行,
+            彩经分析摘要: 摘要,
+            五行提示: 结果.五行 ? {
+                最缺: 结果.五行.最缺五行.join(','),
+                缺失阴阳: 结果.五行.缺失阴阳 || '平衡'
+            } : null,
+            推荐时间: new Date().toLocaleString('zh-CN'),
+            免责声明: "本推荐仅供娱乐参考"
+        };
+    }
+};
+
+// ================================
+// 3. 多注生成（增强版）
+// ================================
+function 天启选号(策略, 组数) {
+    const draws = (typeof window !== 'undefined' && window.DRAWS && window.DRAWS.length > 0) ? window.DRAWS : [];
+    if (draws.length === 0) return [];
+
+    const 策略映射 = { balanced: 'balanced', iching: 'yijing', hot: 'hot', cold: 'cold' };
+    const api策略 = 策略映射[策略] || 'balanced';
+
+    const results = [];
+    for (let i = 0; i < 组数; i++) {
+        const result = 推荐引擎.主推荐(api策略, draws);
+        // 轮流用不同扰动来产生不同号码
+        if (i > 0 && results.length > 0) {
+            // 检查是否与前面的重复
+            const fronts = results.map(r => r.front.join(','));
+            if (fronts.includes(result.主推荐.前区.join(','))) {
+                // 如果重复，再加一次随机扰动
+                const 备 = 推荐引擎.评分(api策略, draws);
+                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.5);
+                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.5);
+                result.主推荐.前区 = 推荐引擎.选号(备.前区评分, 5);
+                result.主推荐.后区 = 推荐引擎.选号(备.后区评分, 2);
+                result.主推荐.易经分析 = IChingAnalyzer.comprehensiveAnalysis(result.主推荐.前区, result.主推荐.后区);
+            }
+        }
+        results.push({
+            front: result.主推荐.前区,
+            back: result.主推荐.后区,
+            yijing: result.主推荐.易经分析,
+            yijingText: result.主推荐.易经分析?.hexagram?.hexagram?.name + '卦',
+            yijingId: result.主推荐.易经分析?.hexagram?.hexagram?.id
+        });
+    }
+    return results;
+}
+
+// ================================
+// 4. 挂载到window
+// ================================
+window.推荐引擎 = 推荐引擎;
+window.天启选号 = 天启选号;
+window.彩经引擎 = 彩经引擎;
+
+console.log('☯ 易彩 · 算法引擎已加载');
+console.log('  选用window.推荐引擎.主推荐("balanced", DRAWS) 获取推荐');
+console.log('  选用window.天启选号("balanced", 5) 生成5注');
+
+})();
+
+    </script>
     <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -787,479 +1256,7 @@ const IChingAnalyzer = {
 
         // 生成建议
         const advice = [];
-        if (wx.balance 
-<script>
-// 大乐透历史开奖数据（自动生成，含140期真实数据）
-// 数据来源：500.com 天启算法引擎
-// 共 140 期
-window.DRAWS = [
-  {"id":"26044","front":[4, 8, 22, 26, 29],"back":[7, 10],"date":"2026-04-25"},
-  {"id":"26043","front":[8, 12, 14, 19, 22],"back":[11, 12],"date":"2026-04-22"},
-  {"id":"26042","front":[2, 7, 13, 19, 24],"back":[3, 8],"date":"2026-04-20"},
-  {"id":"26041","front":[24, 25, 27, 29, 34],"back":[2, 6],"date":"2026-04-18"},
-  {"id":"26040","front":[6, 12, 13, 21, 34],"back":[8, 9],"date":"2026-04-15"},
-  {"id":"26039","front":[9, 11, 20, 26, 27],"back":[6, 9],"date":"2026-04-13"},
-  {"id":"26038","front":[8, 17, 21, 33, 35],"back":[6, 7],"date":"2026-04-11"},
-  {"id":"26037","front":[7, 12, 13, 28, 32],"back":[6, 8],"date":"2026-04-08"},
-  {"id":"26036","front":[4, 7, 16, 26, 32],"back":[5, 8],"date":"2026-04-06"},
-  {"id":"26035","front":[2, 22, 30, 33, 34],"back":[8, 12],"date":"2026-04-04"},
-  {"id":"26034","front":[11, 12, 25, 26, 27],"back":[8, 11],"date":"2026-04-01"},
-  {"id":"26033","front":[3, 5, 7, 9, 18],"back":[2, 10],"date":"2026-03-30"},
-  {"id":"26032","front":[3, 4, 19, 26, 32],"back":[1, 12],"date":"2026-03-28"},
-  {"id":"26031","front":[6, 8, 22, 29, 34],"back":[5, 7],"date":"2026-03-25"},
-  {"id":"26030","front":[2, 13, 22, 28, 34],"back":[5, 12],"date":"2026-03-23"},
-  {"id":"26029","front":[3, 5, 17, 33, 35],"back":[5, 7],"date":"2026-03-21"},
-  {"id":"26028","front":[15, 27, 29, 30, 34],"back":[1, 10],"date":"2026-03-18"},
-  {"id":"26027","front":[9, 10, 11, 12, 16],"back":[1, 11],"date":"2026-03-16"},
-  {"id":"26026","front":[10, 11, 22, 26, 32],"back":[1, 8],"date":"2026-03-14"},
-  {"id":"26025","front":[3, 15, 24, 28, 29],"back":[3, 7],"date":"2026-03-11"},
-  {"id":"26024","front":[2, 4, 8, 10, 21],"back":[9, 12],"date":"2026-03-09"},
-  {"id":"26023","front":[9, 25, 26, 27, 28],"back":[1, 8],"date":"2026-03-07"},
-  {"id":"26022","front":[5, 9, 10, 18, 26],"back":[5, 6],"date":"2026-03-04"},
-  {"id":"26021","front":[5, 8, 12, 14, 17],"back":[4, 5],"date":"2026-03-02"},
-  {"id":"26020","front":[1, 10, 2, 12, 29],"back":[10, 12],"date":"2026-02-28"},
-  {"id":"26019","front":[12, 13, 14, 16, 31],"back":[4, 12],"date":"2026-02-25"},
-  {"id":"26018","front":[9, 11, 19, 30, 35],"back":[1, 12],"date":"2026-02-11"},
-  {"id":"26017","front":[4, 5, 10, 23, 31],"back":[7, 12],"date":"2026-02-09"},
-  {"id":"26016","front":[8, 9, 12, 19, 24],"back":[1, 6],"date":"2026-02-07"},
-  {"id":"26015","front":[1, 4, 10, 13, 17],"back":[3, 11],"date":"2026-02-04"},
-  {"id":"26014","front":[16, 18, 23, 34, 35],"back":[1, 6],"date":"2026-02-02"},
-  {"id":"26013","front":[3, 5, 6, 23, 26],"back":[1, 4],"date":"2026-01-31"},
-  {"id":"26012","front":[1, 2, 9, 22, 25],"back":[1, 6],"date":"2026-01-28"},
-  {"id":"26011","front":[14, 21, 23, 29, 33],"back":[2, 10],"date":"2026-01-26"},
-  {"id":"26010","front":[2, 3, 13, 18, 26],"back":[2, 9],"date":"2026-01-24"},
-  {"id":"26009","front":[5, 12, 13, 14, 33],"back":[5, 8],"date":"2026-01-21"},
-  {"id":"26008","front":[3, 6, 17, 21, 33],"back":[5, 11],"date":"2026-01-19"},
-  {"id":"26007","front":[1, 3, 13, 20, 26],"back":[3, 10],"date":"2026-01-17"},
-  {"id":"26006","front":[5, 12, 18, 23, 35],"back":[6, 12],"date":"2026-01-14"},
-  {"id":"26005","front":[2, 4, 16, 23, 35],"back":[6, 11],"date":"2026-01-12"},
-  {"id":"26004","front":[5, 18, 23, 25, 32],"back":[5, 9],"date":"2026-01-10"},
-  {"id":"26003","front":[2, 9, 11, 15, 16],"back":[2, 4],"date":"2026-01-07"},
-  {"id":"26002","front":[4, 8, 15, 20, 31],"back":[7, 8],"date":"2026-01-05"},
-  {"id":"26001","front":[7, 9, 23, 27, 32],"back":[2, 8],"date":"2026-01-03"},
-  {"id":"25148","front":[3, 4, 14, 30, 32],"back":[8, 12],"date":"2025-12-27"},
-  {"id":"25147","front":[6, 16, 21, 25, 33],"back":[7, 8],"date":"2025-12-24"},
-  {"id":"25146","front":[6, 11, 13, 16, 22],"back":[2, 3],"date":"2025-12-22"},
-  {"id":"25145","front":[5, 7, 20, 22, 25],"back":[4, 5],"date":"2025-12-20"},
-  {"id":"25144","front":[2, 5, 13, 15, 28],"back":[5, 8],"date":"2025-12-17"},
-  {"id":"25143","front":[3, 4, 18, 24, 29],"back":[7, 12],"date":"2025-12-15"},
-  {"id":"25142","front":[9, 10, 14, 27, 29],"back":[2, 9],"date":"2025-12-13"},
-  {"id":"25141","front":[4, 9, 24, 28, 29],"back":[2, 10],"date":"2025-12-10"},
-  {"id":"25140","front":[4, 5, 13, 18, 34],"back":[2, 8],"date":"2025-12-08"},
-  {"id":"25139","front":[8, 18, 22, 30, 35],"back":[1, 4],"date":"2025-12-06"},
-  {"id":"25138","front":[1, 3, 19, 21, 23],"back":[7, 11],"date":"2025-12-03"},
-  {"id":"25137","front":[7, 8, 9, 11, 22],"back":[5, 11],"date":"2025-12-01"},
-  {"id":"25136","front":[7, 11, 15, 16, 23],"back":[9, 11],"date":"2025-11-29"},
-  {"id":"25135","front":[2, 10, 16, 28, 32],"back":[1, 7],"date":"2025-11-26"},
-  {"id":"25134","front":[7, 12, 18, 27, 33],"back":[9, 10],"date":"2025-11-24"},
-  {"id":"25133","front":[4, 11, 23, 27, 35],"back":[7, 11],"date":"2025-11-22"},
-  {"id":"25132","front":[1, 9, 10, 12, 19],"back":[6, 7],"date":"2025-11-19"},
-  {"id":"25131","front":[3, 8, 25, 29, 32],"back":[9, 12],"date":"2025-11-17"},
-  {"id":"25130","front":[1, 13, 16, 27, 29],"back":[2, 11],"date":"2025-11-15"},
-  {"id":"25129","front":[3, 9, 14, 28, 35],"back":[2, 4],"date":"2025-11-12"},
-  {"id":"25128","front":[3, 6, 26, 30, 33],"back":[11, 12],"date":"2025-11-10"},
-  {"id":"25127","front":[4, 5, 19, 28, 29],"back":[5, 8],"date":"2025-11-08"},
-  {"id":"25126","front":[1, 8, 18, 27, 30],"back":[6, 7],"date":"2025-11-05"},
-  {"id":"25125","front":[10, 11, 13, 19, 35],"back":[4, 11],"date":"2025-11-03"},
-  {"id":"25124","front":[6, 9, 14, 26, 27],"back":[8, 9],"date":"2025-11-01"},
-  {"id":"25123","front":[8, 13, 24, 25, 31],"back":[4, 10],"date":"2025-10-29"},
-  {"id":"25122","front":[2, 3, 6, 16, 17],"back":[4, 5],"date":"2025-10-27"},
-  {"id":"25121","front":[2, 3, 8, 13, 21],"back":[7, 12],"date":"2025-10-25"},
-  {"id":"25120","front":[11, 13, 22, 26, 35],"back":[2, 8],"date":"2025-10-22"},
-  {"id":"25119","front":[8, 15, 27, 29, 31],"back":[1, 7],"date":"2025-10-20"},
-  {"id":"25118","front":[2, 8, 9, 12, 21],"back":[4, 5],"date":"2025-10-18"},
-  {"id":"25117","front":[5, 10, 18, 21, 29],"back":[5, 7],"date":"2025-10-15"},
-  {"id":"25116","front":[2, 6, 16, 22, 29],"back":[8, 12],"date":"2025-10-13"},
-  {"id":"25115","front":[3, 12, 14, 21, 35],"back":[1, 5],"date":"2025-10-11"},
-  {"id":"25114","front":[3, 8, 9, 12, 16],"back":[1, 5],"date":"2025-10-08"},
-  {"id":"25113","front":[1, 14, 18, 28, 35],"back":[2, 3],"date":"2025-10-06"},
-  {"id":"25112","front":[3, 4, 21, 23, 24],"back":[9, 12],"date":"2025-09-29"},
-  {"id":"25111","front":[2, 9, 14, 21, 26],"back":[2, 12],"date":"2025-09-27"},
-  {"id":"25110","front":[1, 15, 22, 30, 31],"back":[2, 8],"date":"2025-09-24"},
-  {"id":"25109","front":[4, 8, 10, 13, 26],"back":[9, 10],"date":"2025-09-22"},
-  {"id":"25108","front":[14, 18, 21, 24, 29],"back":[3, 6],"date":"2025-09-20"},
-  {"id":"25107","front":[5, 7, 8, 15, 33],"back":[6, 10],"date":"2025-09-17"},
-  {"id":"25106","front":[5, 6, 11, 26, 29],"back":[5, 10],"date":"2025-09-15"},
-  {"id":"25105","front":[15, 16, 25, 28, 34],"back":[10, 12],"date":"2025-09-13"},
-  {"id":"25104","front":[2, 6, 9, 22, 34],"back":[2, 8],"date":"2025-09-10"},
-  {"id":"25103","front":[5, 8, 19, 32, 34],"back":[4, 5],"date":"2025-09-08"},
-  {"id":"25102","front":[9, 10, 13, 26, 28],"back":[2, 4],"date":"2025-09-06"},
-  {"id":"25101","front":[5, 7, 19, 26, 32],"back":[8, 9],"date":"2025-09-03"},
-  {"id":"25099","front":[6, 12, 20, 26, 31],"back":[2, 4],"date":"2025-08-30"},
-  {"id":"25098","front":[1, 7, 9, 10, 23],"back":[10, 12],"date":"2025-08-27"},
-  {"id":"25097","front":[5, 24, 25, 32, 34],"back":[1, 9],"date":"2025-08-25"},
-  {"id":"25096","front":[2, 11, 17, 22, 24],"back":[7, 9],"date":"2025-08-23"},
-  {"id":"26044","front":[4, 8, 22, 26, 29],"back":[7, 10],"date":"2026-04-25"},
-  {"id":"26043","front":[8, 12, 14, 19, 22],"back":[11, 12],"date":"2026-04-22"},
-  {"id":"26042","front":[2, 7, 13, 19, 24],"back":[3, 8],"date":"2026-04-20"},
-  {"id":"26041","front":[24, 25, 27, 29, 34],"back":[2, 6],"date":"2026-04-18"},
-  {"id":"26040","front":[6, 12, 13, 21, 34],"back":[8, 9],"date":"2026-04-15"},
-  {"id":"26039","front":[9, 11, 20, 26, 27],"back":[6, 9],"date":"2026-04-13"},
-  {"id":"26038","front":[8, 17, 21, 33, 35],"back":[6, 7],"date":"2026-04-11"},
-  {"id":"26037","front":[7, 12, 13, 28, 32],"back":[6, 8],"date":"2026-04-08"},
-  {"id":"26036","front":[4, 7, 16, 26, 32],"back":[5, 8],"date":"2026-04-06"},
-  {"id":"26035","front":[2, 22, 30, 33, 34],"back":[8, 12],"date":"2026-04-04"},
-  {"id":"26034","front":[11, 12, 25, 26, 27],"back":[8, 11],"date":"2026-04-01"},
-  {"id":"26033","front":[3, 5, 7, 9, 18],"back":[2, 10],"date":"2026-03-30"},
-  {"id":"26032","front":[3, 4, 19, 26, 32],"back":[1, 12],"date":"2026-03-28"},
-  {"id":"26031","front":[6, 8, 22, 29, 34],"back":[5, 7],"date":"2026-03-25"},
-  {"id":"26030","front":[2, 13, 22, 28, 34],"back":[5, 12],"date":"2026-03-23"},
-  {"id":"26029","front":[3, 5, 17, 33, 35],"back":[5, 7],"date":"2026-03-21"},
-  {"id":"26028","front":[15, 27, 29, 30, 34],"back":[1, 10],"date":"2026-03-18"},
-  {"id":"26027","front":[9, 10, 11, 12, 16],"back":[1, 11],"date":"2026-03-16"},
-  {"id":"26026","front":[10, 11, 22, 26, 32],"back":[1, 8],"date":"2026-03-14"},
-  {"id":"26025","front":[3, 15, 24, 28, 29],"back":[3, 7],"date":"2026-03-11"},
-  {"id":"26024","front":[2, 4, 8, 10, 21],"back":[9, 12],"date":"2026-03-09"},
-  {"id":"26023","front":[9, 25, 26, 27, 28],"back":[1, 8],"date":"2026-03-07"},
-  {"id":"26022","front":[5, 9, 10, 18, 26],"back":[5, 6],"date":"2026-03-04"},
-  {"id":"26021","front":[5, 8, 12, 14, 17],"back":[4, 5],"date":"2026-03-02"},
-  {"id":"26020","front":[1, 10, 2, 12, 29],"back":[10, 12],"date":"2026-02-28"},
-  {"id":"26019","front":[12, 13, 14, 16, 31],"back":[4, 12],"date":"2026-02-25"},
-  {"id":"26018","front":[9, 11, 19, 30, 35],"back":[1, 12],"date":"2026-02-11"},
-  {"id":"26017","front":[4, 5, 10, 23, 31],"back":[7, 12],"date":"2026-02-09"},
-  {"id":"26016","front":[8, 9, 12, 19, 24],"back":[1, 6],"date":"2026-02-07"},
-  {"id":"26015","front":[1, 4, 10, 13, 17],"back":[3, 11],"date":"2026-02-04"},
-  {"id":"26014","front":[16, 18, 23, 34, 35],"back":[1, 6],"date":"2026-02-02"},
-  {"id":"26013","front":[3, 5, 6, 23, 26],"back":[1, 4],"date":"2026-01-31"},
-  {"id":"26012","front":[1, 2, 9, 22, 25],"back":[1, 6],"date":"2026-01-28"},
-  {"id":"26011","front":[14, 21, 23, 29, 33],"back":[2, 10],"date":"2026-01-26"},
-  {"id":"26010","front":[2, 3, 13, 18, 26],"back":[2, 9],"date":"2026-01-24"},
-  {"id":"26009","front":[5, 12, 13, 14, 33],"back":[5, 8],"date":"2026-01-21"},
-  {"id":"26008","front":[3, 6, 17, 21, 33],"back":[5, 11],"date":"2026-01-19"},
-  {"id":"26007","front":[1, 3, 13, 20, 26],"back":[3, 10],"date":"2026-01-17"},
-  {"id":"26006","front":[5, 12, 18, 23, 35],"back":[6, 12],"date":"2026-01-14"},
-  {"id":"26005","front":[2, 4, 16, 23, 35],"back":[6, 11],"date":"2026-01-12"},
-  {"id":"26004","front":[5, 18, 23, 25, 32],"back":[5, 9],"date":"2026-01-10"},
-  {"id":"26003","front":[2, 9, 11, 15, 16],"back":[2, 4],"date":"2026-01-07"},
-  {"id":"26002","front":[4, 8, 15, 20, 31],"back":[7, 8],"date":"2026-01-05"},
-  {"id":"26001","front":[7, 9, 23, 27, 32],"back":[2, 8],"date":"2026-01-03"},
-];
-
-// 兼容旧版变量名
-window.REAL_DRAWS = window.DRAWS;
-
-</script>
-<script>
-/**
- * 大乐透选号系统 - 前端内嵌算法引擎
- * 天启算法完整JS移植版，纯前端无后端依赖
- * 用于GitHub Pages部署
- */
-
-// ========== 引擎配置 ==========
-(function() {
-
-// ================================
-// 1. 彩经分析引擎
-// ================================
-const 彩经引擎 = {
-    /** 前区频率统计 */
-    前区频率(draws) {
-        const freq = new Array(35).fill(0);
-        draws.forEach(d => d.front.forEach(n => freq[n-1]++));
-        return freq;
-    },
-
-    /** 后区频率统计 */
-    后区频率(draws) {
-        const freq = new Array(12).fill(0);
-        draws.forEach(d => d.back.forEach(n => freq[n-1]++));
-        return freq;
-    },
-
-    /** 遗漏值计算 */
-    遗漏值(draws, maxNum, getNums) {
-        const miss = new Array(maxNum).fill(draws.length);
-        for (let i = 0; i < draws.length; i++) {
-            getNums(draws[i]).forEach(n => {
-                if (miss[n-1] === draws.length) miss[n-1] = i;
-            });
-        }
-        return miss.map((v, i) => v === draws.length ? 0 : draws.length - 1 - v);
-    },
-
-    /** 冷热判断 */
-    冷热判断(freq) {
-        const sorted = [...freq].sort((a,b) => a-b);
-        const tHot = sorted[Math.floor(sorted.length * 0.7)] || 4;
-        const tCold = sorted[Math.floor(sorted.length * 0.3)] || 2;
-        return freq.map((v, i) => ({
-            num: i+1, freq: v,
-            status: v >= tHot ? '热' : v <= tCold ? '冷' : '温'
-        }));
-    },
-
-    /** 奇偶分布 */
-    奇偶分析(draws) {
-        const count = {};
-        draws.forEach(d => {
-            const odds = d.front.filter(n => n % 2 === 1).length;
-            const key = odds + ':' + (5-odds);
-            count[key] = (count[key] || 0) + 1;
-        });
-        return Object.entries(count).sort((a,b) => b[1] - a[1]);
-    },
-
-    /** 和值分析 */
-    和值分析(draws) {
-        const vals = draws.map(d => d.front.reduce((s,n) => s + n, 0));
-        const avg = Math.round(vals.reduce((s,v) => s+v, 0) / vals.length);
-        return { 平均和值: avg, 建议范围: (avg-20) + '-' + (avg+20) };
-    }
-};
-
-// ================================
-// 2. 号码推荐引擎
-// ================================
-const 推荐引擎 = {
-    /** 获取最新开奖号码的五行分析 */
-    分析五行(draws) {
-        if (!draws || draws.length === 0) return null;
-        const latest = draws[draws.length - 1];
-        const allNums = [...latest.front, ...latest.back];
-        const wxCount = { "木": 0, "火": 0, "土": 0, "金": 0, "水": 0 };
-        allNums.forEach(n => {
-            const wx = IChingAnalyzer.getWuxing(n);
-            if (wx) wxCount[wx]++;
-        });
-        const sorted = Object.entries(wxCount).sort((a,b) => a[1] - b[1]);
-        const 最缺五行 = sorted.slice(0, 2).map(x => x[0]);
-
-        // 阴阳分析
-        let yang = 0, yin = 0;
-        allNums.forEach(n => {
-            const yy = IChingAnalyzer.getYinYang(n);
-            if (yy === '阳') yang++;
-            else if (yy === '阴') yin++;
-        });
-        const yangRatio = yang / (yang + yin || 1);
-        const 缺失阴阳 = yangRatio > 0.6 ? '阴' : (yangRatio < 0.4 ? '阳' : null);
-
-        return { 最缺五行, 缺失阴阳, 五行分布: wxCount, 阳比例: yangRatio };
-    },
-
-    /** 号码评分 */
-    评分(策略, draws) {
-        const n = draws.length;
-        const frontFreq = 彩经引擎.前区频率(draws);
-        const backFreq = 彩经引擎.后区频率(draws);
-        const frontMiss = 彩经引擎.遗漏值(draws, 35, d => d.front);
-        const backMiss = 彩经引擎.遗漏值(draws, 12, d => d.back);
-        const frontHC = 彩经引擎.冷热判断(frontFreq);
-        const backHC = 彩经引擎.冷热判断(backFreq);
-
-        // 五行分析
-        const 五行 = this.分析五行(draws);
-
-        // 权重
-        const w = {
-            balanced: { 易经: 0.5, 彩经: 0.5 },
-            yijing: { 易经: 0.7, 彩经: 0.3 },
-            caijing: { 易经: 0.3, 彩经: 0.7 },
-            hot: { 易经: 0.3, 彩经: 0.7 },
-            cold: { 易经: 0.3, 彩经: 0.7 }
-        }[策略] || { 易经: 0.5, 彩经: 0.5 };
-
-        const maxFrontFreq = Math.max(...frontFreq, 1);
-        const maxBackFreq = Math.max(...backFreq, 1);
-
-        // 前区评分
-        const frontScores = {};
-        for (let n = 1; n <= 35; n++) {
-            let 彩经分 = frontFreq[n-1] / maxFrontFreq;
-            if (策略 === 'hot' && frontHC[n-1].status === '热') 彩经分 += 0.5;
-            if (策略 === 'cold' && frontHC[n-1].status === '冷') 彩经分 += 0.5;
-            if (策略 === 'cold' && frontMiss[n-1] > 8) 彩经分 += 0.5;
-            else if (策略 === 'cold' && frontMiss[n-1] > 5) 彩经分 += 0.3;
-
-            // 易经分
-            let 易经分 = 0.2;
-            const wx = IChingAnalyzer.getWuxing(n);
-            if (wx && 五行 && 五行.最缺五行.includes(wx)) 易经分 += 0.3;
-            const yy = IChingAnalyzer.getYinYang(n);
-            if (yy && 五行 && 五行.缺失阴阳 && yy === 五行.缺失阴阳) 易经分 += 0.2;
-            易经分 += Math.random() * 0.05;
-
-            frontScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
-        }
-
-        // 后区评分
-        const backScores = {};
-        for (let n = 1; n <= 12; n++) {
-            let 彩经分 = backFreq[n-1] / maxBackFreq;
-            if (策略 === 'hot' && backHC[n-1].status === '热') 彩经分 += 0.5;
-            if (策略 === 'cold' && backHC[n-1].status === '冷') 彩经分 += 0.4;
-            if (策略 === 'cold' && backMiss[n-1] > 6) 彩经分 += 0.4;
-
-            let 易经分 = 0.2 + Math.random() * 0.05;
-            backScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
-        }
-
-        // 归一化
-        const norm = (scores) => {
-            const max = Math.max(...Object.values(scores));
-            if (max > 0) for (const k in scores) scores[k] /= max;
-            return scores;
-        };
-        norm(frontScores);
-        norm(backScores);
-
-        return {
-            前区评分: frontScores,
-            后区评分: backScores,
-            冷热: { 前区: frontHC, 后区: backHC },
-            遗漏: { 前区: frontMiss, 后区: backMiss },
-            五行: 五行,
-            彩经摘要: {
-                前区热号: frontHC.filter(x => x.status === '热').map(x => x.num),
-                前区冷号: frontHC.filter(x => x.status === '冷').map(x => x.num),
-                奇偶最常: 彩经引擎.奇偶分析(draws).slice(0, 3),
-                和值: 彩经引擎.和值分析(draws)
-            }
-        };
-    },
-
-    /** 智能选号 */
-    选号(评分, count) {
-        const candidates = Object.entries(评分).map(([n, s]) => ({ num: parseInt(n), score: s }));
-        candidates.sort((a, b) => b.score - a.score);
-
-        const selected = [];
-        const used = new Set();
-        for (const c of candidates) {
-            if (selected.length >= count) break;
-            if (used.has(c.num)) continue;
-            selected.push(c.num);
-            used.add(c.num);
-        }
-
-        // 如果不够补充
-        if (selected.length < count) {
-            for (const c of candidates) {
-                if (selected.length >= count) break;
-                if (!used.has(c.num)) { selected.push(c.num); used.add(c.num); }
-            }
-        }
-
-        // 奇偶平衡（仅前区）
-        if (count === 5 && selected.length === 5) {
-            const odds = selected.filter(n => n % 2 === 1).length;
-            if (odds === 0 || odds === 5) {
-                // 过于极端，换一个
-                const swapIdx = odds === 0 ? 3 : 1;
-                const old = selected[swapIdx];
-                const alt = Array.from({length: 35}, (_, i) => i+1)
-                    .filter(n => !selected.includes(n) && n % 2 !== old % 2);
-                if (alt.length > 0) {
-                    alt.sort((a, b) => (评分[b] || 0) - (评分[a] || 0));
-                    selected[swapIdx] = alt[0];
-                }
-            }
-        }
-
-        return selected.sort((a, b) => a - b);
-    },
-
-    /** 主推荐 */
-    主推荐(策略, draws) {
-        const 结果 = this.评分(策略, draws);
-        const 前区 = this.选号(结果.前区评分, 5);
-        const 后区 = this.选号(结果.后区评分, 2);
-
-        // 主推荐的易经分析
-        const 分析 = IChingAnalyzer.comprehensiveAnalysis(前区, 后区);
-
-        // 评分排行
-        const 前区排行 = Object.entries(结果.前区评分)
-            .map(([n, s]) => ({ 号码: parseInt(n), 分数: Math.round(s * 10000) / 10000 }))
-            .sort((a, b) => b.分数 - a.分数).slice(0, 15);
-        const 后区排行 = Object.entries(结果.后区评分)
-            .map(([n, s]) => ({ 号码: parseInt(n), 分数: Math.round(s * 10000) / 10000 }))
-            .sort((a, b) => b.分数 - a.分数).slice(0, 6);
-
-        // 彩经摘要文本
-        const 热号 = 结果.彩经摘要.前区热号.slice(0, 5).join(',');
-        const 冷号 = 结果.彩经摘要.前区冷号.slice(0, 5).join(',');
-        const 奇偶 = 结果.彩经摘要.奇偶最常[0] || ['3:2', 0];
-        const 和值 = 结果.彩经摘要.和值;
-        const 摘要 = `前区热号: ${热号} | 冷号: ${冷号} | 最常见奇偶比: ${奇偶[0]}(${奇偶[1]}次) | 建议和值: ${和值.建议范围}`;
-
-        return {
-            策略: 策略,
-            主推荐: { 前区, 后区, 易经分析: 分析 },
-            备选推荐: Array.from({length: 4}, () => {
-                const 备 = this.评分(策略, draws);
-                // 加点随机扰动
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.3);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.3);
-                return { 前区: this.选号(备.前区评分, 5), 后区: this.选号(备.后区评分, 2) };
-            }),
-            前区评分排行: 前区排行,
-            后区评分排行: 后区排行,
-            彩经分析摘要: 摘要,
-            五行提示: 结果.五行 ? {
-                最缺: 结果.五行.最缺五行.join(','),
-                缺失阴阳: 结果.五行.缺失阴阳 || '平衡'
-            } : null,
-            推荐时间: new Date().toLocaleString('zh-CN'),
-            免责声明: "本推荐仅供娱乐参考"
-        };
-    }
-};
-
-// ================================
-// 3. 多注生成（增强版）
-// ================================
-function 天启选号(策略, 组数) {
-    const draws = (typeof window !== 'undefined' && window.DRAWS && window.DRAWS.length > 0) ? window.DRAWS : [];
-    if (draws.length === 0) return [];
-
-    const 策略映射 = { balanced: 'balanced', iching: 'yijing', hot: 'hot', cold: 'cold' };
-    const api策略 = 策略映射[策略] || 'balanced';
-
-    const results = [];
-    for (let i = 0; i < 组数; i++) {
-        const result = 推荐引擎.主推荐(api策略, draws);
-        // 轮流用不同扰动来产生不同号码
-        if (i > 0 && results.length > 0) {
-            // 检查是否与前面的重复
-            const fronts = results.map(r => r.front.join(','));
-            if (fronts.includes(result.主推荐.前区.join(','))) {
-                // 如果重复，再加一次随机扰动
-                const 备 = 推荐引擎.评分(api策略, draws);
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.5);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.5);
-                result.主推荐.前区 = 推荐引擎.选号(备.前区评分, 5);
-                result.主推荐.后区 = 推荐引擎.选号(备.后区评分, 2);
-                result.主推荐.易经分析 = IChingAnalyzer.comprehensiveAnalysis(result.主推荐.前区, result.主推荐.后区);
-            }
-        }
-        results.push({
-            front: result.主推荐.前区,
-            back: result.主推荐.后区,
-            yijing: result.主推荐.易经分析,
-            yijingText: result.主推荐.易经分析?.hexagram?.hexagram?.name + '卦',
-            yijingId: result.主推荐.易经分析?.hexagram?.hexagram?.id
-        });
-    }
-    return results;
-}
-
-// ================================
-// 4. 挂载到window
-// ================================
-window.推荐引擎 = 推荐引擎;
-window.天启选号 = 天启选号;
-window.彩经引擎 = 彩经引擎;
-
-console.log('☯ 易彩 · 算法引擎已加载');
-console.log('  选用window.推荐引擎.主推荐("balanced", DRAWS) 获取推荐');
-console.log('  选用window.天启选号("balanced", 5) 生成5注');
-
-})();
-
-</script>
-< 0.7) advice.push('五行分布不够平衡（平衡度' + wx.balance.toFixed(2) + '），建议调整号码使五行更均衡');
+        if (wx.balance < 0.7) advice.push('五行分布不够平衡（平衡度' + wx.balance.toFixed(2) + '），建议调整号码使五行更均衡');
         if (wx.dominant) advice.push('主导五行「' + wx.dominant + '」：' + wx.desc.advice);
         if (yy.balance < 0.6) advice.push('阴阳比例失衡（平衡度' + yy.balance.toFixed(2) + '），建议调整阴阳号码比例');
         if (yy.yangRatio > 0.6) advice.push('阳数偏多（' + (yy.yangRatio*100).toFixed(0) + '%），可适当增加阴数号码');
@@ -1678,6 +1675,7 @@ function generateMultiPicks(n) {
     try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
     renderPickHistory();
     showToast('已生成 ' + n + ' 注号码');
+}
 }
 
 function renderPickHistory() {
@@ -2200,11 +2198,17 @@ window.onerror = function(msg, url, line, col, err) {
 };
 
 // ========== 初始化 ==========
-// 延迟初始化（等待defer数据加载）
-setTimeout(function() {
-    loadEmbeddedData();
-    renderPickHistory();
-}, 100);
+(function waitForModules() {
+    if (typeof window.DRAWS !== 'undefined' && 
+        typeof window.推荐引擎 !== 'undefined' &&
+        typeof IChingAnalyzer !== 'undefined') {
+        loadEmbeddedData();
+        renderPickHistory();
+        console.log('[易彩] ✅ 初始化完成');
+    } else {
+        setTimeout(waitForModules, 200);
+    }
+})();
 </script>
 
 
@@ -2233,5 +2237,12 @@ setTimeout(function() {
 })();
 </script>
 
+<script>
+window.onerror = function(m, u, l) {
+  var s = document.getElementById("_dlt_status");
+  if(s) s.innerHTML="❌ 脚本错误: "+m.substring(0,60)+" (行"+l+")";
+  return true;
+};
+</script>
 </body>
 </html>
