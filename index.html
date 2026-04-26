@@ -793,16 +793,21 @@ const IChingAnalyzer = {
     }
 };
 
-// ========== 历史数据（从大乐透历史数据.json嵌入） ==========
-let DRAWS = [];
+// ========== 历史数据（从天启算法引擎数据文件加载） ==========
+// draws_data.js 以 const DRAWS = [...] 提供完整140期数据
+// dlt-engine.js 会自动检测 DRAWS 并加载
 
-// 加载内嵌历史数据
-function loadEmbeddedData() {
-    // 优先使用外部真实数据，回退到内嵌示例数据
-    DRAWS = (typeof REAL_DRAWS !== 'undefined' && REAL_DRAWS.length > 0) ? REAL_DRAWS : EMBEDDED_DRAWS;
+// 兼容旧版：确保 DRAWS 已定义
+if (typeof DRAWS === 'undefined') {
+    var DRAWS = [];
 }
 
-// 内嵌示例数据（最近50期）
+function loadEmbeddedData() {
+    // DRAWS 已由 draws_data.js 提供完整数据
+    console.log('数据已加载: ' + (DRAWS ? DRAWS.length + '期' : '无数据'));
+}
+
+// 内嵌示例数据（最近50期，备用）
 const EMBEDDED_DRAWS = [
     {id:"25143",date:"2025-12-15",front:[3,4,18,24,29],back:[7,12]},
     {id:"25142",date:"2025-12-13",front:[9,10,14,27,29],back:[2,9]},

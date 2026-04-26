@@ -269,7 +269,7 @@ const 推荐引擎 = {
 // 3. 多注生成（增强版）
 // ================================
 function 天启选号(策略, 组数) {
-    const draws = typeof DRAWS !== 'undefined' ? DRAWS : [];
+    const draws = (typeof window !== 'undefined' && window.DRAWS && window.DRAWS.length > 0) ? window.DRAWS : [];
     if (draws.length === 0) return [];
 
     const 策略映射 = { balanced: 'balanced', iching: 'yijing', hot: 'hot', cold: 'cold' };
