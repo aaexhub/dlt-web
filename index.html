@@ -7,6 +7,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
     <script src="draws_data.js"></script>
+    <script src="dlt-engine.js"></script>
     <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -950,32 +951,28 @@ function selectStrategy(el) {
 }
 
 // ========== 选号核心 ==========
-// ========== API选号引擎 ==========
-const DLT_API = 'http://127.0.0.1:3456';
-
+// ========== 天启算法引擎选号 ==========
 function generatePick() {
     document.getElementById('pickResult').style.display = 'block';
-    document.getElementById('pickDisplay').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ 正在计算...</div>';
+    document.getElementById('pickDisplay').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">⏳ 算法计算中...</div>';
     document.getElementById('pickIChing').innerHTML = '';
     document.getElementById('pickBackups').innerHTML = '';
 
     const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
     const apiStrategy = strategyMap[currentStrategy] || 'balanced';
 
-    fetch(DLT_API + '/api/recommend?strategy=' + apiStrategy + '&periods=50')
-        .then(r => r.json())
-        .then(res => {
-            const data = res.data;
-            const frontNums = data.主推荐.前区;
-            const backNums = data.主推荐.后区;
-            currentPick = { front: frontNums, back: backNums, strategy: apiStrategy, engineData: data };
-            renderPickResult(frontNums, backNums, data);
-            renderBackups(data.备选推荐);
-        })
-        .catch(err => {
-            console.warn('API调用失败，使用本地引擎:', err);
-            localGeneratePick();
-        });
+    if (typeof 推荐引擎 !== 'undefined' && DRAWS.length >= 50) {
+        // 使用天启算法引擎
+        const result = 推荐引擎.主推荐(apiStrategy, DRAWS);
+        const frontNums = result.主推荐.前区;
+        const backNums = result.主推荐.后区;
+        currentPick = { front: frontNums, back: backNums, strategy: apiStrategy, engineData: result };
+        renderPickResult(frontNums, backNums, result);
+        renderBackups(result.备选推荐);
+    } else {
+        // fallback到原有简单算法
+        localGeneratePick();
+    }
 }
 
 function localGeneratePick() {
@@ -1053,7 +1050,7 @@ function sampleByWeight(weights, count) {
     return selected;
 }
 
-function renderPickResult(frontNums, backNums) {
+function renderPickResult(frontNums, backNums, engineData) {
     const analysis = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums);
     const hex = analysis.hexagram.hexagram;
     const frontSum = frontNums.reduce((s,n) => s + n, 0);
@@ -1079,6 +1076,18 @@ function renderPickResult(frontNums, backNums) {
 
     // 卦象 & 易经信息
     const ic = document.getElementById('pickIChing');
+    let icExtra = '';
+    if (engineData && engineData.彩经分析摘要) {
+        icExtra = '<div class="card-subtitle" style="margin-top:14px;font-size:0.8rem;color:var(--jin-se-light);">📊 彩经分析（' + engineData.分析期数 + '期）</div>' +
+            '<div style="font-size:0.75rem;line-height:1.6;color:var(--text-muted);">' + engineData.彩经分析摘要 + '</div>';
+    }
+    if (engineData && engineData.五行提示) {
+        icExtra += '<div class="analysis-row" style="margin-top:10px;">' +
+            '<div class="analysis-tag" style="background:rgba(212,165,116,0.1);">☯ 最缺五行：' + (engineData.五行提示.最缺 || '平衡') + '</div>' +
+            '<div class="analysis-tag" style="background:rgba(212,165,116,0.1);">☯ 阴阳建议：' + (engineData.五行提示.缺失阴阳 || '平衡') + '</div>' +
+            '</div>';
+    }
+    
     ic.innerHTML =
         '<div class="hexagram-display" style="margin-bottom:0;">' +
         '<div class="hexagram-lines">' + hex.id + '</div>' +
@@ -1093,7 +1102,7 @@ function renderPickResult(frontNums, backNums) {
         '<div class="analysis-tag"><strong>主导五行：</strong>' + analysis.wuxing.dominant + '（平衡度' + analysis.wuxing.balance.toFixed(2) + '）</div>' +
         '<div class="analysis-tag"><strong>阴阳：</strong>阳' + analysis.yinyang.yang + ' 阴' + analysis.yinyang.yin + '（平衡度' + analysis.yinyang.balance.toFixed(2) + '）</div>' +
         '<div class="analysis-tag"><strong>主导八卦：</strong>' + (analysis.bagua.dominant || '无') + '</div>' +
-        '</div>';
+        '</div>' + icExtra;
 
     document.getElementById('pickResult').style.display = 'block';
 
@@ -1110,26 +1119,65 @@ function renderPickResult(frontNums, backNums) {
 }
 
 function getStrategyName(s) {
-    return { balanced:'均衡策略', hot:'热号策略', cold:'冷号策略', iching:'易理策略' }[s] || s;
+    return { balanced:'均衡策略', hot:'热号策略', cold:'冷号策略', iching:'易理策略', yijing:'易理策略' }[s] || s;
 }
 
+// ========== 备选推荐渲染 ==========
+function renderBackups(backups) {
+    const container = document.getElementById('pickBackups');
+    if (!backups || backups.length === 0) { container.innerHTML = ''; return; }
+    let html = '<div class="card-title">📋 备选推荐（天启算法）</div><div class="backup-grid">';
+    backups.forEach((g, i) => {
+        const f = g.前区 || g.front;
+        const b = g.后区 || g.back;
+        if (!f || !b) return;
+        const sum = f.reduce((s,n) => s + n, 0);
+        const odd = f.filter(n => n%2===1).length;
+        html += '<div class="backup-card"><div class="backup-label">备选 ' + (i+1) + '</div>' +
+            '<div>' + f.map(n => getBallHTML(n, 'front', 'sm')).join(' ') + '</div>' +
+            '<div style="margin-top:4px;">' + b.map(n => getBallHTML(n, 'back', 'sm')).join(' ') + '</div>' +
+            '<div class="backup-meta" style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">和值:' + sum + ' 奇偶:' + odd + ':' + (5-odd) + '</div></div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+// ========== 多注生成（天启引擎版） ==========
 function generateMultiPicks(n) {
     pickHistory = pickHistory.filter(r => !r._multi);
-    for (let i = 0; i < n; i++) {
-        const frontFreq = calcFrequency('front', 35);
-        const backFreq = calcFrequency('back', 12);
-        let frontNums, backNums;
-        if (currentStrategy === 'iching') { frontNums = ichingPick(5, 35, frontFreq); backNums = ichingPick(2, 12, backFreq); }
-        else { frontNums = weightedPick(frontFreq, 5, currentStrategy); backNums = weightedPick(backFreq, 2, currentStrategy); }
-        frontNums.sort((a,b) => a-b); backNums.sort((a,b) => a-b);
-
-        const hex = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums).hexagram.hexagram;
-        pickHistory.unshift({
-            id: Date.now() + i, date: new Date().toLocaleDateString('zh-CN'),
-            front: frontNums, back: backNums, strategy: currentStrategy,
-            hexagram: hex.name, hexagramId: hex.id, _multi: true
+    
+    if (typeof 天启选号 !== 'undefined' && DRAWS.length >= 50) {
+        // 天启引擎版
+        const strategyMap = { 'balanced': 'balanced', 'iching': 'yijing', 'hot': 'hot', 'cold': 'cold' };
+        const apiStrategy = strategyMap[currentStrategy] || 'balanced';
+        const results = 天启选号(strategyMap[currentStrategy] || 'balanced', n);
+        results.forEach(r => {
+            pickHistory.unshift({
+                id: Date.now() + pickHistory.filter(x=>x._multi).length,
+                date: new Date().toLocaleDateString('zh-CN'),
+                front: r.front, back: r.back,
+                strategy: currentStrategy,
+                hexagram: r.yijingText || '卦',
+                hexagramId: r.yijingId || '☰', _multi: true
+            });
         });
+    } else {
+        for (let i = 0; i < n; i++) {
+            const frontFreq = calcFrequency('front', 35);
+            const backFreq = calcFrequency('back', 12);
+            let frontNums, backNums;
+            if (currentStrategy === 'iching') { frontNums = ichingPick(5, 35, frontFreq); backNums = ichingPick(2, 12, backFreq); }
+            else { frontNums = weightedPick(frontFreq, 5, currentStrategy); backNums = weightedPick(backFreq, 2, currentStrategy); }
+            frontNums.sort((a,b) => a-b); backNums.sort((a,b) => a-b);
+            const hex = IChingAnalyzer.comprehensiveAnalysis(frontNums, backNums).hexagram.hexagram;
+            pickHistory.unshift({
+                id: Date.now() + i, date: new Date().toLocaleDateString('zh-CN'),
+                front: frontNums, back: backNums, strategy: currentStrategy,
+                hexagram: hex.name, hexagramId: hex.id, _multi: true
+            });
+        }
     }
+    
     if (pickHistory.length > 50) pickHistory = pickHistory.slice(0, 50);
     try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
     renderPickHistory();
