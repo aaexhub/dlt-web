@@ -1693,14 +1693,16 @@ function renderPickHistory() {
         return;
     }
     c.innerHTML = pickHistory.slice(0, 30).map(r =>
-        '<div class="pick-history-item">' +
+        '<div class="pick-history-item" style="align-items:flex-start;">' +
+        '<div style="flex:1;min-width:0;">' +
         '<span class="date">' + r.date + '</span>' +
-        '<span>' + getBallsHTML(r.front, 'front', 'sm') + ' <span style="color:var(--jin-se-dim);margin:0 4px;">+</span> ' + getBallsHTML(r.back, 'back', 'sm') + '</span>' +
+        '<div style="margin:6px 0;">' + getBallsHTML(r.front, 'front', 'sm') + ' <span style="color:var(--jin-se-dim);margin:0 4px;">+</span> ' + getBallsHTML(r.back, 'back', 'sm') + '</div>' +
         '<span class="method">☯ ' + (r.hexagram || '') + ' · ' + getStrategyName(r.strategy || 'balanced') + '</span>' +
-        '<span style="display:inline-flex;gap:4px;">' +
-        '<button class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:0.75rem;" onclick="yijingFromHistory(' + r.id + ')">☯ 易经分析</button>' +
-        '<button class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:0.75rem;" onclick="addFavFromHistory(' + r.id + ')">⭐</button>' +
-        '</span>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">' +
+        '<button class="btn btn-outline btn-sm" style="padding:4px 8px;font-size:0.72rem;white-space:nowrap;" onclick="yijingFromHistory(' + r.id + ')">☯ 易经分析</button>' +
+        '<button class="btn btn-outline btn-sm" style="padding:4px 8px;font-size:0.72rem;" onclick="addFavFromHistory(' + r.id + ')">⭐收藏</button>' +
+        '</div>' +
         '</div>'
     ).join('');
 }
