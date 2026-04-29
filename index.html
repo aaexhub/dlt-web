@@ -296,7 +296,7 @@ const 推荐引擎 = {
             if (wx && 五行 && 五行.最缺五行.includes(wx)) 易经分 += 0.3;
             const yy = IChingAnalyzer.getYinYang(n);
             if (yy && 五行 && 五行.缺失阴阳 && yy === 五行.缺失阴阳) 易经分 += 0.2;
-            易经分 += Math.random() * 0.05;
+            易经分 += Math.random() * 1.5;
 
             frontScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
         }
@@ -309,7 +309,7 @@ const 推荐引擎 = {
             if (策略 === 'cold' && backHC[n-1].status === '冷') 彩经分 += 0.4;
             if (策略 === 'cold' && backMiss[n-1] > 6) 彩经分 += 0.4;
 
-            let 易经分 = 0.2 + Math.random() * 0.05;
+            let 易经分 = 0.2 + Math.random() * 1.5;
             backScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
         }
 
@@ -408,8 +408,8 @@ const 推荐引擎 = {
             备选推荐: Array.from({length: 4}, () => {
                 const 备 = this.评分(策略, draws);
                 // 加点随机扰动
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.3);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.3);
+                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 2.5);
+                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 2.5);
                 return { 前区: this.选号(备.前区评分, 5), 后区: this.选号(备.后区评分, 2) };
             }),
             前区评分排行: 前区排行,
@@ -445,8 +445,8 @@ function 天启选号(策略, 组数) {
             if (fronts.includes(result.主推荐.前区.join(','))) {
                 // 如果重复，再加一次随机扰动
                 const 备 = 推荐引擎.评分(api策略, draws);
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 0.5);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 0.5);
+                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 3.0);
+                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 3.0);
                 result.主推荐.前区 = 推荐引擎.选号(备.前区评分, 5);
                 result.主推荐.后区 = 推荐引擎.选号(备.后区评分, 2);
                 result.主推荐.易经分析 = IChingAnalyzer.comprehensiveAnalysis(result.主推荐.前区, result.主推荐.后区);
