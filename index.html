@@ -407,9 +407,10 @@ const 推荐引擎 = {
             主推荐: { 前区, 后区, 易经分析: 分析 },
             备选推荐: Array.from({length: 4}, () => {
                 const 备 = this.评分(策略, draws);
-                // 加点随机扰动
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 2.5);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 2.5);
+                // 加入强随机扰动，确保4个备选互不相同
+                const 扰动量 = 3.0 + Math.random() * 5.0;
+                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 扰动量);
+                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 扰动量);
                 return { 前区: this.选号(备.前区评分, 5), 后区: this.选号(备.后区评分, 2) };
             }),
             前区评分排行: 前区排行,
@@ -437,27 +438,38 @@ function 天启选号(策略, 组数) {
 
     const results = [];
     for (let i = 0; i < 组数; i++) {
-        const result = 推荐引擎.主推荐(api策略, draws);
-        // 轮流用不同扰动来产生不同号码
-        if (i > 0 && results.length > 0) {
-            // 检查是否与前面的重复
+        // 每次重新跑评分，不复用之前的结果
+        const 评分 = 推荐引擎.评分(api策略, draws);
+        // 用强随机扰动确保每次结果不同
+        const seed1 = Math.random() * 10.0 + (_pickRandomSeed || Date.now()) % 100;
+        const seed2 = Math.random() * 10.0 + i * 7;
+        Object.keys(评分.前区评分).forEach(k => 评分.前区评分[k] += Math.random() * seed1);
+        Object.keys(评分.后区评分).forEach(k => 评分.后区评分[k] += Math.random() * seed2);
+        // 重跑选号
+        const 前区 = 推荐引擎.选号(评分.前区评分, 5);
+        const 后区 = 推荐引擎.选号(评分.后区评分, 2);
+        const 易经分析 = IChingAnalyzer.comprehensiveAnalysis(前区, 后区);
+        
+        // 如果与已有结果重复，再加随机扰动重试
+        if (results.length > 0) {
             const fronts = results.map(r => r.front.join(','));
-            if (fronts.includes(result.主推荐.前区.join(','))) {
-                // 如果重复，再加一次随机扰动
-                const 备 = 推荐引擎.评分(api策略, draws);
-                Object.keys(备.前区评分).forEach(k => 备.前区评分[k] += Math.random() * 3.0);
-                Object.keys(备.后区评分).forEach(k => 备.后区评分[k] += Math.random() * 3.0);
-                result.主推荐.前区 = 推荐引擎.选号(备.前区评分, 5);
-                result.主推荐.后区 = 推荐引擎.选号(备.后区评分, 2);
-                result.主推荐.易经分析 = IChingAnalyzer.comprehensiveAnalysis(result.主推荐.前区, result.主推荐.后区);
+            const backs = results.map(r => r.back.join(','));
+            let retries = 0;
+            while (fronts.includes(前区.join(',')) && backs.includes(后区.join(',')) && retries < 10) {
+                Object.keys(评分.前区评分).forEach(k => 评分.前区评分[k] += Math.random() * 8.0);
+                Object.keys(评分.后区评分).forEach(k => 评分.后区评分[k] += Math.random() * 8.0);
+                前区 = 推荐引擎.选号(评分.前区评分, 5);
+                后区 = 推荐引擎.选号(评分.后区评分, 2);
+                retries++;
             }
         }
+        
         results.push({
-            front: result.主推荐.前区,
-            back: result.主推荐.后区,
-            yijing: result.主推荐.易经分析,
-            yijingText: result.主推荐.易经分析?.hexagram?.hexagram?.name + '卦',
-            yijingId: result.主推荐.易经分析?.hexagram?.hexagram?.id
+            front: 前区,
+            back: 后区,
+            yijing: 易经分析,
+            yijingText: 易经分析?.hexagram?.hexagram?.name + '卦',
+            yijingId: 易经分析?.hexagram?.hexagram?.id
         });
     }
     return results;
@@ -1649,13 +1661,14 @@ function generateMultiPicks(n) {
             const apiStrategy = strategyMap[currentStrategy] || 'balanced';
             const results = 天启选号(strategyMap[currentStrategy] || 'balanced', n);
             results.forEach(r => {
+                const hex = IChingAnalyzer.comprehensiveAnalysis(r.front, r.back).hexagram.hexagram;
                 pickHistory.unshift({
                     id: Date.now() + pickHistory.filter(x=>x._multi).length,
                     date: new Date().toLocaleDateString('zh-CN'),
                     front: r.front, back: r.back,
                     strategy: currentStrategy,
-                    hexagram: r.yijingText || '卦',
-                    hexagramId: r.yijingId || '☰', _multi: true
+                    hexagram: hex.name,
+                    hexagramId: hex.id, _multi: true
                 });
             });
         } else {
@@ -1676,7 +1689,9 @@ function generateMultiPicks(n) {
         }
     } catch(e) {
         console.error('[易彩] 多注生成出错:', e.message);
-        showToast('⚠️ 尝试备选方案');
+        showToast('⚠️ 备选方案不可用');
+        return;
+    }
     
     if (pickHistory.length > 50) pickHistory = pickHistory.slice(0, 50);
     try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
