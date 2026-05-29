@@ -433,6 +433,9 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     .vip-card { cursor: pointer; border: 1px solid var(--jin-se); transition: all 0.3s; }
     .vip-card:hover { box-shadow: 0 0 20px rgba(212,175,55,0.3); transform: translateY(-3px); }
     .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+    @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; gap: 12px; } }
+    @media (max-width: 600px) { .qrcode-box { flex-direction: column; } }
+    @media (max-width: 600px) { .qrcode-box .qrcode-placeholder { width: 140px; height: 140px; } }
     .pricing-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px 18px; text-align: center; transition: all 0.3s; position: relative; }
     .pricing-card.featured { border-color: var(--jin-se); box-shadow: 0 0 20px rgba(212,175,55,0.2); }
     .pricing-card .price { font-size: 2rem; font-weight: bold; color: var(--jin-se); margin: 12px 0; }
@@ -445,6 +448,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     .badge-hot { background: #e74c3c; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; position: absolute; top: -8px; right: 10px; }
     .qrcode-box { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; }
     .qrcode-box .qrcode-placeholder { width: 180px; height: 180px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #333; font-size: 0.8rem; border: 2px dashed #ccc; }
+    .qrcode-box .qrcode-placeholder img { max-width: 100%; max-height: 100%; border-radius: 6px; }
     .vip-step { display: flex; align-items: center; gap: 14px; padding: 14px; background: var(--bg-card); border-radius: 10px; margin-bottom: 8px; }
     .vip-step .step-num { width: 32px; height: 32px; background: var(--jin-se); color: #1a1a2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
     .section-desc { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; }
@@ -494,7 +498,9 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
     /* Features */
-    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 32px; }
+    .feat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 32px; }
+    @media (max-width: 768px) { .feat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+    @media (max-width: 420px) { .feat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
     .feat-card {
         background: var(--bg-card); border: 1px solid var(--border-color);
         border-radius: var(--radius); padding: 24px 18px; text-align: center;
@@ -1065,8 +1071,14 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         <div style="text-align:center;margin-top:18px;padding:16px;background:var(--bg-dark);border-radius:10px;">
             <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:10px;">👇 扫码添加微信 · 发送付款截图开通VIP</p>
             <div class="qrcode-box" style="display:inline-flex;">
-                <div class="qrcode-placeholder" id="vipWechatQr">📱 请上传微信收款码</div>
-                <p style="font-size:0.85rem;color:var(--jin-se);font-weight:bold;">联系微信号：<span id="vipWechatId" style="color:#4ecdc4;">[待填写]</span></p>
+                <div class="qrcode-placeholder" id="vipWechatQr" style="background:linear-gradient(135deg,#f5f5f5,#e8e8e8);border:2px dashed #aaa;">
+                    <div style="text-align:center;color:#666;">
+                        <div style="font-size:2.5rem;margin-bottom:6px;">📱</div>
+                        <div style="font-size:0.85rem;">微信收款码</div>
+                        <div style="font-size:0.7rem;margin-top:4px;color:#999;">（请替换为实际收款码图片）</div>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem;color:var(--jin-se);font-weight:bold;">联系微信号：<strong id="vipWechatId" style="color:#4ecdc4;font-size:1rem;">[待填写-联系管理员]</strong></p>
             </div>
         </div>
     </div>
