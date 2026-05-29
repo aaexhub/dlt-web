@@ -802,7 +802,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 <div id="_dlt_status" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;
     text-align:center;padding:6px;font-size:0.7rem;color:var(--text-muted);
     background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);transition:all 0.4s;">
-    ⏳ 加载中... | 140期历史数据 | 天启算法引擎
+    ⏳ 加载中... | <span id="_dlt_period_count">?</span>期历史数据 | 天启算法引擎
 </div>
 
 <header>
@@ -2259,7 +2259,11 @@ window.onerror = function(msg, url, line, col, err) {
     try {
         const status = document.getElementById('_dlt_status');
         if (status) {
-            status.textContent = '✓ 已就绪 | 140期数据 | 天启算法';
+            const periodCount = (typeof window.DRAWS !== 'undefined' && window.DRAWS) ? window.DRAWS.length : 0;
+            status.textContent = '✓ 已就绪 | ' + periodCount + '期数据 | 天启算法';
+            // 同时更新页面顶部加载提示中的期数
+            const periodSpan = document.getElementById('_dlt_period_count');
+            if (periodSpan) periodSpan.textContent = periodCount;
             status.style.background = 'rgba(76,175,80,0.15)';
         }
     } catch(e) {}
