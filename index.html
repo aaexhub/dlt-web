@@ -672,8 +672,6 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         nav a { font-size: 0.75rem; padding: 6px 8px; }
         .hero h1 { font-size: 1.6rem; }
         .hero { padding: 30px 14px 20px; }
-        .container { padding: 14px 10px 40px; }
-        .bagua-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
         .chart-box { height: 260px; }
         .ball-lg { width: 44px; height: 44px; font-size: 1rem; }
         .strategy-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1784,7 +1782,6 @@ function generateMultiPicks(n) {
     try { localStorage.setItem('dltPickHistory', JSON.stringify(pickHistory)); } catch(e) {}
     renderPickHistory();
     showToast('已生成 ' + n + ' 注号码');
-}
 }
 
 function renderPickHistory() {
