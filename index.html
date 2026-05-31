@@ -804,6 +804,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <a data-section="analysis">📊 分析</a>
             <a data-section="data">📋 数据</a>
             <a data-section="fav">⭐ 收藏</a>
+            <a data-section="bazi">🧧 八字</a>
             <!-- 客服和推广暂时隐藏 -->
             <!-- <a data-section="service" style="color:#4ecdc4;">💬 客服</a> -->
             <!-- <a data-section="promote">📣 推广</a> -->
@@ -1106,6 +1107,74 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
                 <thead><tr><th>期号</th><th>日期</th><th>前区</th><th>后区</th><th>前区特征</th><th>后区特征</th></tr></thead>
                 <tbody id="dataTableBody"></tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 八字页 ==================== -->
+<div class="section" id="section-bazi">
+    <h2 class="section-title">🧧 生辰八字选号</h2>
+    <p class="section-desc">输入您的出生信息，根据生辰八字匹配专属号码</p>
+
+    <div class="card">
+        <div class="card-title">📅 出生信息</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:12px;">
+            <div>
+                <label style="font-size:0.82rem;color:var(--text-muted);">出生年</label><br>
+                <select id="baziYear" style="width:80px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.9rem;">
+                </select>
+            </div>
+            <div>
+                <label style="font-size:0.82rem;color:var(--text-muted);">月</label><br>
+                <select id="baziMonth" style="width:68px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.9rem;">
+                    <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+                    <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+                    <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+                    <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-size:0.82rem;color:var(--text-muted);">日</label><br>
+                <select id="baziDay" style="width:68px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.9rem;">
+                </select>
+            </div>
+            <div>
+                <label style="font-size:0.82rem;color:var(--text-muted);">时辰</label><br>
+                <select id="baziHour" style="width:80px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.9rem;">
+                    <option value="0">子时(23-01)</option><option value="1">丑时(01-03)</option>
+                    <option value="2">寅时(03-05)</option><option value="3">卯时(05-07)</option>
+                    <option value="4">辰时(07-09)</option><option value="5">巳时(09-11)</option>
+                    <option value="6">午时(11-13)</option><option value="7">未时(13-15)</option>
+                    <option value="8">申时(15-17)</option><option value="9">酉时(17-19)</option>
+                    <option value="10">戌时(19-21)</option><option value="11">亥时(21-23)</option>
+                </select>
+            </div>
+            <div style="margin-left:auto;">
+                <label style="font-size:0.82rem;color:var(--text-muted);">性别</label><br>
+                <select id="baziSex" style="width:70px;padding:8px;background:var(--bg-dark);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.9rem;">
+                    <option value="male">男</option><option value="female">女</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-gold" onclick="analyzeBaZi()" style="font-size:1rem;padding:12px 36px;">🧧 排八字 · 选号码</button>
+    </div>
+
+    <div id="baziResult" style="display:none;">
+        <!-- 四柱八字 -->
+        <div class="card">
+            <div class="card-title" style="text-align:center;">📜 八字四柱</div>
+            <div id="baziPillars" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;"></div>
+            <div style="text-align:center;margin-top:8px;font-size:0.8rem;color:var(--text-muted);" id="baziNayin"></div>
+        </div>
+        <!-- 五行分析 -->
+        <div class="card" id="baziWuxingCard">
+            <div class="card-title">🔥 五行分析</div>
+            <div id="baziWuxingContent"></div>
+        </div>
+        <!-- 推荐号码 -->
+        <div class="card">
+            <div class="card-title" style="text-align:center;">🎯 八字推荐号码</div>
+            <div id="baziPicks" style="text-align:center;"></div>
         </div>
     </div>
 </div>
@@ -1692,6 +1761,246 @@ function cycleTheme() {
         }
     } catch(e) {}
 })();
+
+// ========== 八字引擎 ==========
+// 天干地支对照表
+var TIANGAN = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+var DIZHI  = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+// 生肖表
+var SHENGXIAO = ['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'];
+// 五行配天干
+var TG_WUXING = {甲:'木',乙:'木',丙:'火',丁:'火',戊:'土',己:'土',庚:'金',辛:'金',壬:'水',癸:'水'};
+// 五行配地支
+var DZ_WUXING = {子:'水',丑:'土',寅:'木',卯:'木',辰:'土',巳:'火',午:'火',未:'土',申:'金',酉:'金',戌:'土',亥:'水'};
+// 地支时辰
+var DIZHI_HOURS = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+// 纳音五行表（简化版——按年柱纳音）
+var NAYIN_MAP = {
+    '甲子乙丑':'海中金','丙寅丁卯':'炉中火','戊辰己巳':'大林木','庚午辛未':'路旁土','壬申癸酉':'剑锋金',
+    '甲戌乙亥':'山头火','丙子丁丑':'涧下水','戊寅己卯':'城头土','庚辰辛巳':'白蜡金','壬午癸未':'杨柳木',
+    '甲申乙酉':'泉中水','丙戌丁亥':'屋上土','戊子己丑':'霹雳火','庚寅辛卯':'松柏木','壬辰癸巳':'长流水',
+    '甲午乙未':'沙中金','丙申丁酉':'山下火','戊戌己亥':'平地木','庚子辛丑':'壁上土','壬寅癸卯':'金箔金',
+    '甲辰乙巳':'覆灯火','丙午丁未':'天河水','戊申己酉':'大驿土','庚戌辛亥':'钗钏金','壬子癸丑':'桑柘木',
+    '甲寅乙卯':'大溪水','丙辰丁巳':'沙中土','戊午己未':'天上火','庚申辛酉':'石榴木','壬戌癸亥':'大海水'
+};
+
+// 计算年柱天干地支
+function getYearGZ(year) {
+    var gan = TIANGAN[(year - 4) % 10];
+    var zhi = DIZHI[(year - 4) % 12];
+    return {gan:gan, zhi:zhi, str:gan+zhi};
+}
+
+// 月柱（以节气简化：正月寅、二月卯……）
+function getMonthGZ(year, month) {
+    var mDZ = DIZHI[(month + 1) % 12]; // 正月寅月在索引2
+    // 年上起月法（五虎遁）
+    var yearGan = (year - 4) % 10;
+    var monthStarts = ['丙','戊','庚','壬','甲']; // 甲乙丙丁戊己庚
+    // 甲己年起丙寅，乙庚年起戊寅，丙辛年起庚寅，丁壬年起壬寅，戊癸年起甲寅
+    var startGanIdx = [2,4,6,8,0]; // 对应年干0-4
+    var s = startGanIdx[yearGan % 5];
+    var mGan = TIANGAN[(s + month - 1) % 10];
+    return {gan:mGan, zhi:mDZ, str:mGan+mDZ};
+}
+
+// 日柱（简化计算——基于1900-01-01的日干支为甲子日）
+function getDayGZ(year, month, day) {
+    var base = new Date(1900, 0, 1); // 1900-01-01 甲子日
+    var target = new Date(year, month-1, day);
+    var diff = Math.round((target - base) / 86400000);
+    var gan = TIANGAN[diff % 10];
+    var zhi = DIZHI[diff % 12];
+    return {gan:gan, zhi:zhi, str:gan+zhi};
+}
+
+// 时柱（日上起时法——五鼠遁）
+function getHourGZ(dayGan, hourIdx) {
+    // 甲己日起甲子，乙庚日起丙子，丙辛日起戊子，丁壬日起庚子，戊癸日起壬子
+    var startGanIdx = [0,2,4,6,8]; // 对应日干0-4
+    var s = startGanIdx[dayGan % 5];
+    var hGan = TIANGAN[(s + hourIdx) % 10];
+    var hZhi = DIZHI[hourIdx % 12];
+    return {gan:hGan, zhi:hZhi, str:hGan+hZhi};
+}
+
+// 获取纳音
+function getNayin(gzStr) {
+    // 匹配纳音表中的前四字
+    for (var k in NAYIN_MAP) {
+        if (k.indexOf(gzStr) === 0 || gzStr.indexOf(k.substring(0,2)) === 0) {
+            return NAYIN_MAP[k];
+        }
+    }
+    return '';
+}
+
+// 分析五行旺衰
+function analyzeWuxing(pillars) {
+    var wxCount = {金:0,木:0,水:0,火:0,土:0};
+    for (var i = 0; i < pillars.length; i++) {
+        var p = pillars[i];
+        // 天干五行
+        if (TG_WUXING[p.gan]) wxCount[TG_WUXING[p.gan]]++;
+        // 地支五行
+        if (DZ_WUXING[p.zhi]) wxCount[DZ_WUXING[p.zhi]]++;
+    }
+    return wxCount;
+}
+
+// 初始化八字页面的下拉框
+function initBaZiUI() {
+    var yearSel = document.getElementById('baziYear');
+    var daySel = document.getElementById('baziDay');
+    if (!yearSel) return;
+    for (var y = 1940; y <= 2025; y++) {
+        var opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y + '年';
+        if (y === 1980) opt.selected = true;
+        yearSel.appendChild(opt);
+    }
+    for (var d = 1; d <= 31; d++) {
+        var opt2 = document.createElement('option');
+        opt2.value = d;
+        opt2.textContent = d + '日';
+        if (d === 15) opt2.selected = true;
+        daySel.appendChild(opt2);
+    }
+}
+
+// 排盘&&选号
+function analyzeBaZi() {
+    var y = parseInt(document.getElementById('baziYear').value);
+    var m = parseInt(document.getElementById('baziMonth').value);
+    var d = parseInt(document.getElementById('baziDay').value);
+    var h = parseInt(document.getElementById('baziHour').value);
+    var sex = document.getElementById('baziSex').value;
+    
+    var yearGZ = getYearGZ(y);
+    var monthGZ = getMonthGZ(y, m);
+    var dayGZ = getDayGZ(y, m, d);
+    var hourGZ = getHourGZ((y-4)%10, h);
+    
+    var pillars = [yearGZ, monthGZ, dayGZ, hourGZ];
+    var titles = ['年柱','月柱','日柱','时柱'];
+    
+    // 显示四柱
+    var pillHtml = '';
+    for (var i = 0; i < pillars.length; i++) {
+        pillHtml += 
+            '<div style="text-align:center;padding:8px 14px;background:var(--bg-dark);border-radius:8px;border:1px solid rgba(212,165,116,0.2);min-width:72px;">' +
+            '<div style="font-size:0.72rem;color:var(--text-muted);">' + titles[i] + '</div>' +
+            '<div style="font-size:1.3rem;color:var(--jin-se);font-weight:bold;margin:4px 0;">' + pillars[i].gan + '<br>' + pillars[i].zhi + '</div>' +
+            '<div style="font-size:0.88rem;color:var(--text-primary);">' + pillars[i].str + '</div>' +
+            '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">' + TG_WUXING[pillars[i].gan] + DZ_WUXING[pillars[i].zhi] + '</div>' +
+            '</div>';
+    }
+    document.getElementById('baziPillars').innerHTML = pillHtml;
+    
+    // 纳音
+    var nayinStr = yearGZ.str.substring(0,2);
+    var nain = NAYIN_MAP[nayinStr];
+    if (!nain) {
+        // 尝试匹配
+        for (var k in NAYIN_MAP) {
+            if (k.indexOf(nayinStr) === 0) { nain = NAYIN_MAP[k]; break; }
+        }
+    }
+    document.getElementById('baziNayin').textContent = '纳音：' + (nain || '--') + ' 命';
+    
+    // 五行分析
+    var wx = analyzeWuxing(pillars);
+    var total = Object.values(wx).reduce(function(a,b){return a+b;}, 0);
+    // 找出最多的两个和最缺的两个
+    var sorted = Object.keys(wx).sort(function(a,b){return wx[b]-wx[a];});
+    var wxHtml = '<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">';
+    var barColors = {金:'#ffd700',木:'#2ecc71',水:'#3498db',火:'#e74c3c',土:'#8B4513'};
+    for (var k5 in wx) {
+        var pct = total > 0 ? Math.round(wx[k5]/total*100) : 0;
+        var barColor = barColors[k5] || '#888';
+        wxHtml += '<div style="text-align:center;"><div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:4px;">' + k5 + '</div>' +
+            '<div style="width:40px;height:' + (pct*2 + 20) + 'px;background:' + barColor + ';border-radius:4px;margin:0 auto;opacity:0.8;"></div>' +
+            '<div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">' + pct + '%</div></div>';
+    }
+    wxHtml += '</div>';
+    
+    var mostWx = sorted[0];
+    var leastWx = sorted[sorted.length-1];
+    var wxDesc = '<div style="margin-top:10px;font-size:0.85rem;color:var(--text-secondary);">';
+    wxDesc += '🔸 最旺：<span style="color:var(--jin-se);font-weight:bold;">' + mostWx + '</span> · ';
+    wxDesc += '🔹 最缺：<span style="color:var(--accent-color);font-weight:bold;">' + leastWx + '</span> · ';
+    wxDesc += '建议补 <span style="color:' + barColors[leastWx] + ';font-weight:bold;">' + leastWx + '</span> 属性号码';
+    wxDesc += '</div>';
+    document.getElementById('baziWuxingContent').innerHTML = wxHtml + wxDesc;
+    
+    // 基于八字生成推荐号码
+    var leastWxNums = []; // 补所需五行的号码
+    var mostWxNums = [];
+    for (var n = 1; n <= 35; n++) {
+        var wxN = IChingAnalyzer.getWuxing(n);
+        if (wxN === leastWx) leastWxNums.push(n);
+        if (wxN === mostWx) mostWxNums.push(n);
+    }
+    
+    // 后区：用八字最缺五行对应的号码
+    var backPicks = [];
+    for (var n = 1; n <= 12; n++) {
+        var wxB = IChingAnalyzer.getWuxing(n);
+        if (wxB === leastWx) backPicks.push(n);
+    }
+    if (backPicks.length < 2) {
+        for (var n = 1; n <= 12; n++) {
+            if (backPicks.length >= 2) break;
+            var wxB = IChingAnalyzer.getWuxing(n);
+            if (wxB === mostWx) backPicks.push(n);
+        }
+    }
+    while (backPicks.length < 2) {
+        var r = Math.floor(Math.random()*12)+1;
+        if (backPicks.indexOf(r) === -1) backPicks.push(r);
+    }
+    backPicks.sort(function(a,b){return a-b;});
+    backPicks = backPicks.slice(0,2);
+    
+    // 生成多组推荐
+    function shuffle(a) {
+        for (var i = a.length-1; i > 0; i--) {
+            var j = Math.floor(Math.random()*(i+1));
+            var t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+    }
+    
+    var pickHtml = '<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:10px;">基于您八字中「<span style="color:var(--jin-se);font-weight:bold;">' + leastWx + '</span>」属性生成的推荐号码：</div>';
+    for (var g = 0; g < 3; g++) {
+        var pool = leastWxNums.length >= 5 ? leastWxNums : leastWxNums.concat(mostWxNums);
+        shuffle(pool);
+        var front = pool.slice(0,5).sort(function(a,b){return a-b;});
+        // 保证5个
+        while (front.length < 5) {
+            var rn = Math.floor(Math.random()*35)+1;
+            if (front.indexOf(rn) === -1) front.push(rn);
+            front.sort(function(a,b){return a-b;});
+        }
+        pickHtml += '<div style="display:inline-flex;flex-wrap:wrap;gap:4px;justify-content:center;padding:6px 14px;margin:4px;background:var(--bg-dark);border-radius:8px;">' +
+            '<span style="font-size:0.75rem;color:var(--text-muted);margin-right:6px;">第' + (g+1) + '组</span>';
+        for (var fi = 0; fi < front.length; fi++) {
+            pickHtml += '<span class="num-ball">' + front[fi] + '</span>';
+        }
+        pickHtml += '<span style="margin:0 4px;">|</span>';
+        for (var bi = 0; bi < backPicks.length; bi++) {
+            pickHtml += '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + backPicks[bi] + '</span>';
+        }
+        pickHtml += '</div>';
+    }
+    
+    document.getElementById('baziPicks').innerHTML = pickHtml;
+    
+    // 显示结果区域
+    document.getElementById('baziResult').style.display = 'block';
+    document.getElementById('baziResult').scrollIntoView({behavior:'smooth',block:'start'});
+}
 
 // ========== 导航 ==========
 function navigateTo(section) {
@@ -3296,6 +3605,9 @@ function generateSharePoster() {
         toast.scrollIntoView({behavior:'smooth',block:'center'});
     }
 }
+
+// 初始化八字UI
+initBaZiUI();
 </script>
 </body>
 </html>
