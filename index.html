@@ -3089,6 +3089,42 @@ function checkFreeActionWithConsume() {
     document.head.appendChild(script);
     console.log('[易彩] 已加载不蒜子访客统计');
 })();
+
+// ========== 易彩统计上报 ==========
+(function() {
+    var STATS_URL = 'https://correlation-seeker-cups-sat.trycloudflare.com';
+    
+    // 上报页面访问
+    function reportVisit() {
+        try {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', STATS_URL + '/api/visit', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                page: window.location.pathname,
+                referer: document.referrer || ''
+            }));
+        } catch(e) { /* 静默 */ }
+    }
+    reportVisit();
+    
+    // 拦截注册函数，上报注册事件
+    var origSubmit = authSubmit;
+    window.authSubmit = function() {
+        var user = document.getElementById('authUser').value.trim();
+        if (user) {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', STATS_URL + '/api/register', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({username: user}));
+            } catch(e) {}
+        }
+        return origSubmit ? origSubmit.apply(this, arguments) : null;
+    };
+    
+    console.log('[易彩] 已加载统计上报 → ' + STATS_URL);
+})();
 </script>
 </body>
 </html>
