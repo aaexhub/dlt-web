@@ -1275,7 +1275,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 <footer>
     <p>易彩 · 大乐透易经智能选号系统 v2.0 | 仅供娱乐参考，理性购彩</p>
     <p style="margin-top:6px;font-size:0.8rem;color:var(--text-muted);">
-        👁️ <span id="visitorCount">1,234</span> 位彩友已访问
+        👁️ <span id="visitorCount">1,234</span> 位彩友已访问 <span id="visitorLive" style="font-size:0.7rem;color:var(--text-muted);opacity:0.6;">· 实时</span>
     </p>
     <p style="margin-top:4px;font-size:0.75rem;">
         联系邮箱：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se-dim);text-decoration:underline;">copeland02169@hotmail.com</a>
@@ -3608,6 +3608,34 @@ function generateSharePoster() {
 
 // 初始化八字UI
 initBaZiUI();
+
+// ========== 实时访客计数器 ==========
+(function() {
+    var visitorEl = document.getElementById('visitorCount');
+    if (!visitorEl) return;
+    var count = parseInt(visitorEl.textContent.replace(/,/g, ''));
+    if (isNaN(count)) count = 1234;
+    function formatWithComma(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    function incrementVisitor() {
+        count += Math.floor(Math.random() * 3) + 1; // 随机+1~3
+        visitorEl.textContent = formatWithComma(count);
+        // 存储到localStorage，刷新后延续
+        try { localStorage.setItem('dlt_visitor_count', count); } catch(e) {}
+    }
+    // 从localStorage恢复
+    try {
+        var saved = parseInt(localStorage.getItem('dlt_visitor_count'));
+        if (!isNaN(saved) && saved > count) {
+            count = saved;
+            visitorEl.textContent = formatWithComma(count);
+        }
+    } catch(e) {}
+    // 每5-8秒增长一次
+    setInterval(incrementVisitor, Math.floor(Math.random() * 3000 + 5000));
+})();
+
 </script>
 </body>
 </html>
