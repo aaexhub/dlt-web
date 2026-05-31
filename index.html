@@ -665,6 +665,83 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     }
     .toast.show { opacity: 1; }
 
+    /* Modal overlay */
+    .modal-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6); z-index: 10000;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+    .modal-box {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 30px;
+        max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    .modal-box h2 { color: var(--jin-se); margin-bottom: 16px; text-align: center; }
+    .modal-box label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin: 10px 0 4px; }
+    .modal-box input[type=text], .modal-box input[type=password] {
+        width: 100%; padding: 10px; background: var(--bg-card);
+        border: 1px solid var(--border-color); border-radius: 6px;
+        color: var(--text-primary); font-size: 0.9rem; box-sizing: border-box;
+    }
+    .modal-actions { text-align: center; margin-top: 16px; }
+    .modal-link { font-size: 0.82rem; color: var(--jin-se-dim); cursor: pointer; }
+    .modal-link:hover { color: var(--jin-se); }
+    .modal-close {
+        float: right; cursor: pointer; font-size: 1.2rem;
+        color: var(--text-muted); background: none; border: none;
+    }
+    .modal-status {
+        text-align: center; font-size: 0.82rem; margin-top: 12px;
+        padding: 8px; border-radius: 6px;
+    }
+    .modal-status.success { background: rgba(76,175,80,0.1); color: #4CAF50; }
+    .modal-status.error { background: rgba(244,67,54,0.1); color: #F44336; }
+
+    /* Service page */
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .service-card {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 20px; text-align: center;
+        transition: all 0.2s;
+    }
+    .service-card:hover { border-color: var(--jin-se); }
+    .service-card .s-icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .service-card h3 { color: var(--jin-se); margin-bottom: 6px; }
+    .service-card p { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Promote page */
+    .promo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .promo-card {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius); padding: 18px;
+        transition: all 0.2s;
+    }
+    .promo-card:hover { border-color: var(--jin-se); }
+    .promo-card .p-icon { font-size: 1.8rem; }
+    .promo-card h3 { color: var(--jin-se); margin-bottom: 4px; font-size: 0.95rem; }
+    .promo-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* Legal modals */
+    .legal-content { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; }
+    .legal-content h3 { color: var(--jin-se); margin: 16px 0 8px; }
+    .legal-content h4 { color: var(--jin-se-dim); margin: 12px 0 4px; }
+    .legal-content p { margin: 6px 0; }
+
+    /* Expandable section */
+    .expandable { border: 1px solid var(--border-color); border-radius: var(--radius-sm); margin: 8px 0; }
+    .expandable-header {
+        padding: 12px 14px; cursor: pointer; font-size: 0.88rem;
+        color: var(--text-secondary); display: flex; justify-content: space-between;
+        align-items: center; user-select: none;
+    }
+    .expandable-header:hover { background: rgba(212,165,116,0.03); }
+    .expandable-header .arrow { transition: transform 0.2s; }
+    .expandable-header.open .arrow { transform: rotate(180deg); }
+    .expandable-body { padding: 0 14px 12px; display: none; font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; }
+
     /* Responsive */
     @media (max-width: 768px) {
         .header-inner { flex-direction: column; height: auto; padding: 8px 0; gap: 6px; }
@@ -698,7 +775,10 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <a data-section="analysis">📊 分析</a>
             <a data-section="data">📋 数据</a>
             <a data-section="fav">⭐ 收藏</a>
+            <a data-section="service" style="color:#4ecdc4;">💬 客服</a>
+            <a data-section="promote">📣 推广</a>
             <a data-section="vip" style="color:var(--jin-se);font-weight:bold;">👑 VIP</a>
+            <a id="navRegisterBtn" data-section="register" style="color:var(--jin-se);font-weight:bold;cursor:pointer;">🔑 登录/注册</a>
         </nav>
     </div>
 </header>
@@ -974,6 +1054,32 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 </div>
 
 <!-- ==================== VIP会员页 ==================== -->
+<div class="section" id="section-service">
+    <h2 class="section-title">💬 客服中心</h2>
+    <p class="section-desc">联系客服 · 反馈问题 · 咨询VIP</p>
+    <div class="card">
+        <div class="card-title">🤖 智能客服</div>
+        <div class="service-grid" id="serviceGrid"></div>
+    </div>
+    <div class="card">
+        <div class="card-title">📝 常见问题</div>
+        <div id="faqContentStatic"></div>
+    </div>
+</div>
+
+<div class="section" id="section-promote">
+    <h2 class="section-title">📣 推广方案</h2>
+    <p class="section-desc">将易彩智能选号系统分享给更多人</p>
+    <div class="card" id="promoteContent">
+        <div class="card-title">🚀 推广方式</div>
+        <div class="promo-grid" id="promoGrid"></div>
+    </div>
+    <div class="card">
+        <div class="card-title">📈 推广建议</div>
+        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.8;padding:10px;" id="promoteTips"></div>
+    </div>
+</div>
+
 <div class="section" id="section-vip">
     <h2 class="section-title">👑 VIP会员 · 专属服务</h2>
     <p class="section-desc">解锁全部功能，畅享易彩智能选号完整体验</p>
@@ -1103,8 +1209,57 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 
 <footer>
     <p>易彩 · 大乐透易经智能选号系统 v2.0 | 仅供娱乐参考，理性购彩</p>
+    <p style="margin-top:6px;">
+        <span id="busuanzi_value_site_pv" style="display:inline;">0</span> 次访问
+    </p>
+    <p style="margin-top:4px;font-size:0.75rem;">
+        联系邮箱：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se-dim);text-decoration:underline;">copeland02169@hotmail.com</a>
+        |
+        <a href="javascript:void(0)" onclick="showLegalModal('terms')" style="color:var(--text-muted);text-decoration:underline;">服务条款</a>
+        |
+        <a href="javascript:void(0)" onclick="showLegalModal('privacy')" style="color:var(--text-muted);text-decoration:underline;">隐私政策</a>
+        |
+        <a href="javascript:void(0)" onclick="showLegalModal('disclaimer')" style="color:var(--text-muted);text-decoration:underline;">免责声明</a>
+    </p>
     <p style="margin-top:4px;">© 2026 白玦团队 · 炙阳开发 ☀️</p>
 </footer>
+
+<!-- ==================== 注册/登录弹窗 ==================== -->
+<div class="modal-overlay" id="authModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeAuthModal()">✕</button>
+        <h2 id="authTitle">🔑 登录</h2>
+        <div id="authForm">
+            <label>昵称</label>
+            <input type="text" id="authUser" placeholder="输入昵称" maxlength="20">
+            <label>密码</label>
+            <input type="password" id="authPass" placeholder="输入密码" maxlength="30">
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="authSubmitBtn" onclick="authSubmit()">登录</button>
+            </div>
+            <div style="text-align:center;margin-top:12px;">
+                <span class="modal-link" id="authToggle" onclick="toggleAuthMode()">还没有账号？立即注册</span>
+            </div>
+            <div id="authStatus" class="modal-status" style="display:none;"></div>
+        </div>
+        <div id="authLoggedIn" style="display:none;text-align:center;">
+            <p style="font-size:1rem;color:var(--text-secondary);margin:20px 0;">👋 欢迎回来，<strong id="authDisplayUser" style="color:var(--jin-se);"></strong></p>
+            <p style="font-size:0.85rem;color:var(--text-muted);">✨ 免费体验次数剩余：<strong id="authFreeRemaining">0</strong> 次</p>
+            <div style="margin-top:16px;">
+                <button class="btn btn-outline" onclick="logoutUser()">退出登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 法律条款弹窗 ==================== -->
+<div class="modal-overlay" id="legalModal">
+    <div class="modal-box" style="max-width:560px;">
+        <button class="modal-close" onclick="closeLegalModal()">✕</button>
+        <h2 id="legalTitle">服务条款</h2>
+        <div class="legal-content" id="legalContent"></div>
+    </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -1489,6 +1644,11 @@ setTimeout(updateDailyCount, 500);
 
 // ========== 导航 ==========
 function navigateTo(section) {
+    // 注册/登录弹窗
+    if (section === 'register') {
+        openAuthModal();
+        return;
+    }
     document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
     const link = document.querySelector('nav a[data-section="' + section + '"]');
     if (link) link.classList.add('active');
@@ -1501,9 +1661,11 @@ function navigateTo(section) {
 
     if (section === 'analysis') initAnalysis();
     if (section === 'iching') initIChingPage();
-    if (section === 'data') initDataTable();
+    if (section === 'data') { initDataTable(); addExportButtonToData(); }
     if (section === 'fav') renderFavorites();
     if (section === 'vip') updateDailyCount();
+    if (section === 'service') renderServicePage();
+    if (section === 'promote') renderPromotePage();
 }
 
 document.querySelectorAll('nav a').forEach(link => {
@@ -1520,6 +1682,10 @@ function selectStrategy(el) {
 // ========== 选号核心 ==========
 // ========== 天启算法引擎选号 ==========
 function generatePick() {
+    // 免费用户控制：仅限1次总量
+    if (!isVip()) {
+        if (!checkFreeActionWithConsume()) return;
+    }
     var el_pickResult = document.getElementById('pickResult');
     if (!el_pickResult) { console.warn('[易彩] pickResult不存在'); return; }
     el_pickResult.style.display = 'block';
@@ -1724,8 +1890,12 @@ function renderBackups(backups) {
 
 // ========== 多注生成（天启引擎版） ==========
 function generateMultiPicks(n) {
-    // VIP限制：免费用户每日最多3次连出5注
+    // 策略变更：免费用户总限1次（连出5注也占用免费次数）
+    if (!isVip()) {
+        if (!checkFreeActionWithConsume()) return;
+    }
     const isVip = getVipStatus();
+    // 保留原有检测，但改为仅VIP可用（免费用户已在上方拦截）
     if (!isVip && n > 1) {
         const today = new Date().toDateString();
         const dailyKey = 'dlt_daily_pick_' + today;
@@ -1817,6 +1987,10 @@ function saveCurrentPick() {
 function initIChingPage() {}
 
 function analyzeInput() {
+    // 免费用户限1次
+    if (!isVip()) {
+        if (!checkFreeActionWithConsume()) return;
+    }
     const frontNums = [], backNums = [];
     for (let i = 1; i <= 5; i++) {
         const v = parseInt(document.getElementById('icFront' + i).value);
@@ -1836,6 +2010,10 @@ function analyzeInput() {
 }
 
 function randomAndAnalyze() {
+    // 免费用户限1次
+    if (!isVip()) {
+        if (!checkFreeActionWithConsume()) return;
+    }
     const frontNums = [], backNums = [];
     while (frontNums.length < 5) { const n = randomInt(1,35); if (!frontNums.includes(n)) frontNums.push(n); }
     while (backNums.length < 2) { const n = randomInt(1,12); if (!backNums.includes(n)) backNums.push(n); }
@@ -2458,6 +2636,450 @@ setTimeout(function() {
 
 // 暴露到全局
 window.fetchLatestDraws = fetchLatestDraws;
+
+// ========== 用户注册/登录系统 ==========
+const USER_DB_KEY = 'dlt_users';
+const CURRENT_USER_KEY = 'dlt_current_user';
+const FREE_REMAINING_KEY = 'dlt_free_remaining';
+
+function getUsers() {
+    try { return JSON.parse(localStorage.getItem(USER_DB_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveUsers(users) {
+    try { localStorage.setItem(USER_DB_KEY, JSON.stringify(users)); } catch(e) {}
+}
+function getCurrentUser() {
+    return localStorage.getItem(CURRENT_USER_KEY) || null;
+}
+function setCurrentUser(name) {
+    if (name) localStorage.setItem(CURRENT_USER_KEY, name);
+    else localStorage.removeItem(CURRENT_USER_KEY);
+    updateAuthNav();
+}
+
+// 已注册用户首次获赠1次
+var _freeInitialized = false;
+function getFreeRemaining() {
+    const user = getCurrentUser();
+    if (!user) return 0;
+    const key = FREE_REMAINING_KEY + '_' + user;
+    // 检查是否已初始化
+    const initKey = FREE_REMAINING_KEY + '_init_' + user;
+    if (!localStorage.getItem(initKey)) {
+        localStorage.setItem(initKey, '1');
+        localStorage.setItem(key, '1');
+        return 1;
+    }
+    return parseInt(localStorage.getItem(key) || '0');
+}
+function setFreeRemaining(count) {
+    const user = getCurrentUser();
+    if (!user) return;
+    const key = FREE_REMAINING_KEY + '_' + user;
+    localStorage.setItem(key, String(count));
+    const initKey = FREE_REMAINING_KEY + '_init_' + user;
+    if (!localStorage.getItem(initKey)) localStorage.setItem(initKey, '1');
+}
+function consumeFree(count) {
+    const r = getFreeRemaining();
+    if (r <= 0) return false;
+    setFreeRemaining(Math.max(0, r - count));
+    return true;
+}
+
+// 检查是否VIP（VIP用户不受限制）
+function isVip() { return getVipStatus(); }
+
+// 检查当前用户是否有权限执行需计数的操作
+function checkFreeAction() {
+    const user = getCurrentUser();
+    if (!user) {
+        showToast('🔑 请先登录/注册');
+        openAuthModal();
+        return false;
+    }
+    if (isVip()) return true;
+    const r = getFreeRemaining();
+    if (r <= 0) {
+        showToast('👑 免费体验次数已用完，升级VIP不限次使用');
+        setTimeout(function() { navigateTo('vip'); }, 800);
+        return false;
+    }
+    return true;
+}
+
+function openAuthModal() {
+    document.getElementById('authModal').classList.add('show');
+    _authMode = 'login';
+    document.getElementById('authTitle').textContent = '🔑 登录';
+    document.getElementById('authSubmitBtn').textContent = '登录';
+    document.getElementById('authToggle').textContent = '还没有账号？立即注册';
+    document.getElementById('authStatus').style.display = 'none';
+    document.getElementById('authForm').style.display = 'block';
+    document.getElementById('authLoggedIn').style.display = 'none';
+    document.getElementById('authUser').value = '';
+    document.getElementById('authPass').value = '';
+}
+function closeAuthModal() {
+    document.getElementById('authModal').classList.remove('show');
+}
+var _authMode = 'login';
+function toggleAuthMode() {
+    _authMode = _authMode === 'login' ? 'register' : 'login';
+    document.getElementById('authTitle').textContent = _authMode === 'login' ? '🔑 登录' : '📝 注册';
+    document.getElementById('authSubmitBtn').textContent = _authMode === 'login' ? '登录' : '注册';
+    document.getElementById('authToggle').textContent = _authMode === 'login' ? '还没有账号？立即注册' : '已有账号？去登录';
+    document.getElementById('authStatus').style.display = 'none';
+}
+function authSubmit() {
+    const user = document.getElementById('authUser').value.trim();
+    const pass = document.getElementById('authPass').value.trim();
+    if (!user || !pass) {
+        showAuthStatus('请输入昵称和密码', 'error');
+        return;
+    }
+    const users = getUsers();
+    if (_authMode === 'register') {
+        if (users[user]) {
+            showAuthStatus('该昵称已被注册', 'error');
+            return;
+        }
+        users[user] = { pass: pass, created: Date.now() };
+        saveUsers(users);
+        setCurrentUser(user);
+        showAuthStatus('✅ 注册成功！赠送1次免费体验', 'success');
+        updateAuthLoggedIn();
+        setTimeout(closeAuthModal, 1200);
+    } else {
+        if (!users[user]) {
+            showAuthStatus('用户不存在，请先注册', 'error');
+            return;
+        }
+        if (users[user].pass !== pass) {
+            showAuthStatus('密码错误', 'error');
+            return;
+        }
+        setCurrentUser(user);
+        showAuthStatus('✅ 登录成功', 'success');
+        updateAuthLoggedIn();
+        setTimeout(closeAuthModal, 800);
+    }
+}
+function logoutUser() {
+    setCurrentUser(null);
+    showToast('已退出登录');
+    closeAuthModal();
+}
+function showAuthStatus(msg, type) {
+    const el = document.getElementById('authStatus');
+    el.textContent = msg;
+    el.className = 'modal-status ' + type;
+    el.style.display = 'block';
+}
+function updateAuthLoggedIn() {
+    const user = getCurrentUser();
+    const form = document.getElementById('authForm');
+    const logged = document.getElementById('authLoggedIn');
+    if (user) {
+        form.style.display = 'none';
+        logged.style.display = 'block';
+        document.getElementById('authDisplayUser').textContent = user;
+        const r = isVip() ? '♾️ 无限' : getFreeRemaining();
+        document.getElementById('authFreeRemaining').textContent = r;
+    } else {
+        form.style.display = 'block';
+        logged.style.display = 'none';
+    }
+}
+function updateAuthNav() {
+    const btn = document.getElementById('navRegisterBtn');
+    if (!btn) return;
+    const user = getCurrentUser();
+    if (user) {
+        btn.innerHTML = '👤 ' + user.substring(0,6);
+        btn.style.color = '#4ecdc4';
+        btn.title = '点击查看账户';
+    } else {
+        btn.innerHTML = '🔑 登录/注册';
+        btn.style.color = 'var(--jin-se)';
+        btn.title = '';
+    }
+}
+
+// ========== 法律服务条款内容 ==========
+var legalContents = {
+    terms: '<h3>服务条款</h3>' +
+        '<p><strong>最后更新：</strong>2026年5月</p>' +
+        '<p>欢迎使用「易彩·大乐透智能选号系统」（以下简称"本系统"）。在使用本系统之前，请仔细阅读以下条款。注册或使用即视为同意本条款。</p>' +
+        '<h4>1. 服务说明</h4>' +
+        '<p>本系统基于《易经》传统文化与统计学原理，提供大乐透号码智能推荐与分析服务。所有分析和推荐仅供娱乐参考，不构成任何投资或购彩建议。</p>' +
+        '<h4>2. 用户责任</h4>' +
+        '<p>用户应理性使用本系统，遵守当地法律法规。禁止将本系统用于赌博、非法集资等违法行为。</p>' +
+        '<h4>3. 服务变更</h4>' +
+        '<p>我们保留随时修改、暂停或终止服务的权利，不另行通知。VIP会员的付费服务按现行政策执行，不支持无理由退款。</p>' +
+        '<h4>4. 免责声明</h4>' +
+        '<p>本系统不保证号码中奖。彩票中奖属于小概率随机事件，任何分析方法和推荐号码均不提升中奖概率。请理性购彩，量力而行。</p>' +
+        '<h4>5. 知识产权</h4>' +
+        '<p>本系统所有代码、设计、内容和算法版权归白玦团队所有。未经许可，禁止复制、修改、反向工程或商业使用。</p>' +
+        '<h4>6. 联系方式</h4>' +
+        '<p>如有疑问，请联系邮箱：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);">copeland02169@hotmail.com</a></p>',
+    privacy: '<h3>隐私政策</h3>' +
+        '<p><strong>最后更新：</strong>2026年5月</p>' +
+        '<p>我们重视您的隐私。本政策说明我们如何收集、使用和保护您的信息。</p>' +
+        '<h4>1. 信息收集</h4>' +
+        '<p>我们仅收集您主动提供的信息：昵称和密码（用于本地登录）。选号记录和收藏存储在您的浏览器本地存储，不会上传至服务器。</p>' +
+        '<h4>2. 信息使用</h4>' +
+        '<p>您的信息仅用于：身份验证、服务体验优化、访问统计分析（使用不蒜子统计，仅记录PV，不采集个人信息）。</p>' +
+        '<h4>3. 信息存储</h4>' +
+        '<p>所有用户数据和偏好设置仅保存在您的浏览器本地存储中。清空浏览器缓存会导致数据丢失。</p>' +
+        '<h4>4. 第三方统计</h4>' +
+        '<p>本系统使用不蒜子（busuanzi.ibruce.info）进行访问统计，该服务仅记录页面浏览量，不采集个人身份信息。</p>' +
+        '<h4>5. 数据安全</h4>' +
+        '<p>由于数据存储在本地，请勿在共享设备上使用本系统。我们不承担因设备共享导致的信息泄露责任。</p>' +
+        '<h4>6. 联系我们</h4>' +
+        '<p>如有隐私相关问题，请联系：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);">copeland02169@hotmail.com</a></p>',
+    disclaimer: '<h3>免责声明</h3>' +
+        '<p><strong>最后更新：</strong>2026年5月</p>' +
+        '<p>本系统基于《易经》传统文化与现代统计学原理，仅供娱乐参考。</p>' +
+        '<h4>1. 非投资建议</h4>' +
+        '<p>本系统推荐的所有号码均不构成投资或购彩建议。彩票中奖属于小概率随机事件。</p>' +
+        '<h4>2. 不承诺收益</h4>' +
+        '<p>我们不承诺、不保证使用本系统会产生任何收益。VIP服务解锁的是算法推荐功能和数据分析，不代表提升中奖概率。</p>' +
+        '<h4>3. 理性购彩</h4>' +
+        '<p>请根据个人经济状况理性购彩，不投入超出承受能力的资金。未成年人不得购买彩票。</p>' +
+        '<h4>4. 风险自负</h4>' +
+        '<p>用户自行承担使用本系统进行彩票投注的一切风险。我们对任何直接或间接损失不承担责任。</p>' +
+        '<h4>5. 法律合规</h4>' +
+        '<p>用户应确保自身使用行为符合当地法律法规。如当地禁止彩票相关服务，请停止使用本系统。</p>' +
+        '<h4>6. 联系我们</h4>' +
+        '<p>如有疑问，请联系：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);">copeland02169@hotmail.com</a></p>'
+};
+
+function showLegalModal(type) {
+    var title = { terms:'📜 服务条款', privacy:'🔒 隐私政策', disclaimer:'⚖️ 免责声明' };
+    document.getElementById('legalTitle').textContent = title[type] || '法律条款';
+    document.getElementById('legalContent').innerHTML = legalContents[type] || '<p>内容加载中...</p>';
+    document.getElementById('legalModal').classList.add('show');
+}
+function closeLegalModal() {
+    document.getElementById('legalModal').classList.remove('show');
+}
+
+// ========== 客服页面（💬 客服白玦） ==========
+function renderServicePage() {
+    var grid = document.getElementById('serviceGrid');
+    if (!grid) return;
+    grid.innerHTML = '' +
+        '<div class="service-card">' +
+            '<div class="s-icon">🤖</div>' +
+            '<h3>在线客服</h3>' +
+            '<p>Telegram 智能客服 @OpenClawBot，24小时在线</p>' +
+            '<a href="https://t.me/OpenClawBot" target="_blank" class="btn btn-outline btn-sm" style="margin-top:10px;display:inline-block;">联系 @OpenClawBot</a>' +
+        '</div>' +
+        '<div class="service-card">' +
+            '<div class="s-icon">💬</div>' +
+            '<h3>微信客服</h3>' +
+            '<p>扫码添加客服白玦微信，获取一对一服务</p>' +
+            '<div style="margin-top:10px;padding:12px;background:#f5f5f5;border-radius:8px;">' +
+                '<div style="font-size:0.85rem;color:#666;">📱 白玦 · 客服微信</div>' +
+                '<div style="font-size:0.78rem;color:#999;margin-top:4px;">（请替换为实际二维码图片）</div>' +
+            '</div>' +
+        '</div>' +
+        '<div class="service-card">' +
+            '<div class="s-icon">📧</div>' +
+            '<h3>邮件联系</h3>' +
+            '<p>发送邮件至客服邮箱，我们将在24小时内回复</p>' +
+            '<a href="mailto:copeland02169@hotmail.com" class="btn btn-outline btn-sm" style="margin-top:10px;display:inline-block;">发送邮件</a>' +
+        '</div>' +
+        '<div class="service-card">' +
+            '<div class="s-icon">🤝</div>' +
+            '<h3>客服白玦</h3>' +
+            '<p>白玦 ⚪ · 您的专属客服，随时待命</p>' +
+            '<p style="font-size:0.78rem;color:var(--jin-se);margin-top:6px;">服务时间：08:00 - 24:00</p>' +
+        '</div>';
+    
+    // FAQ
+    var faqs = [
+        { q:"免费用户可以使用哪些功能？", a:"免费用户注册后可体验1次选号（含易经分析）。连出5注、数据导出、深度分析需升级VIP。" },
+        { q:"如何升级VIP？", a:"进入VIP页面选择方案，扫码付款后截图发送至微信，24小时内开通。" },
+        { q:"数据更新频率如何？", a:"系统自动从体彩官方API同步数据，开奖日（二、四、日）自动获取最新数据。" },
+        { q:"号码会中奖吗？", a:"本系统仅提供娱乐参考，彩票中奖为小概率随机事件，请理性购彩。" },
+        { q:"如何联系管理员？", a:"通过Telegram @OpenClawBot 或邮箱 copeland02169@hotmail.com" }
+    ];
+    var faqHtml = faqs.map(function(f, i) {
+        return '<div class="expandable">' +
+            '<div class="expandable-header" onclick="toggleFaq(this)">' +
+                '<span>❓ ' + f.q + '</span>' +
+                '<span class="arrow">▼</span>' +
+            '</div>' +
+            '<div class="expandable-body">' + f.a + '</div>' +
+        '</div>';
+    }).join('');
+    setTimeout(function() {
+        var el = document.getElementById('faqContentStatic');
+        if (el) el.innerHTML = faqHtml;
+    }, 100);
+}
+
+function toggleFaq(el) {
+    el.classList.toggle('open');
+    var body = el.nextElementSibling;
+    if (body) body.style.display = body.style.display === 'block' ? 'none' : 'block';
+}
+
+// ========== 推广页面 ==========
+function renderPromotePage() {
+    var promoGrid = document.getElementById('promoGrid');
+    if (!promoGrid) return;
+    promoGrid.innerHTML = '' +
+        '<div class="promo-card">' +
+            '<div class="p-icon">💬</div>' +
+            '<h3>微信群分享</h3>' +
+            '<p>在彩票爱好者微信群中分享易彩小程序链接，推荐好友体验智能选号。群发可配合红包活动提升参与度。</p>' +
+        '</div>' +
+        '<div class="promo-card">' +
+            '<div class="p-icon">🎨</div>' +
+            '<h3>朋友圈海报</h3>' +
+            '<p>制作精美海报（含二维码），分享到微信朋友圈。文案突出"易经+大数据"特色，吸引好奇心。</p>' +
+        '</div>' +
+        '<div class="promo-card">' +
+            '<div class="p-icon">📝</div>' +
+            '<h3>彩票论坛发帖</h3>' +
+            '<p>在500.com、彩吧论坛等彩票社区发布使用心得和选号体验帖，注意遵守各平台推广规则。</p>' +
+        '</div>' +
+        '<div class="promo-card">' +
+            '<div class="p-icon">🔍</div>' +
+            '<h3>SEO优化</h3>' +
+            '<p>优化页面关键词（大乐透、智能选号、易经选号、彩经分析），提升搜索引擎排名获取自然流量。</p>' +
+        '</div>' +
+        '<div class="promo-card">' +
+            '<div class="p-icon">📢</div>' +
+            '<h3>搜索推广</h3>' +
+            '<p>在百度、搜狗等搜索引擎投放关键词广告，精准触达彩票爱好者群体，提升注册转化率。</p>' +
+        '</div>' +
+        '<div class="promo-card">' +
+            '<div class="p-icon">🎯</div>' +
+            '<h3>精准获客</h3>' +
+            '<p>通过抖音、今日头条等平台的内容推荐机制，发布易彩功能介绍视频/图文，吸引目标用户访问。</p>' +
+        '</div>';
+    
+    var tips = document.getElementById('promoteTips');
+    if (tips) {
+        tips.innerHTML = '' +
+            '<p><strong>1. 起步阶段（1-2周）</strong>：在朋友圈和微信群分享，重点关注10-20位彩票爱好者，收集使用反馈。</p>' +
+            '<p><strong>2. 扩展阶段（3-4周）</strong>：选择2-3个彩票论坛发布体验帖，同步优化SEO关键词。</p>' +
+            '<p><strong>3. 增长阶段（5周+）</strong>：评估各渠道效果，集中资源在转化率最高的2个渠道加大投入。</p>' +
+            '<p style="margin-top:10px;color:var(--jin-se-dim);">💡 提示：分享时强调系统的"易经+大数据"特色卖点，不同于普通随机选号工具。</p>';
+    }
+}
+
+// ========== 数据导出功能（仅VIP） ==========
+function addExportButtonToData() {
+    var statsBar = document.getElementById('dataStats');
+    if (!statsBar) return;
+    // 添加导出按钮
+    var exportBtn = document.createElement('button');
+    exportBtn.className = 'btn btn-gold btn-sm';
+    exportBtn.innerHTML = '📥 导出Excel';
+    exportBtn.style.marginLeft = '12px';
+    exportBtn.onclick = function() {
+        if (getVipStatus()) {
+            exportDataToCSV();
+        } else {
+            showToast('👑 数据导出仅限VIP会员，请升级VIP');
+        }
+    };
+    statsBar.appendChild(exportBtn);
+}
+
+function exportDataToCSV() {
+    if (!DRAWS || DRAWS.length === 0) {
+        showToast('⚠️ 无数据可导出');
+        return;
+    }
+    var csv = '\uFEFF'; // BOM for Excel
+    csv += '期号,日期,前区,后区,前区和值,后区和值,五行特征\n';
+    DRAWS.forEach(function(d) {
+        var frontStr = d.front.join(',');
+        var backStr = d.back.join(',');
+        var frontSum = d.front.reduce(function(s,n){return s+n;}, 0);
+        var backSum = d.back.reduce(function(s,n){return s+n;}, 0);
+        var wxFeatures = d.front.map(function(n) { return IChingAnalyzer.getWuxing(n); }).filter(Boolean).join(' ');
+        csv += d.id + ',' + d.date + ',"' + frontStr + '","' + backStr + '",' + frontSum + ',' + backSum + ',' + wxFeatures + '\n';
+    });
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = '大乐透数据_' + new Date().toISOString().slice(0,10) + '.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    showToast('✅ 数据导出成功');
+}
+
+// ========== 免费用户次数检查并消耗 ==========
+function checkFreeActionWithConsume() {
+    var user = getCurrentUser();
+    if (!user) {
+        showToast('🔑 请先登录/注册后再使用');
+        openAuthModal();
+        return false;
+    }
+    if (isVip()) return true;
+    var r = getFreeRemaining();
+    if (r <= 0) {
+        showToast('👑 免费体验次数已用完，升级VIP不限次使用');
+        setTimeout(function() { navigateTo('vip'); }, 1000);
+        return false;
+    }
+    // 消耗1次
+    consumeFree(1);
+    return true;
+}
+
+// ========== 页面初始化 ==========
+(function() {
+    // 更新导航栏（登录状态）
+    updateAuthNav();
+    
+    // 初始化客服和推广页面（延迟加载，仅首次进入时渲染）
+    var initServicePromote = function() {
+        renderServicePage();
+        renderPromotePage();
+    };
+    setTimeout(initServicePromote, 500);
+    
+    // VIP页面添加邮箱
+    var addEmailToVip = function() {
+        var vipSections = document.querySelectorAll('#section-vip .card');
+        if (vipSections.length > 0) {
+            var lastCard = vipSections[vipSections.length - 1];
+            var emailNote = document.createElement('div');
+            emailNote.style.cssText = 'margin-top:14px;padding:10px;background:rgba(212,165,116,0.05);border-radius:8px;border:1px dashed var(--jin-se-dim);font-size:0.82rem;text-align:center;';
+            emailNote.innerHTML = '📧 联系管理员：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);text-decoration:underline;">copeland02169@hotmail.com</a>';
+            lastCard.appendChild(emailNote);
+        }
+    };
+    setTimeout(addEmailToVip, 600);
+    
+    // 在数据分析Tab中添加导出按钮（回退方案）
+    setTimeout(function() {
+        addExportButtonToData();
+    }, 1000);
+})();
+
+// ========== 不蒜子访客统计 ==========
+(function() {
+    var script = document.createElement('script');
+    script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    console.log('[易彩] 已加载不蒜子访客统计');
+})();
 </script>
 </body>
 </html>
+
+
