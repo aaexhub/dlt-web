@@ -1092,73 +1092,44 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 </div>
 
 <div class="section" id="section-vip">
-    <h2 class="section-title">❤️ 支持我们 · 自愿打赏</h2>
-    <p class="section-desc">所有功能已全面开放，如果您觉得好用，欢迎自愿打赏支持开发者</p>
+    <h2 class="section-title">❤️ 自愿打赏</h2>
+    <p class="section-desc">所有功能已全面免费开放～如果您觉得好用，欢迎打赏支持</p>
 
-    <!-- 全面开放公告 -->
-    <div class="card" style="border:1px solid var(--jin-se);">
-        <div class="card-title" style="color:var(--jin-se);">🎉 全面开放公告</div>
-        <div style="padding:10px 0;">
-            <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.8;">
-                感谢您使用易彩智能选号系统！🎯<br><br>
-                本站所有功能已<strong style="color:var(--jin-se);">全面免费开放</strong>，包括：
-            </p>
-            <div class="pricing-grid" style="margin-top:14px;">
-                <div class="pricing-card">
-                    <h3>🎲 无限选号</h3>
-                    <p style="font-size:0.82rem;color:var(--text-muted);">连出5注不限制</p>
-                </div>
-                <div class="pricing-card">
-                    <h3>☯ 完整卦象</h3>
-                    <p style="font-size:0.82rem;color:var(--text-muted);">每注易经详评</p>
-                </div>
-                <div class="pricing-card">
-                    <h3>📊 数据导出</h3>
-                    <p style="font-size:0.82rem;color:var(--text-muted);">全功能开放</p>
-                </div>
+    <!-- 紧凑1：状态+开放公告 -->
+    <div class="card" style="padding:16px 18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <div>
+                <span style="font-size:1.1rem;color:var(--jin-se);">🎉 全功能模式</span>
+                <span style="font-size:0.78rem;color:var(--text-muted);margin-left:8px;">无限选号 · 卦象解析 · 数据导出</span>
             </div>
         </div>
     </div>
 
-    <!-- 自愿打赏 -->
-    <div class="card">
-        <div class="card-title" style="color:var(--jin-se);">💝 自愿打赏</div>
-        <div style="text-align:center;padding:10px 0;">
-            <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:18px;">
-                易彩系统由天启算法团队持续维护升级。如果您觉得系统好用，
-                自愿打赏将帮助我们做得更好 🙏
-            </p>
-            <div style="display:inline-block;padding:20px 30px;background:var(--bg-dark);border-radius:12px;border:1px solid var(--border-color);">
-                <p style="font-size:1rem;color:var(--jin-se);margin-bottom:14px;">💳 微信/支付宝</p>
-                <div class="qrcode-placeholder" style="width:160px;height:160px;margin:0 auto 12px;background:linear-gradient(135deg,#f5f5f5,#e8e8e8);border:2px dashed #aaa;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+    <!-- 紧凑2：打赏区（核心） -->
+    <div class="card" style="padding:16px 18px;">
+        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;">
+            <!-- 收款码 -->
+            <div style="flex-shrink:0;">
+                <div class="qrcode-placeholder" style="width:120px;height:120px;background:linear-gradient(135deg,#f5f5f5,#e8e8e8);border:2px dashed #aaa;border-radius:8px;display:flex;align-items:center;justify-content:center;">
                     <div style="text-align:center;color:#666;">
-                        <div style="font-size:2.2rem;margin-bottom:4px;">📱</div>
-                        <div style="font-size:0.8rem;">收款码</div>
-                        <div style="font-size:0.65rem;margin-top:3px;color:#999;">（暂未上传）</div>
+                        <div style="font-size:1.6rem;">📱</div>
+                        <div style="font-size:0.7rem;">收款码</div>
                     </div>
                 </div>
-                <p style="font-size:0.82rem;color:var(--text-muted);margin:0;">
-                    打赏后请添加微信告知：
-                    <strong style="color:#4ecdc4;">[待填写微信号]</strong>
-                </p>
+            </div>
+            <!-- 说明 -->
+            <div style="flex:1;min-width:140px;">
+                <p style="font-size:0.88rem;color:var(--text-secondary);margin:0 0 6px 0;">💝 觉得好用，随心打赏</p>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin:0 0 8px 0;">微信/支付宝扫码 → 添加微信告知</p>
+                <p style="font-size:0.82rem;margin:0;">📞 微信号：<strong style="color:#4ecdc4;">[待填写]</strong></p>
             </div>
         </div>
     </div>
 
-    <!-- 当前状态 -->
-    <div class="card">
-        <div class="card-title">🔑 当前状态</div>
-        <div id="vipStatusDisplay" style="text-align:center;padding:20px;">
-            <p style="font-size:1.1rem;margin:0 0 6px 0;">🎉 您正在使用 <strong style="color:var(--jin-se);">全功能</strong> 模式</p>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">所有功能已全面免费开放</p>
-        </div>
-    </div>
-
-    <div class="card" style="margin-top:8px;">
-        <div class="card-title">📢 重要提示</div>
-        <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.8;">
-            本站所有号码推荐均基于天启算法与易经传统文化分析，仅供娱乐参考。
-            彩票中奖为小概率随机事件，请理性购彩，量力而行。
+    <!-- 紧凑3：提示 -->
+    <div class="card" style="padding:12px 16px;">
+        <p style="font-size:0.78rem;color:var(--text-muted);margin:0;line-height:1.6;">
+            📢 号码推荐基于易经传统文化分析，仅供娱乐参考。彩票为随机事件，请理性购彩。
         </p>
     </div>
 </div>
