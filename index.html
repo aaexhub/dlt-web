@@ -880,6 +880,10 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             本系统基于《易经》传统文化与现代统计学原理，仅供娱乐参考。彩票中奖纯属随机事件，任何分析方法和推荐号码均不构成投资建议。请理性购彩，量力而行。
         </p>
     </div>
+    <!-- SEO说明文本（帮助百度爬虫抓取关键词） -->
+    <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+        <p>大乐透选号推荐，易经智能选号系统，免费在线生成大乐透号码。融合易经五行八卦与现代数据分析，提供冷热走势、遗漏追踪、历史开奖查询等全面功能。每日更新大乐透开奖数据，智能推荐号码供您参考。免费在线使用，无需注册即可体验易经选号的独特魅力。</p>
+    </div>
     <!-- 分享入口卡片 -->
     <div class="card" style="margin-top:8px;text-align:center;">
         <div class="card-title">📤 分享给朋友</div>
@@ -928,6 +932,16 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         <button class="btn btn-primary" onclick="generatePick()" style="font-size:1.1rem;padding:14px 40px;">🎲 生成号码</button>
         <button class="btn btn-gold btn-sm" onclick="generateMultiPicks(5)" style="margin-left:10px;">连出5注</button>
         <button class="btn btn-outline btn-sm" onclick="fetchLatestDraws()" style="margin-left:10px;" title="从体彩官方同步最新开奖数据">📡 更新数据</button>
+    </div>
+
+    <!-- 每日热门推荐模块 -->
+    <div class="card" id="todayHotPick" style="margin-bottom:10px;">
+        <div class="card-title">🔥 今日热门推荐 <span style="font-size:0.7rem;color:var(--text-muted);font-weight:normal;">基于近期开奖趋势生成</span></div>
+        <div id="todayHotContent" style="text-align:center;padding:8px 0;">
+            <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:10px;">点击下方按钮，自动生成今日推荐号码</div>
+            <button class="btn btn-gold btn-sm" onclick="generateTodayHot()" style="font-size:0.9rem;padding:10px 24px;">🔥 查看今日推荐</button>
+            <div id="todayHotResult" style="margin-top:12px;display:none;"></div>
+        </div>
     </div>
 
     <div id="pickResult" style="display:none;">
@@ -1160,9 +1174,10 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 
 <footer>
     <p>易彩 · 大乐透易经智能选号系统 v2.0 | 仅供娱乐参考，理性购彩</p>
-    <p style="margin-top:6px;">
+    <!-- 访客统计暂时隐藏，等数据上来后再启用 -->
+    <!-- <p style="margin-top:6px;">
         <span id="busuanzi_value_site_pv" style="display:inline;">0</span> 次访问
-    </p>
+    </p> -->
     <p style="margin-top:4px;font-size:0.75rem;">
         联系邮箱：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se-dim);text-decoration:underline;">copeland02169@hotmail.com</a>
         |
@@ -3131,6 +3146,76 @@ function shareToWechat() {
         showToast('💡 复制完成，请打开微信粘贴发送给好友');
     }
 }
+// ========== 每日热门推荐 ==========
+function generateTodayHot() {
+    var resultDiv = document.getElementById('todayHotResult');
+    if (!resultDiv) return;
+    
+    // 从最新的几期开奖数据中分析热门号码
+    var draws = window.DRAWS || [];
+    var recent = draws.slice(-10);
+    var frontMap = {}, backMap = {};
+    for (var i = 0; i < recent.length; i++) {
+        var d = recent[i];
+        if (!d || !d.front) continue;
+        for (var j = 0; j < d.front.length; j++) {
+            var n = d.front[j];
+            frontMap[n] = (frontMap[n] || 0) + 1;
+        }
+        for (var j = 0; j < d.back.length; j++) {
+            var n2 = d.back[j];
+            backMap[n2] = (backMap[n2] || 0) + 1;
+        }
+    }
+    
+    // 取前区高频号排序
+    var frontSort = Object.keys(frontMap).sort(function(a,b){return frontMap[b]-frontMap[a];});
+    var topFront = frontSort.slice(0,5);
+    // 后区高频号
+    var backSort = Object.keys(backMap).sort(function(a,b){return backMap[b]-backMap[a];});
+    var topBack = backSort.slice(0,2);
+    
+    // 格式化显示
+    function fmtNums(arr) {
+        return arr.map(function(n){return n<10?'0'+n:''+n;}).join(' ');
+    }
+    
+    // 趋势说明
+    var frontDesc = topFront.map(function(n){
+        return '<span class="num-ball">'+n+'</span><sup style="color:var(--text-muted);font-size:0.7rem;">×'+frontMap[n]+'</sup>';
+    }).join(' ');
+    var backDesc = topBack.map(function(n){
+        return '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">'+n+'</span><sup style="color:var(--text-muted);font-size:0.7rem;">×'+backMap[n]+'</sup>';
+    }).join(' ');
+    
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = 
+        '<div style="margin-bottom:10px;">' +
+        '<div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;">📊 近10期高频号码</div>' +
+        '<div style="margin-bottom:4px;"><span style="font-size:0.8rem;color:var(--text-muted);">前区：</span> ' + frontDesc + '</div>' +
+        '<div><span style="font-size:0.8rem;color:var(--text-muted);">后区：</span> ' + backDesc + '</div>' +
+        '</div>' +
+        '<div style="border-top:1px solid rgba(212,165,116,0.15);padding-top:10px;">' +
+        '<div style="font-size:0.85rem;color:var(--jin-se);margin-bottom:8px;">☯ 今日推荐组合</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:6px;">' +
+        '<span class="num-ball">' + topFront[0] + '</span>' +
+        '<span class="num-ball">' + topFront[1] + '</span>' +
+        '<span class="num-ball">' + topFront[2] + '</span>' +
+        '<span class="num-ball">' + (frontSort[5]||topFront[3]) + '</span>' +
+        '<span class="num-ball">' + (frontSort[6]||topFront[4]) + '</span>' +
+        '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;">' +
+        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + topBack[0] + '</span>' +
+        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + topBack[1] + '</span>' +
+        '</div>' +
+        '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">📅 更新于 ' + new Date().toLocaleDateString('zh-CN') + ' · 每日自动更新</div>' +
+        '</div>' +
+        '<div style="margin-top:10px;">' +
+        '<button class="btn btn-primary btn-sm" onclick="generatePick()" style="font-size:0.85rem;">🎲 生成我的号码</button>' +
+        '</div>';
+    resultDiv.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
 function generateSharePoster() {
     var toast = document.getElementById('shareResult');
     if (!toast) { toast = document.getElementById('shareUrlDisplay'); }
