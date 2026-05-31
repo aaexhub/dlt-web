@@ -2865,19 +2865,19 @@ function renderPromotePage() {
 function addExportButtonToData() {
     var statsBar = document.getElementById('dataStats');
     if (!statsBar) return;
-    // 添加导出按钮
-    var exportBtn = document.createElement('button');
-    exportBtn.className = 'btn btn-gold btn-sm';
-    exportBtn.innerHTML = '📥 导出Excel';
-    exportBtn.style.marginLeft = '12px';
-    exportBtn.onclick = function() {
-        if (getVipStatus()) {
-            exportDataToCSV();
-        } else {
-            showToast('👑 数据导出仅限VIP会员，请升级VIP');
-        }
-    };
-    statsBar.appendChild(exportBtn);
+    // 导出Excel按钮已隐藏（老胡指示）
+    // var exportBtn = document.createElement('button');
+    // exportBtn.className = 'btn btn-gold btn-sm';
+    // exportBtn.innerHTML = '📥 导出Excel';
+    // exportBtn.style.marginLeft = '12px';
+    // exportBtn.onclick = function() {
+    //     if (getVipStatus()) {
+    //         exportDataToCSV();
+    //     } else {
+    //         showToast('👑 数据导出仅限VIP会员，请升级VIP');
+    //     }
+    // };
+    // statsBar.appendChild(exportBtn);
 }
 
 function exportDataToCSV() {
