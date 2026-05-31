@@ -436,6 +436,16 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; gap: 12px; } }
     @media (max-width: 600px) { .qrcode-box { flex-direction: column; } }
     @media (max-width: 600px) { .qrcode-box .qrcode-placeholder { width: 140px; height: 140px; } }
+    @media (max-width: 600px) { .card { padding: 16px 14px; } }
+    @media (max-width: 600px) { .pricing-card { padding: 18px 14px; } }
+    @media (max-width: 600px) { .vip-step { padding: 12px 10px; gap: 10px; } }
+    @media (max-width: 600px) { .vip-step .step-num { width: 28px; height: 28px; font-size: 0.85rem; } }
+    @media (max-width: 480px) { .section-title { font-size: 1.2rem; } }
+    @media (max-width: 480px) { .pricing-card .price { font-size: 1.6rem; } }
+    @media (max-width: 480px) { .pricing-card ul { font-size: 0.78rem; } }
+    @media (max-width: 480px) { .qrcode-box .qrcode-placeholder { width: 120px; height: 120px; } }
+    @media (max-width: 480px) { .card .pricing-card .badge-hot { top: -6px; right: 6px; font-size: 0.65rem; } }
+    @media (max-width: 480px) { .badge-hot { font-size: 0.6rem; padding: 1px 6px; } }
     .pricing-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px 18px; text-align: center; transition: all 0.3s; position: relative; }
     .pricing-card.featured { border-color: var(--jin-se); box-shadow: 0 0 20px rgba(212,175,55,0.2); }
     .pricing-card .price { font-size: 2rem; font-weight: bold; color: var(--jin-se); margin: 12px 0; }
@@ -1172,17 +1182,17 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <span class="step-num">3</span>
             <div><strong>发送截图</strong><br><span style="font-size:0.82rem;color:var(--text-muted);">将付款截图发送至微信，24小时内开通VIP</span></div>
         </div>
-        <div style="text-align:center;margin-top:18px;padding:16px;background:var(--bg-dark);border-radius:10px;">
-            <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:10px;">👇 扫码添加微信 · 发送付款截图开通VIP</p>
-            <div class="qrcode-box" style="display:inline-flex;">
-                <div class="qrcode-placeholder" id="vipWechatQr" style="background:linear-gradient(135deg,#f5f5f5,#e8e8e8);border:2px dashed #aaa;">
+        <div style="text-align:center;margin-top:18px;padding:20px 16px;background:var(--bg-dark);border-radius:12px;">
+            <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:14px;">👇 扫码添加微信 · 发送付款截图开通VIP</p>
+            <div class="qrcode-box" style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:20px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;max-width:300px;margin:0 auto;">
+                <div class="qrcode-placeholder" id="vipWechatQr" style="width:160px;height:160px;background:linear-gradient(135deg,#f5f5f5,#e8e8e8);border:2px dashed #aaa;border-radius:8px;display:flex;align-items:center;justify-content:center;">
                     <div style="text-align:center;color:#666;">
-                        <div style="font-size:2.5rem;margin-bottom:6px;">📱</div>
-                        <div style="font-size:0.85rem;">微信收款码</div>
-                        <div style="font-size:0.7rem;margin-top:4px;color:#999;">（请替换为实际收款码图片）</div>
+                        <div style="font-size:2.2rem;margin-bottom:4px;">📱</div>
+                        <div style="font-size:0.8rem;">微信收款码</div>
+                        <div style="font-size:0.65rem;margin-top:3px;color:#999;">（请替换为实际收款码图片）</div>
                     </div>
                 </div>
-                <p style="font-size:0.85rem;color:var(--jin-se);font-weight:bold;">联系微信号：<strong id="vipWechatId" style="color:#4ecdc4;font-size:1rem;">[待填写-联系管理员]</strong></p>
+                <p style="font-size:0.82rem;color:var(--jin-se);margin:0;">📞 联系微信号：<strong id="vipWechatId" style="color:#4ecdc4;font-size:1rem;">[待填写-联系管理员]</strong></p>
             </div>
         </div>
     </div>
@@ -1191,9 +1201,9 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     <div class="card">
         <div class="card-title">🔑 当前状态</div>
         <div id="vipStatusDisplay" style="text-align:center;padding:20px;">
-            <p style="font-size:1.1rem;">🎫 当前：<strong id="vipStatusLabel" style="color:var(--text-muted);">免费用户</strong></p>
-            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:6px;">今日连出5注已用：<span id="dailyPickCount">0</span>/3 次</p>
-            <button class="btn btn-gold" onclick="document.getElementById('vip-pricing').scrollIntoView({behavior:'smooth'})" style="margin-top:10px;">👑 升级VIP</button>
+            <p style="font-size:1.05rem;margin:0 0 8px 0;">🎫 当前：<strong id="vipStatusLabel" style="color:var(--text-muted);">免费用户</strong></p>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin:0 0 14px 0;">今日连出5注已用：<span id="dailyPickCount">0</span>/3 次</p>
+            <button class="btn btn-gold" onclick="document.querySelector('.card:nth-child(3)').scrollIntoView({behavior:'smooth'})" style="margin-top:4px;padding:10px 28px;font-size:0.95rem;">👑 升级VIP</button>
         </div>
     </div>
 
