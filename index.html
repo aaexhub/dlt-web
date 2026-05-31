@@ -398,7 +398,24 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             radial-gradient(ellipse at 50% 80%, rgba(26,26,46,0.8) 0%, transparent 50%);
         pointer-events: none;
         z-index: 0;
+        transition: background 0.5s ease;
     }
+    /* 主题色切换 */
+    .theme-dot {
+        display: inline-flex; align-items: center; gap: 3px;
+        margin-left: 6px; cursor: pointer;
+    }
+    .theme-dot span {
+        width: 16px; height: 16px; border-radius: 50%;
+        border: 2px solid transparent; transition: all 0.2s;
+        display: inline-block;
+    }
+    .theme-dot span:hover, .theme-dot span.active-dot { border-color: var(--jin-se); transform: scale(1.2); }
+    /* 主题色变体 */
+    body.theme-ocean { background: #0a1628; }
+    body.theme-forest { background: #0f1a0f; }
+    body.theme-wine { background: #1a0f0f; }
+    body.theme-night { background: var(--bg-dark); }
 
     /* Header */
     header {
@@ -790,6 +807,12 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <!-- <a data-section="promote">📣 推广</a> -->
             <a data-section="vip" style="color:var(--jin-se);font-weight:bold;">👑 VIP</a>
             <a id="navRegisterBtn" data-section="register" style="color:var(--jin-se);font-weight:bold;cursor:pointer;">🔑 登录/注册</a>
+            <span class="theme-dot" onclick="cycleTheme()" title="切换主题背景" style="flex-shrink:0;">
+                <span id="themeDot1" class="active-dot" style="background:#0F0F1A;"></span>
+                <span id="themeDot2" style="background:#0a1628;"></span>
+                <span id="themeDot3" style="background:#0f1a0f;"></span>
+                <span id="themeDot4" style="background:#1a0f0f;"></span>
+            </span>
         </nav>
     </div>
 </header>
@@ -1546,6 +1569,61 @@ function activateVip(days) {
     showToast('👑 VIP已激活（' + days + '天）');
 }
 setTimeout(updateDailyCount, 500);
+
+// ========== 主题背景切换 ==========
+var currentThemeIdx = 0;
+var themeData = [
+    { body: 'theme-night', dots: [1,0,0,0] },
+    { body: 'theme-ocean', dots: [0,1,0,0] },
+    { body: 'theme-forest', dots: [0,0,1,0] },
+    { body: 'theme-wine',  dots: [0,0,0,1] }
+];
+function cycleTheme() {
+    var last = currentThemeIdx;
+    currentThemeIdx = (currentThemeIdx + 1) % themeData.length;
+    var t = themeData[currentThemeIdx];
+    var body = document.body;
+    themeData.forEach(function(d, i) {
+        body.classList.remove(d.body);
+        document.getElementById('themeDot' + (i+1)).classList.remove('active-dot');
+    });
+    body.classList.add(t.body);
+    t.dots.forEach(function(v, i) {
+        if (v) document.getElementById('themeDot' + (i+1)).classList.add('active-dot');
+    });
+    // 同时调整body::before渐变
+    var overlay = document.querySelector('body::before');
+    if (t.body === 'theme-ocean') {
+        body.style.setProperty('--bg-card', '#0f1a2e');
+        body.style.setProperty('--bg-dark', '#060e1a');
+    } else if (t.body === 'theme-forest') {
+        body.style.setProperty('--bg-card', '#142014');
+        body.style.setProperty('--bg-dark', '#0a120a');
+    } else if (t.body === 'theme-wine') {
+        body.style.setProperty('--bg-card', '#2a1515');
+        body.style.setProperty('--bg-dark', '#1a0a0a');
+    } else {
+        body.style.setProperty('--bg-card', '#16162A');
+        body.style.setProperty('--bg-dark', '#0F0F1A');
+    }
+    try { localStorage.setItem('dlt_theme', currentThemeIdx); } catch(e) {}
+}
+// 恢复上次选择的主题
+(function() {
+    try {
+        var s = parseInt(localStorage.getItem('dlt_theme') || '0');
+        if (s > 0 && s < themeData.length) {
+            currentThemeIdx = s;
+            var t = themeData[currentThemeIdx];
+            var body = document.body;
+            themeData.forEach(function(d, i) { body.classList.remove(d.body); });
+            body.classList.add(t.body);
+            t.dots.forEach(function(v, i) {
+                if (v) document.getElementById('themeDot' + (i+1)).classList.add('active-dot');
+            });
+        }
+    } catch(e) {}
+})();
 
 // ========== 导航 ==========
 function navigateTo(section) {
