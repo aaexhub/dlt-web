@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>易彩 · 大乐透智能选号系统</title>
+        <title>大乐透选号推荐 - 易经智能解析号码 | 免费在线选号</title>
+    <meta name="description" content="大乐透智能选号系统，融合易经五行八卦与现代数据分析，免费生成推荐号码、冷热走势、遗漏追踪。立即在线使用。">
+    <meta name="keywords" content="大乐透选号,大乐透推荐号码,易经选号,智能选号,免费选号工具">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
     <script defer>
@@ -878,6 +880,17 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             本系统基于《易经》传统文化与现代统计学原理，仅供娱乐参考。彩票中奖纯属随机事件，任何分析方法和推荐号码均不构成投资建议。请理性购彩，量力而行。
         </p>
     </div>
+    <!-- 分享入口卡片 -->
+    <div class="card" style="margin-top:8px;text-align:center;">
+        <div class="card-title">📤 分享给朋友</div>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">推荐给身边的好友，一起体验易经智能选号</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="shareToWechat()" style="font-size:0.9rem;">📱 分享到微信</button>
+            <button class="btn btn-gold btn-sm" onclick="generateSharePoster()" style="font-size:0.9rem;">🖼️ 生成分享图</button>
+            <button class="btn btn-outline btn-sm" onclick="copyShareLink()" style="font-size:0.9rem;">🔗 复制链接</button>
+        </div>
+        <div id="shareResult" style="margin-top:10px;font-size:0.82rem;color:var(--text-muted);display:none;"></div>
+    </div>
 </div>
 
 <!-- ==================== 选号页 ==================== -->
@@ -1111,6 +1124,16 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     <div class="card">
         <div class="card-title">📈 推广建议</div>
         <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.8;padding:10px;" id="promoteTips"></div>
+    </div>
+    <div class="card" style="text-align:center;">
+        <div class="card-title">🖼️ 快速分享工具</div>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">一键生成分享海报，发到朋友圈或微信群</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-gold btn-sm" onclick="generateSharePoster()" style="font-size:0.9rem;">🖼️ 生成分享海报</button>
+            <button class="btn btn-primary btn-sm" onclick="shareToWechat()" style="font-size:0.9rem;">📱 分享到微信</button>
+            <button class="btn btn-outline btn-sm" onclick="copyShareLink()" style="font-size:0.9rem;">🔗 复制链接</button>
+        </div>
+        <div id="shareUrlDisplay" style="margin-top:10px;font-size:0.82rem;color:var(--text-muted);word-break:break-all;"></div>
     </div>
 </div>
 
@@ -3072,6 +3095,63 @@ function checkFreeActionWithConsume() {
     
     console.log('[易彩] 已加载统计上报 → ' + STATS_URL);
 })();
+
+// ========== 分享功能 ==========
+function copyShareLink() {
+    var url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            showToast('✅ 链接已复制：' + url);
+        }).catch(function() {
+            fallbackCopy(url);
+        });
+    } else {
+        fallbackCopy(url);
+    }
+}
+function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showToast('✅ 链接已复制'); } catch(e) { showToast('⚠️ 请手动复制地址栏链接'); }
+    document.body.removeChild(ta);
+}
+function shareToWechat() {
+    var shareUrl = window.location.href;
+    var msg = encodeURIComponent('🎲 推荐一个好玩的大乐透选号工具！易经+大数据智能选号，免费使用！\n\n' + shareUrl);
+    // 尝试调起微信分享（移动端）
+    if (/MicroMessenger/i.test(navigator.userAgent)) {
+        showToast('💡 请点击右上角「···」分享给好友或朋友圈');
+    } else {
+        // 非微信环境，复制分享文案
+        copyShareLink();
+        showToast('💡 复制完成，请打开微信粘贴发送给好友');
+    }
+}
+function generateSharePoster() {
+    var toast = document.getElementById('shareResult');
+    if (!toast) { toast = document.getElementById('shareUrlDisplay'); }
+    if (toast) {
+        toast.style.display = 'block';
+        toast.innerHTML = '🖼️ 正在生成分享海报...<br>' +
+            '<span style="font-size:0.78rem;color:var(--text-muted);">请截图保存本页，或使用手机浏览器自带分享功能</span><br><br>' +
+            '<div style="border:1px dashed var(--jin-se-dim);border-radius:8px;padding:16px;text-align:center;background:linear-gradient(135deg,#0F0F1A 0%,#1a1625 100%);max-width:300px;margin:0 auto;">' +
+            '<div style="font-size:1.5rem;margin-bottom:6px;">☯</div>' +
+            '<div style="font-size:1.1rem;color:var(--jin-se);font-weight:bold;margin-bottom:4px;">易彩 · 大乐透选号</div>' +
+            '<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">易经+大数据智能推荐号码</div>' +
+            '<div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">📱 扫码即可使用</div>' +
+            '<div style="width:100px;height:100px;margin:0 auto;background:rgba(212,165,116,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--jin-se-dim);">☯</div>' +
+            '<div style="font-size:0.7rem;color:var(--text-muted);margin-top:8px;word-break:break-all;">' + window.location.hostname + '</div>' +
+            '</div><br>' +
+            '<button class="btn btn-primary btn-sm" onclick="copyShareLink()" style="font-size:0.85rem;">🔗 复制链接发送</button>' +
+            '<p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;">💡 长按上方海报截图，即可分享到朋友圈/微信群</p>';
+        // 滚动到海报位置
+        toast.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+}
 </script>
 </body>
 </html>
