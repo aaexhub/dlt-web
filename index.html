@@ -3175,6 +3175,30 @@ function generateTodayHot() {
     var backSort = Object.keys(backMap).sort(function(a,b){return backMap[b]-backMap[a];});
     var topBack = backSort.slice(0,2);
     
+    // 今日推荐号码（前5+后2）
+    var recFront = [parseInt(topFront[0]), parseInt(topFront[1]), parseInt(topFront[2]), parseInt(frontSort[5])||parseInt(topFront[3]), parseInt(frontSort[6])||parseInt(topFront[4])];
+    var recBack = [parseInt(topBack[0]), parseInt(topBack[1])];
+    recFront.sort(function(a,b){return a-b;});
+    recBack.sort(function(a,b){return a-b;});
+    
+    // 调用易经分析引擎
+    var 五行分析 = '';
+    var 卦象分析 = '';
+    if (typeof IChingAnalyzer !== 'undefined' && IChingAnalyzer.comprehensiveAnalysis) {
+        var result = IChingAnalyzer.comprehensiveAnalysis(recFront, recBack);
+        if (result && result.hexagram) {
+            var hexData = result.hexagram.hexagram;
+            卦象分析 = '<div style="font-size:0.85rem;color:var(--jin-se);margin-bottom:4px;">☯ ' + hexData.name + '卦</div>' +
+                       '<div style="font-size:0.78rem;color:var(--text-muted);">' + hexData.desc + '</div>';
+        }
+        if (result && result.五行) {
+            var wx = result.五行;
+            五行分析 = '<div style="font-size:0.8rem;color:var(--text-secondary);">📐 五行：' + 
+                       (wx.最缺五行 ? '偏缺' + wx.最缺五行.join('、') : '平衡') + 
+                       (wx.缺失阴阳 ? ' · ☯ ' + wx.缺失阴阳 + '偏旺' : ' · ☯ 阴阳平衡') + '</div>';
+        }
+    }
+    
     // 格式化显示
     function fmtNums(arr) {
         return arr.map(function(n){return n<10?'0'+n:''+n;}).join(' ');
@@ -3198,20 +3222,25 @@ function generateTodayHot() {
         '<div style="border-top:1px solid rgba(212,165,116,0.15);padding-top:10px;">' +
         '<div style="font-size:0.85rem;color:var(--jin-se);margin-bottom:8px;">☯ 今日推荐组合</div>' +
         '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:6px;">' +
-        '<span class="num-ball">' + topFront[0] + '</span>' +
-        '<span class="num-ball">' + topFront[1] + '</span>' +
-        '<span class="num-ball">' + topFront[2] + '</span>' +
-        '<span class="num-ball">' + (frontSort[5]||topFront[3]) + '</span>' +
-        '<span class="num-ball">' + (frontSort[6]||topFront[4]) + '</span>' +
+        '<span class="num-ball">' + recFront[0] + '</span>' +
+        '<span class="num-ball">' + recFront[1] + '</span>' +
+        '<span class="num-ball">' + recFront[2] + '</span>' +
+        '<span class="num-ball">' + recFront[3] + '</span>' +
+        '<span class="num-ball">' + recFront[4] + '</span>' +
         '</div>' +
         '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;">' +
-        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + topBack[0] + '</span>' +
-        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + topBack[1] + '</span>' +
+        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + recBack[0] + '</span>' +
+        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + recBack[1] + '</span>' +
+        '</div>' +
+        '<div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(212,165,116,0.1);">' +
+        卦象分析 +
+        五行分析 +
         '</div>' +
         '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">📅 更新于 ' + new Date().toLocaleDateString('zh-CN') + ' · 每日自动更新</div>' +
         '</div>' +
         '<div style="margin-top:10px;">' +
         '<button class="btn btn-primary btn-sm" onclick="generatePick()" style="font-size:0.85rem;">🎲 生成我的号码</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="goToSection(\'iching\')" style="margin-left:6px;font-size:0.85rem;">☯ 深入分析</button>' +
         '</div>';
     resultDiv.scrollIntoView({behavior:'smooth',block:'center'});
 }
