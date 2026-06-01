@@ -1988,35 +1988,51 @@ function analyzeBaZi() {
 
 // ========== 导航 ==========
 function navigateTo(section) {
+    console.log('[易彩] navigateTo被调用:', section, '调用栈:', new Error().stack);
     // 注册/登录弹窗
     if (section === 'register') {
-        openAuthModal();
+        if (typeof openAuthModal === 'function') openAuthModal();
         return;
     }
     document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
     const link = document.querySelector('nav a[data-section="' + section + '"]');
     if (link) link.classList.add('active');
     const sectionEl = document.getElementById('section-' + section);
-    if (!link || !sectionEl) { console.warn('[易彩] 无效页面:', section); return; }
+    if (!link || !sectionEl) {
+        console.warn('[易彩] 无效页面:', section, 'link:', !!link, 'sectionEl:', !!sectionEl);
+        // 即使没找到nav链接，也尝试切换section（支持非导航入口调用）
+        if (sectionEl) {
+            console.log('[易彩] 通过非导航入口切换section:', section);
+        } else {
+            console.error('[易彩] section元素不存在: section-' + section);
+            return;
+        }
+    }
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     const target = document.getElementById('section-' + section);
-    if (target) target.classList.add('active');
+    if (target) {
+        target.classList.add('active');
+        console.log('[易彩] 已切换到section:', section);
+    } else {
+        console.error('[易彩] 找不到目标section: section-' + section);
+        return;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (section === 'analysis') initAnalysis();
-    if (section === 'iching') initIChingPage();
-    if (section === 'data') { initDataTable(); addExportButtonToData(); }
-    if (section === 'fav') renderFavorites();
-    if (section === 'vip') updateDailyCount();
-    if (section === 'service') renderServicePage();
-    if (section === 'promote') renderPromotePage();
+    if (section === 'analysis' && typeof initAnalysis === 'function') initAnalysis();
+    if (section === 'iching' && typeof initIChingPage === 'function') initIChingPage();
+    if (section === 'data') { if (typeof initDataTable === 'function') initDataTable(); if (typeof addExportButtonToData === 'function') addExportButtonToData(); }
+    if (section === 'fav' && typeof renderFavorites === 'function') renderFavorites();
+    if (section === 'vip' && typeof updateDailyCount === 'function') updateDailyCount();
+    if (section === 'service' && typeof renderServicePage === 'function') renderServicePage();
+    if (section === 'promote' && typeof renderPromotePage === 'function') renderPromotePage();
 
-    // 修复：确保目标section的父链没有display:none（Chrome容错解析导致部分section被嵌套到section-home内）
+    // 修复：确保目标section的父链没有display:none
     if (target) {
         var p = target.parentElement;
         while (p && p !== document.body) {
             var ps = window.getComputedStyle ? window.getComputedStyle(p) : { display: '' };
-            if (ps.display === 'none' || ps.opacity === '0') {
+            if (ps.display === 'none' || String(ps.opacity) === '0') {
                 p.style.display = 'block';
                 p.style.opacity = '1';
             }
@@ -2025,9 +2041,34 @@ function navigateTo(section) {
     }
 }
 
-document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function(e) { e.preventDefault(); navigateTo(this.dataset.section); });
-});
+// goToSection别名（兼容所有调用点）
+function goToSection(section) {
+    console.log('[易彩] goToSection被调用:', section);
+    navigateTo(section);
+}
+
+// 全局暴露，确保所有onclick引用都能找到
+try {
+    window.navigateTo = navigateTo;
+    window.goToSection = goToSection;
+    console.log('[易彩] 导航函数已全局暴露: navigateTo, goToSection');
+} catch(e) {}
+
+// nav链接事件绑定（用try包装，防止绑定异常影响其他代码）
+try {
+    document.querySelectorAll('nav a[data-section]').forEach(function(link) {
+        // 移除已有监听器（防止多次绑定）
+        var cloned = link.cloneNode(true);
+        link.parentNode.replaceChild(cloned, link);
+        cloned.addEventListener('click', function(e) {
+            e.preventDefault();
+            navigateTo(this.dataset.section);
+        });
+    });
+    console.log('[易彩] nav链接事件已绑定');
+} catch(e) {
+    console.error('[易彩] nav绑定错误:', e.message);
+}
 
 // ========== 选号策略 ==========
 function selectStrategy(el) {
@@ -2836,6 +2877,13 @@ window.addEventListener('resize', () => {
 // ========== 初始化 ==========
 // ========== 全局错误捕获（移动端调试辅助） ==========
 window.onerror = function(msg, url, line, col, err) {
+    // 过滤掉因defer加载顺序导致的常见临时错误（函数未定义等），交由底部navigateTo安全网处理
+    var msgStr = String(msg);
+    var isNavError = /navigateTo|goToSection/.test(msgStr);
+    if (isNavError) {
+        console.warn('[易彩] 导航相关临时错误（安全网会处理）:', msgStr, line);
+        return false; // 不吞掉错误，让底部安全网捕获
+    }
     console.error('[易彩全局错误]', msg, line);
     const el = document.createElement('div');
     el.style.cssText = 'position:fixed;bottom:50px;left:10px;right:10px;z-index:8888;background:rgba(196,30,58,0.9);color:#fff;padding:10px 14px;border-radius:8px;font-size:0.75rem;word-break:break-all;';
@@ -2892,7 +2940,10 @@ window.onerror = function(msg, url, line, col, err) {
 <script>
 window.onerror = function(m, u, l) {
   var s = document.getElementById("_dlt_status");
-  if(s) s.innerHTML="❌ 脚本错误: "+m.substring(0,60)+" (行"+l+")";
+  var msg = String(m);
+  // 导航相关临时错误由安全网处理
+  if (/navigateTo|goToSection/.test(msg)) return false;
+  if(s) s.innerHTML="❌ 脚本错误: "+msg.substring(0,60)+" (行"+l+")";
   return true;
 };
 </script>
@@ -3718,6 +3769,92 @@ initBaZiUI();
     } else {
         renderDailyReviews();
     }
+})();
+</script>
+
+<!-- ========== 导航修复安全网 ========== -->
+<script>
+// 导航修复安全网 - 在页面底部同步执行，确保所有导航功能正常
+(function() {
+    'use strict';
+
+    // 1. 确保navigateTo和goToSection全局可用
+    if (typeof window.navigateTo !== 'function') {
+        console.error('[易彩安全网] navigateTo未定义，需要重建');
+        // 重建一个简易版navigateTo
+        window.navigateTo = function(section) {
+            console.log('[易彩安全网] navigateTo (fallback):', section);
+            try {
+                document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+                var target = document.getElementById('section-' + section);
+                if (target) {
+                    target.classList.add('active');
+                    document.querySelectorAll('nav a').forEach(function(l) { l.classList.remove('active'); });
+                    var link = document.querySelector('nav a[data-section="' + section + '"]');
+                    if (link) link.classList.add('active');
+                }
+            } catch(e) {
+                console.error('[易彩安全网] navigateTo出错:', e);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    }
+    if (typeof window.goToSection !== 'function') {
+        window.goToSection = function(section) { window.navigateTo(section); };
+    }
+
+    // 2. 重新绑定onclick到所有data-section nav链接（作为安全网）
+    try {
+        var navLinks = document.querySelectorAll('nav a[data-section]');
+        navLinks.forEach(function(link) {
+            // 移除旧的onclick（可能指向未定义的函数）
+            link.onclick = null;
+            // 添加可靠的事件监听
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.navigateTo(this.dataset.section);
+            });
+        });
+        console.log('[易彩安全网] nav链接已重新绑定, 共' + navLinks.length + '个');
+    } catch(e) {
+        console.error('[易彩安全网] nav绑定失败:', e);
+    }
+
+    // 3. 修复 首页feature卡片/按钮的onclick
+    try {
+        document.body.addEventListener('click', function(e) {
+            var el = e.target.closest('[onclick*="navigateTo"]') || e.target.closest('[onclick*="goToSection"]');
+            if (!el) return;
+            var onclick = el.getAttribute('onclick');
+            var match = onclick.match(/navigateTo\((['"])([^'"]+)\1\)/);
+            if (!match) match = onclick.match(/goToSection\((['"])([^'"]+)\1\)/);
+            if (match) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.navigateTo(match[2]);
+            }
+        });
+    } catch(e) {
+        console.error('[易彩安全网] 事件代理绑定失败:', e);
+    }
+
+    // 4. DOMContentLoaded后激活首页
+    function activateHome() {
+        console.log('[易彩安全网] DOM就绪，激活首页');
+        // 确保首页处于激活状态
+        var homeSection = document.getElementById('section-home');
+        if (homeSection && !homeSection.classList.contains('active')) {
+            homeSection.classList.add('active');
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', activateHome);
+    } else {
+        activateHome();
+    }
+
+    console.log('[易彩安全网] ✅ 导航修复安全网已部署');
 })();
 </script>
 
