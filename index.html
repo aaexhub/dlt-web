@@ -2010,6 +2010,19 @@ function navigateTo(section) {
     if (section === 'vip') updateDailyCount();
     if (section === 'service') renderServicePage();
     if (section === 'promote') renderPromotePage();
+
+    // 修复：确保目标section的父链没有display:none（Chrome容错解析导致部分section被嵌套到section-home内）
+    if (target) {
+        var p = target.parentElement;
+        while (p && p !== document.body) {
+            var ps = window.getComputedStyle ? window.getComputedStyle(p) : { display: '' };
+            if (ps.display === 'none' || ps.opacity === '0') {
+                p.style.display = 'block';
+                p.style.opacity = '1';
+            }
+            p = p.parentElement;
+        }
+    }
 }
 
 document.querySelectorAll('nav a').forEach(link => {
