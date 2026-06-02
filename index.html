@@ -1919,17 +1919,17 @@ function doBaziPaiPan() {
             var dayunHtml = '<p style="margin-bottom:10px;color:var(--bz-dim);font-size:0.82rem;">' +
                 startAge + '岁起运（' + startYear + '年）</p>';
             dayunHtml += '<table class="bz-dayun-table"><thead><tr><th>大运</th><th>年龄</th><th>干支</th></tr></thead><tbody>';
-            for (var di = 0; di < dayunList.length; di++) {
+            for (var di = 1; di < dayunList.length; di++) {
                 var dy = dayunList[di];
-                var aS = startAge + di * 10;
+                var aS = startAge + (di - 1) * 10;
                 var aE = aS + 9;
-                var dGan = dy.getGan();
-                var dZhi = dy.getZhi();
-                var style = di === 0 ? ' class="current-row"' : '';
+                // 注意：该库lunar.js v1.7.7的DaYun.getGanZhi()对index=0返回空字符串，需从index=1开始
+                var gz = dy.getGanZhi();
+                var style = di === 1 ? ' class="current-row"' : '';
                 dayunHtml += '<tr' + style + '>';
-                dayunHtml += '<td>第' + (di+1) + '步</td>';
+                dayunHtml += '<td>第' + di + '步</td>';
                 dayunHtml += '<td>' + aS + '-' + aE + '岁</td>';
-                dayunHtml += '<td style="color:var(--bz-gold);font-weight:700;">' + dGan + dZhi + '</td>';
+                dayunHtml += '<td style="color:var(--bz-gold);font-weight:700;">' + gz + '</td>';
                 dayunHtml += '</tr>';
             }
             dayunHtml += '</tbody></table>';
