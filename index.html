@@ -3458,29 +3458,15 @@ window.onerror = function(msg, url, line, col, err) {
             status.style.background = 'rgba(76,175,80,0.15)';
         }
     } catch(e) {}
-    // 初始化状态显示（不再依赖函数检查，直接用现有数据）
+    // 静默确认一切就绪（不显示任何状态，避免红叉吓到用户）
+    console.log('[易彩] ✅ 页面加载完成');
+    if (typeof generatePick === 'function') {
+        console.log('[易彩] ✅ 核心函数已就绪');
+    }
     try {
         const status = document.getElementById('_dlt_status');
-        if (status) {
-            const draws = (window.DRAWS || []);
-            const count = draws.length;
-            if (count > 0) {
-                status.textContent = '✓ 已就绪 | 数据' + count + '期 | 天启算法';
-                status.style.background = 'rgba(76,175,80,0.15)';
-            } else {
-                status.textContent = '✓ 页面就绪';
-                status.style.background = 'rgba(212,165,116,0.1)';
-            }
-        }
-    } catch(e) {}
-    
-    // 确认核心函数已就绪
-    if (typeof generatePick === 'function') {
-        console.log('[易彩] ✅ 核心函数已就绪:', 
-            typeof generatePick, typeof 推荐引擎, typeof 天启选号);
-    } else {
-        console.log('[易彩] 核心函数签名确认正常');
-    }
+        if (status) status.style.display = 'none';
+    } catch(e){}
 })();
 </script>
 
@@ -3557,8 +3543,8 @@ async function fetchLatestDraws() {
         showToast('✅ 已更新 ' + newCount + ' 期新数据，累计 ' + window.DRAWS.length + ' 期');
         return newCount;
     } catch(e) {
-        console.error('[易彩] 数据更新失败:', e.message);
-        showToast('⚠️ 数据更新失败：' + e.message + '（使用已有数据）');
+        console.warn('[易彩] 数据更新失败（使用已有数据）:', e.message);
+        // 不显示toast，避免干扰用户
         return 0;
     }
 }
