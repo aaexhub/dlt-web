@@ -9,6 +9,17 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/index.min.js"></script>
+    <!-- 备用CDN（主CDN加载失败时使用） -->
+    <script>
+// 确保lunar-javascript库可用（双重保障）
+if (typeof Solar === 'undefined') {
+    console.warn('[易彩] lunar-javascript主CDN未就绪，尝试备用加载');
+    var backupScript = document.createElement('script');
+    backupScript.src = 'https://unpkg.com/lunar-javascript@1.7.7/index.min.js';
+    backupScript.onload = function() { console.log('[易彩] 备用CDN加载成功'); };
+    document.head.appendChild(backupScript);
+}
+    </script>
     <script defer>
 // 大乐透历史开奖数据（自动生成，含140期真实数据）
 // 数据来源：500.com 天启算法引擎
@@ -1131,8 +1142,14 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
                 <label style="font-size:0.82rem;color:var(--bz-dim);display:block;margin-bottom:4px;">出生时间</label>
                 <input type="time" id="bzTime" value="12:00">
             </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:0.82rem;color:var(--bz-dim);display:block;margin-bottom:4px;">电子邮箱 <span style="color:var(--bz-dim);font-size:0.65rem;">（选填，用于接收命理报告PDF）</span></label>
+                <input type="email" id="bzEmail" placeholder="example@email.com" style="font-size:0.82rem;">
+            </div>
         </div>
-        <button class="bz-btn" id="bzSubmit" onclick="doBaziPaiPan()">☯ 开始排盘 · 命理分析</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="bz-btn" id="bzSubmit" onclick="doBaziPaiPan()" style="flex:1;">☯ 开始排盘 · 命理分析</button>
+        </div>
     </div>
 
     <!-- 加载 -->
@@ -1161,9 +1178,12 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
                 <div style="text-align:center;padding:16px;color:var(--bz-dim);"><em>正在结合古籍智慧生成分析...</em></div>
             </div>
         </div>
-        <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
             <button class="btn btn-secondary" onclick="bzReset()" style="flex:1;">← 重新输入</button>
+            <button class="bz-btn" onclick="bzExportPDF()" style="flex:1;">📄 导出PDF</button>
+            <button class="bz-btn" onclick="bzSendEmail()" style="flex:1;">📧 发送到邮箱</button>
         </div>
+        <div id="bzEmailStatus" style="text-align:center;font-size:0.8rem;color:var(--bz-green);display:none;margin-bottom:10px;"></div>
         <div class="bz-disclaimer">命理分析仅供文化研究参考，人生在于自身的努力与选择。</div>
     </div>
 </div>
@@ -1813,10 +1833,27 @@ function doBaziPaiPan() {
     document.getElementById('bzResult').style.display = 'none';
     
     try {
-        if (typeof Solar === 'undefined') {
-            bzError('排盘库正在加载，请刷新页面后重试');
-            document.getElementById('bzFormCard').style.display = 'block';
-            document.getElementById('bzLoading').style.display = 'none';
+        if (typeof Solar === 'undefined' || typeof Solar.fromYmdHms !== 'function') {
+            // 尝试再次加载CDN
+            var scr = document.createElement('script');
+            scr.src = 'https://unpkg.com/lunar-javascript@1.7.7/index.min.js';
+            scr.onload = function() {
+                // CDN加载成功，重试排盘
+                if (typeof Solar !== 'undefined' && typeof Solar.fromYmdHms === 'function') {
+                    doBaziPaiPan();
+                } else {
+                    bzError('排盘库加载失败，请使用现代浏览器或刷新页面后重试');
+                    document.getElementById('bzFormCard').style.display = 'block';
+                    document.getElementById('bzLoading').style.display = 'none';
+                }
+            };
+            scr.onerror = function() {
+                bzError('排盘库加载失败，请检查网络连接后刷新页面重试');
+                document.getElementById('bzFormCard').style.display = 'block';
+                document.getElementById('bzLoading').style.display = 'none';
+            };
+            document.head.appendChild(scr);
+            bzError('正在加载排盘库，请稍候...');
             return;
         }
         var dt = new Date(dateVal + 'T' + (timeVal || '12:00'));
@@ -1914,6 +1951,12 @@ function doBaziPaiPan() {
         document.getElementById('bzResult').style.display = 'block';
         document.getElementById('bzResult').scrollIntoView({behavior:'smooth',block:'start'});
         
+        // 保存到全局（供导出和发送使用）
+        BZ_BAZI_STR = baziStr;
+        BZ_USER_NAME = name;
+        BZ_USER_GENDER = document.getElementById('bzGender').value;
+        BZ_USER_EMAIL = document.getElementById('bzEmail').value.trim();
+        
         // AI命理分析（基于八字的本地智能分析，不调外部API）
         bzLocalAnalysis({name:dG+dZ, gender:genderText, yG,yZ,mG,mZ,dG,dZ,tG,tZ, baziStr, sx,
             ny:[yNY,mNY,dNY,tNY], year:year, nianGan:yG, nianZhi:yZ});
@@ -1927,7 +1970,10 @@ function doBaziPaiPan() {
 }
 
 // ====== 本地智能命理分析（无需API） ======
+var BZ_LAST_DATA = null; // 最后一次排盘数据，供导出和发送使用
+
 function bzLocalAnalysis(data) {
+    BZ_LAST_DATA = data; // 保存到全局
     var el = document.getElementById('bzAnalysis');
     
     // 五行计数
@@ -2020,6 +2066,127 @@ function bzLocalAnalysis(data) {
     html += '</div>';
     
     el.innerHTML = html;
+}
+
+// ========== 全局数据（供导出和发送使用） ==========
+var BZ_BAZI_STR = '';
+var BZ_USER_NAME = '';
+var BZ_USER_GENDER = '';
+var BZ_USER_EMAIL = '';
+
+// ====== 导出PDF（浏览器打印/另存为PDF） ======
+function bzExportPDF() {
+    var resultEl = document.getElementById('bzResult');
+    if (!resultEl || resultEl.style.display === 'none') {
+        alert('请先进行排盘分析后再导出');
+        return;
+    }
+    var name = BZ_USER_NAME || document.getElementById('bzName').value || '未知';
+    var gender = BZ_USER_GENDER || document.getElementById('bzGender').value;
+    var genderText = gender === 'male' ? '男' : '女';
+    
+    // 构造打印页面
+    var printWin = window.open('', '_blank', 'width=800,height=600');
+    var content = document.getElementById('bzResult').innerHTML;
+    var styles = document.querySelectorAll('style');
+    var styleText = '';
+    styles.forEach(function(s) { styleText += s.innerHTML; });
+    
+    printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + 
+        encodeURIComponent(name) + '八字命理分析报告</title>' +
+        '<style>' + styleText + '</style>' +
+        '<style>@page { size: A4; margin: 2cm; } ' +
+        'body { font-family: "Songti SC", "SimSun", serif; padding: 0; } ' +
+        '.section { display: block !important; } ' +
+        '.card { margin-bottom: 16px; } ' +
+        '#bzFormCard, #bzLoading { display: none !important; } ' +
+        'button, .bz-disclaimer { display: none !important; } ' +
+        '</style></head><body>' +
+        '<h1 style="text-align:center;color:#c9a259;font-family:serif;">' + name + ' · 八字命理分析报告</h1>' +
+        '<p style="text-align:center;color:#666;font-size:0.85rem;">' + genderText + ' · 命理分析仅供传统文化研究参考</p>' +
+        '<hr style="border:none;border-top:1px solid #ddd;margin:16px 0;">' +
+        content.replace(/<button[^>]*>.*?<\/button>/g, '').replace(/<div class="bz-disclaimer"[^>]*>.*?<\/div>/g, '') +
+        '<hr style="border:none;border-top:1px solid #ddd;margin:20px 0;">' +
+        '<p style="text-align:center;color:#999;font-size:0.75rem;">由 易彩·白玦团队 生成 © 2026</p>' +
+        '</body></html>');
+    printWin.document.close();
+    
+    // 延迟触发打印
+    setTimeout(function() {
+        printWin.focus();
+        printWin.print();
+    }, 500);
+}
+
+// ====== 发送命理报告到邮箱 ======
+function bzSendEmail() {
+    var email = document.getElementById('bzEmail').value.trim();
+    if (!email) {
+        alert('请先在输入框中填写电子邮箱地址');
+        document.getElementById('bzEmail').focus();
+        return;
+    }
+    // 简单邮箱校验
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('请输入有效的电子邮箱地址');
+        return;
+    }
+    var name = BZ_USER_NAME || document.getElementById('bzName').value.trim() || '用户';
+    
+    // 构建报告文本
+    var basicInfo = document.getElementById('bzBasicInfo');
+    var sizhuGrid = document.querySelector('#bzSizhuGrid');
+    var dayunContent = document.getElementById('bzDayunContent');
+    var analysisEl = document.getElementById('bzAnalysis');
+    
+    var reportTxt = '【' + name + '】八字命理分析报告\n';
+    reportTxt += '==============================\n\n';
+    if (basicInfo) reportTxt += basicInfo.innerText + '\n\n';
+    if (sizhuGrid) reportTxt += '【四柱八字】\n' + sizhuGrid.innerText + '\n\n';
+    if (dayunContent) reportTxt += '【大运排列】\n' + dayunContent.innerText + '\n\n';
+    if (analysisEl) reportTxt += '【命理分析】\n' + analysisEl.innerText + '\n\n';
+    reportTxt += '==============================\n';
+    reportTxt += '由 易彩·白玦团队 生成 © 2026\n';
+    reportTxt += '命理分析仅供传统文化研究参考，人生在于自身的努力与选择。\n';
+    
+    var statusEl = document.getElementById('bzEmailStatus');
+    if (!statusEl) return;
+    
+    // 显示加载状态
+    statusEl.style.display = 'block';
+    statusEl.textContent = '⏳ 正在准备报告并打开邮件客户端...';
+    statusEl.style.color = 'var(--bz-gold)';
+    
+    // 方案一：mailto方式（自动打开本地邮件客户端）
+    var subject = encodeURIComponent(name + '的八字命理分析报告');
+    var body = encodeURIComponent(reportTxt);
+    window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+    
+    // 方案二：3秒后提供复制报告链接
+    setTimeout(function() {
+        var copyBtn = document.createElement('span');
+        copyBtn.style.cursor = 'pointer';
+        copyBtn.style.color = 'var(--bz-gold)';
+        copyBtn.style.textDecoration = 'underline';
+        copyBtn.textContent = ' 📋 点击复制报告';
+        copyBtn.onclick = function() {
+            navigator.clipboard.writeText(reportTxt).then(function() {
+                statusEl.textContent = '✅ 报告已复制到剪贴板，可粘贴到邮件中发送至 ' + email;
+            }).catch(function() {
+                // 回退方案：textarea选择复制
+                var ta = document.createElement('textarea');
+                ta.value = reportTxt;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                statusEl.textContent = '✅ 报告已复制到剪贴板（请粘贴到邮件中发送至 ' + email + '）';
+            });
+        };
+        statusEl.textContent = '';
+        statusEl.appendChild(document.createTextNode('📧 邮件客户端已打开'));
+        statusEl.appendChild(copyBtn);
+    }, 3000);
 }
 
 // ========== 导航 ==========
