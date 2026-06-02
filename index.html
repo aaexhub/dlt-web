@@ -2037,7 +2037,8 @@ function doBaziPaiPan() {
             yNY:yNY, mNY:mNY, dNY:dNY, tNY:tNY,
             year:year, month:month, day:day, hour:hour, min:min,
             nianGan:yG, nianZhi:yZ, yueGan:mG, yueZhi:mZ,
-            riGan:dG, riZhi:dZ, shiGan:tG, shiZhi:tZ});
+            riGan:dG, riZhi:dZ, shiGan:tG, shiZhi:tZ,
+            dayunList:dayunList, startAge:startAge, startYear:startYear});
         
     } catch(e) {
         document.getElementById('bzLoading').style.display = 'none';
@@ -2055,6 +2056,7 @@ function bzLocalAnalysis(data) {
 
     var yG=data.yG, yZ=data.yZ, mG=data.mG, mZ=data.mZ, dG=data.dG, dZ=data.dZ, tG=data.tG, tZ=data.tZ;
     var riGan=dG, riGanWx=BZ_WX[dG];
+    var dayunList=data.dayunList||[], startAge=data.startAge||0, startYear=data.startYear||0;
 
     // ========== 1. 五行量化（含藏干加权） ==========
     var wx={金:0,木:0,水:0,火:0,土:0};
