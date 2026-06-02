@@ -972,7 +972,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <!-- 客服和推广暂时隐藏 -->
             <!-- <a data-section="service" style="color:#4ecdc4;">💬 客服</a> -->
             <!-- <a data-section="promote">📣 推广</a> -->
-            <a data-section="vip" style="color:var(--jin-se);font-weight:bold;">🎁 打赏</a>
+            <!-- 打赏已移除 -->
             <!-- 登录/注册暂时隐藏，后续推广阶段再启用 -->
             <!-- <a id="navRegisterBtn" data-section="register" style="color:var(--jin-se);font-weight:bold;cursor:pointer;">🔑 登录/注册</a> -->
             <span class="theme-dot" onclick="cycleTheme()" title="切换主题背景" style="flex-shrink:0;">
@@ -1350,20 +1350,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     </div>
 </div>
 
-<div class="section" id="section-vip" style="text-align:center;">
-
-    <!-- 居中布局 -->
-    <div class="card" style="max-width:420px;margin:0 auto 12px;padding:20px;">
-        <div style="text-align:center;">
-            <p style="font-size:1.05rem;color:var(--jin-se);margin:0 0 4px 0;">🎉 全功能模式</p>
-            <p style="font-size:0.8rem;color:var(--text-muted);margin:0 0 18px 0;">无限选号 · 卦象解析 · 数据导出 全部免费</p>
-            <img src="wechat-pay.jpg" alt="微信收款码" style="width:140px;height:140px;border-radius:10px;object-fit:cover;display:block;margin:0 auto 14px;">
-            <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">💝 微信扫一扫，随心打赏</p>
-        </div>
-    </div>
-
-</div>
-
+<!-- 打赏页已移除 -->
 <footer>
     <p>易彩 · 大乐透易经智能选号系统 v2.0 | 仅供娱乐参考，理性购彩</p>
     <p style="margin-top:6px;font-size:0.8rem;color:var(--text-muted);">
@@ -2393,41 +2380,64 @@ function bzSendEmail() {
     var statusEl = document.getElementById('bzEmailStatus');
     if (!statusEl) return;
     
+    var baziData = BZ_LAST_DATA || {};
+    
     // 显示加载状态
     statusEl.style.display = 'block';
-    statusEl.textContent = '⏳ 正在准备报告并打开邮件客户端...';
+    statusEl.textContent = '⏳ 正在发送报告至 ' + email + '...';
     statusEl.style.color = 'var(--bz-gold)';
     
-    // 方案一：mailto方式（自动打开本地邮件客户端）
-    var subject = encodeURIComponent(name + '的八字命理分析报告');
-    var body = encodeURIComponent(reportTxt);
-    window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
-    
-    // 方案二：3秒后提供复制报告链接
-    setTimeout(function() {
-        var copyBtn = document.createElement('span');
-        copyBtn.style.cursor = 'pointer';
-        copyBtn.style.color = 'var(--bz-gold)';
-        copyBtn.style.textDecoration = 'underline';
-        copyBtn.textContent = ' 📋 点击复制报告';
-        copyBtn.onclick = function() {
-            navigator.clipboard.writeText(reportTxt).then(function() {
-                statusEl.textContent = '✅ 报告已复制到剪贴板，可粘贴到邮件中发送至 ' + email;
-            }).catch(function() {
-                // 回退方案：textarea选择复制
-                var ta = document.createElement('textarea');
-                ta.value = reportTxt;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                statusEl.textContent = '✅ 报告已复制到剪贴板（请粘贴到邮件中发送至 ' + email + '）';
-            });
-        };
-        statusEl.textContent = '';
-        statusEl.appendChild(document.createTextNode('📧 邮件客户端已打开'));
-        statusEl.appendChild(copyBtn);
-    }, 3000);
+    // 方案一：通过邮件API转发（优先尝试）
+    var apiUrl = 'https://www.dlt168.cn/api/send-email';
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            to: email,
+            subject: name + '的八字命理分析报告 - 易彩智能选号',
+            text: reportTxt,
+            name: name
+        })
+    }).then(function(r) {
+        if (r.ok) {
+            statusEl.textContent = '✅ 命理报告已成功发送至 ' + email + '，请查看收件箱（含垃圾邮件箱）';
+            statusEl.style.color = 'var(--bz-green)';
+        } else {
+            throw new Error('API返回异常');
+        }
+    }).catch(function() {
+        // 方案二：mailto + 复制按钮（备选）
+        statusEl.textContent = '📧 自动发送失败，已为您打开邮件客户端...';
+        statusEl.style.color = 'var(--bz-gold)';
+        
+        var subject = encodeURIComponent(name + '的八字命理分析报告');
+        var body = encodeURIComponent(reportTxt);
+        window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+        
+        setTimeout(function() {
+            var copyBtn = document.createElement('span');
+            copyBtn.style.cursor = 'pointer';
+            copyBtn.style.color = 'var(--bz-gold)';
+            copyBtn.style.textDecoration = 'underline';
+            copyBtn.textContent = ' 📋 点击复制报告到剪贴板';
+            copyBtn.onclick = function() {
+                navigator.clipboard.writeText(reportTxt).then(function() {
+                    statusEl.textContent = '✅ 报告已复制到剪贴板，可粘贴到邮件中发送至 ' + email;
+                }).catch(function() {
+                    var ta = document.createElement('textarea');
+                    ta.value = reportTxt;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    statusEl.textContent = '✅ 报告已复制到剪贴板（请粘贴到邮件中发送至 ' + email + '）';
+                });
+            };
+            statusEl.textContent = '';
+            statusEl.appendChild(document.createTextNode('📧 邮件客户端已打开'));
+            statusEl.appendChild(copyBtn);
+        }, 3000);
+    });
 }
 
 // ========== 导航 ==========
