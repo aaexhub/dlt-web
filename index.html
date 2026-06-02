@@ -948,28 +948,13 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         <button class="btn btn-outline btn-sm" onclick="fetchLatestDraws()" style="margin-left:10px;" title="从体彩官方同步最新开奖数据">📡 更新数据</button>
     </div>
 
-    <!-- 每日热门推荐模块 -->
-    <div class="card" id="todayHotPick" style="margin-bottom:10px;">
-        <div class="card-title">🔥 今日热门推荐 <span style="font-size:0.7rem;color:var(--text-muted);font-weight:normal;">基于近期开奖趋势生成</span></div>
-        <div id="todayHotContent" style="text-align:center;padding:8px 0;">
-            <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:10px;">点击下方按钮，自动生成今日推荐号码</div>
-            <button class="btn btn-gold btn-sm" onclick="generateTodayHot()" style="font-size:0.9rem;padding:10px 24px;">🔥 查看今日推荐</button>
-            <div id="todayHotResult" style="margin-top:12px;display:none;"></div>
-        </div>
-    </div>
-
-    <div id="pickResult" style="display:none;">
+        <div id="pickResult" style="display:none;">
         <div class="card" id="pickDisplay"></div>
         <div class="card" id="pickIChing"></div>
         <div class="card" id="pickBackups" style="display:none;"></div>
         <div style="text-align:center;margin:10px 0;">
             <button class="btn btn-outline btn-sm" onclick="saveCurrentPick()">⭐ 收藏此注</button>
         </div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">📜 选号记录</div>
-        <div id="historyList"></div>
     </div>
 </div>
 
