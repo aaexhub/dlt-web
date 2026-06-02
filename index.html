@@ -12,7 +12,7 @@
     <!-- 备用CDN（主CDN加载失败时使用） -->
     <script>
 // 确保lunar-javascript库可用（双重保障）
-if (typeof Solar === 'undefined') {
+if (typeof Lunar === 'undefined') {
     console.warn('[易彩] lunar-javascript主CDN未就绪，尝试备用加载');
     var backupScript = document.createElement('script');
     backupScript.src = 'https://unpkg.com/lunar-javascript@1.7.7/lunar.js';
@@ -1828,13 +1828,12 @@ function doBaziPaiPan() {
     document.getElementById('bzResult').style.display = 'none';
     
     try {
-        if (typeof Solar === 'undefined' || typeof Solar.fromYmdHms !== 'function') {
+        if (typeof Lunar === 'undefined' || typeof Lunar.fromYmdHms !== 'function') {
             // 尝试再次加载CDN
             var scr = document.createElement('script');
             scr.src = 'https://unpkg.com/lunar-javascript@1.7.7/lunar.js';
             scr.onload = function() {
-                // CDN加载成功，重试排盘
-                if (typeof Solar !== 'undefined' && typeof Solar.fromYmdHms === 'function') {
+                if (typeof Lunar !== 'undefined' && typeof Lunar.fromYmdHms === 'function') {
                     doBaziPaiPan();
                 } else {
                     bzError('排盘库加载失败，请使用现代浏览器或刷新页面后重试');
@@ -1858,10 +1857,9 @@ function doBaziPaiPan() {
         var hour = dt.getHours();
         var min = dt.getMinutes();
         
-        // 使用 lunar-javascript 库排盘
-        var solar = Solar.fromYmdHms(year, month, day, hour, min, 0);
-        var lunar = solar.getLunar();
-        var ec = solar.getEightChar();
+        // 使用 lunar-javascript 库排盘（v1.7.7 API：通过 Lunar 获取 EightChar）
+        var lunar = Lunar.fromYmdHms(year, month, day, hour, min, 0);
+        var ec = lunar.getEightChar();
         
         // 四柱干支
         var yG = ec.getYearGan(), yZ = ec.getYearZhi();
