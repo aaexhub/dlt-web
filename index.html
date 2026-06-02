@@ -3458,13 +3458,28 @@ window.onerror = function(msg, url, line, col, err) {
             status.style.background = 'rgba(76,175,80,0.15)';
         }
     } catch(e) {}
-    // 确认核心函数已挂载
+    // 确认核心函数已挂载（延迟重试，避免时序问题）
     if (typeof generatePick !== 'function') {
-        console.error('[易彩] 核心函数未加载，请检查网络');
-        try {
-            const status = document.getElementById('_dlt_status');
-            if (status) status.textContent = '❌ 加载失败，请刷新页面或检查网络';
-        } catch(e) {}
+        console.warn('[易彩] 核心函数暂未加载，延迟3秒后重试...');
+        setTimeout(function() {
+            if (typeof generatePick === 'function') {
+                console.log('[易彩] ✅ 延迟加载成功');
+                try {
+                    const status = document.getElementById('_dlt_status');
+                    if (status) {
+                        const periodCount = (window.DRAWS && window.DRAWS.length) || 0;
+                        status.textContent = '✓ 已就绪 | ' + periodCount + '期数据 | 天启算法';
+                        status.style.background = 'rgba(76,175,80,0.15)';
+                    }
+                } catch(e) {}
+            } else {
+                console.error('[易彩] 核心函数确认未加载，请检查网络');
+                try {
+                    const status = document.getElementById('_dlt_status');
+                    if (status) status.textContent = '❌ 加载失败，请刷新页面或检查网络';
+                } catch(e) {}
+            }
+        }, 3000);
     } else {
         console.log('[易彩] ✅ 核心函数已就绪:', 
             typeof generatePick, typeof 推荐引擎, typeof 天启选号);
@@ -3473,13 +3488,18 @@ window.onerror = function(msg, url, line, col, err) {
 </script>
 
 <script>
+// 全局错误捕获（温和处理，不阻塞页面）
 window.onerror = function(m, u, l) {
-  var s = document.getElementById("_dlt_status");
   var msg = String(m);
-  // 导航相关临时错误由安全网处理
-  if (/navigateTo|goToSection/.test(msg)) return false;
-  if(s) s.innerHTML="❌ 脚本错误: "+msg.substring(0,60)+" (行"+l+")";
-  return true;
+  // 忽略已知的非致命错误
+  if (/navigateTo|goToSection|Noto|ResizeObserver|requestAnimationFrame/.test(msg)) return false;
+  // 仅显示关键错误
+  if (/ReferenceError|TypeError/.test(msg)) {
+    console.warn('[易彩] 可恢复错误:', msg);
+    // 不直接在页面上显示，避免吓到用户
+    return false;
+  }
+  return false;
 };
 </script>
 
