@@ -1327,7 +1327,6 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         <div id="faqContentStatic"></div>
     </div>
     </div>
-    <!-- 赞助支持已删除 -->
 </div>
 
 <div class="section" id="section-promote">
@@ -3808,12 +3807,7 @@ function renderServicePage() {
     var grid = document.getElementById('serviceGrid');
     if (!grid) return;
     grid.innerHTML = '' +
-        '<div class="service-card">' +
-            '<div class="s-icon">🤖</div>' +
-            '<h3>在线客服</h3>' +
-            '<p>Telegram 智能客服 @OpenClawBot，24小时在线</p>' +
-            '<a href="https://t.me/OpenClawBot" target="_blank" class="btn btn-outline btn-sm" style="margin-top:10px;display:inline-block;">联系 @OpenClawBot</a>' +
-        '</div>' +
+        <!-- Telegram客服已删除 -->
         '<div class="service-card">' +
             '<div class="s-icon">💬</div>' +
             '<h3>微信客服</h3>' +
@@ -3842,7 +3836,7 @@ function renderServicePage() {
         { q:"如何升级VIP？", a:"进入VIP页面选择方案，扫码付款后截图发送至微信，24小时内开通。" },
         { q:"数据更新频率如何？", a:"系统自动从体彩官方API同步数据，开奖日（二、四、日）自动获取最新数据。" },
         { q:"号码会中奖吗？", a:"本系统仅提供娱乐参考，彩票中奖为小概率随机事件，请理性购彩。" },
-        { q:"如何联系管理员？", a:"通过Telegram @OpenClawBot 或邮箱 copeland02169@hotmail.com" }
+        { q:"如何联系管理员？", a:"发送邮件至 copeland02169@hotmail.com" }
     ];
     var faqHtml = faqs.map(function(f, i) {
         return '<div class="expandable">' +
