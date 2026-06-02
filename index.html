@@ -2272,11 +2272,92 @@ function bzLocalAnalysis(data) {
     html+='<div class="bz-classical-quote">《三命通会》：「天乙贵人解厄·文昌聪慧·桃花人缘·华盖清贵」</div>';
     html+='</div>';
 
-    // ⑧ 大运·流年提示
-    html+='<div class="bz-card-title" style="margin-top:16px;">⑧ 大运·流年提示</div>';
+    // ⑧ 一生运势总览（大运·流年·十年趋势）
+    html+='<div class="bz-card-title" style="margin-top:16px;">⑧ 一生运势总览 <span style="font-size:0.65rem;color:var(--bz-dim);">—大运·流年·趋势</span></div>';
     html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
+    // 8a. 起运信息
+    html+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">';
+    html+='<span style="background:rgba(212,165,116,0.06);padding:2px 10px;border-radius:12px;">起运：'+startAge+'岁('+startYear+'年)</span>';
+    html+='<span style="background:rgba(212,165,116,0.06);padding:2px 10px;border-radius:12px;">属相：'+sx+'年</span>';
+    html+='<span style="background:rgba(212,165,116,0.06);padding:2px 10px;border-radius:12px;">当前大运：第1步</span>';
+    html+='</div>';
+    // 8b. 大运十年走势总表（行）
+    html+='<div style="font-size:0.78rem;font-weight:700;margin-bottom:4px;color:var(--jin-se);">📊 一生大运走势</div>';
+    html+='<div style="display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;" class="bz-life-dayun">';
+    for (var qi = 1; qi < dayunList.length; qi++) {
+        var qdy = dayunList[qi];
+        var qgz = qdy.getGanZhi();
+        var qs = startAge + (qi - 1) * 10;
+        var qe = qs + 9;
+        var qi_isCur = (data.year >= qs && data.year <= qe);
+        var qgan = qgz.charAt(0);
+        var qwx = BZ_WX[qgan] || '';
+        var qwxCls = 'bz-c' + (qwx==='木'?'m':qwx==='火'?'f':qwx==='土'?'e':qwx==='金'?'g':qwx==='水'?'w':'');
+        // 大运与用神的关系
+        var q_xiShenMatch = false;
+        if (xiShenFull.indexOf('木') >= 0 && qwx === '木') q_xiShenMatch = true;
+        else if (xiShenFull.indexOf('火') >= 0 && qwx === '火') q_xiShenMatch = true;
+        else if (xiShenFull.indexOf('金') >= 0 && qwx === '金') q_xiShenMatch = true;
+        else if (xiShenFull.indexOf('水') >= 0 && qwx === '水') q_xiShenMatch = true;
+        else if (xiShenFull.indexOf('土') >= 0 && qwx === '土') q_xiShenMatch = true;
+        html+='<div style="flex:0 0 72px;text-align:center;padding:8px 4px;border-radius:8px;background:'+(qi_isCur?'rgba(212,165,116,0.12)':'rgba(22,22,42,0.6)')+';border:1px solid '+(qi_isCur?'var(--jin-se)':'rgba(212,165,116,0.06)')+';scroll-snap-align:start;">';
+        html+='<span style="font-family:'Noto Serif SC',serif;font-size:0.9rem;font-weight:700;display:block;" class="'+qwxCls+'">'+qgz+'</span>';
+        html+='<span style="font-size:0.6rem;color:var(--text-muted);display:block;">'+qs+'~'+qe+'岁</span>';
+        html+='<span style="font-size:0.65rem;display:block;'+(q_xiShenMatch?'color:var(--bz-green);font-weight:700;':'color:var(--bz-dim);')+'">'+(q_xiShenMatch?'✅用神运':'—')+'</span>';
+        html+='</div>';
+    }
+    html+='</div>';
+    // 8c. 当前流年分析
+    var curYear = data.year;
+    var liuNianGZ = BZ_TG[(curYear-4)%10] + BZ_DZ[(curYear-4)%12];
+    html+='<div style="font-size:0.78rem;font-weight:700;margin:8px 0 4px;color:var(--jin-se);">🌟 当前流年·' + curYear + '年 (' + liuNianGZ + '年)</div>';
+    html+='<div style="font-size:0.82rem;line-height:1.7;">';
+    var liuGan = liuNianGZ.charAt(0);
+    var liuZhi = liuNianGZ.charAt(1);
+    var liuGanWx = BZ_WX[liuGan] || '—';
+    var liuZhiWx = BZ_WX[liuZhi] || '—';
+    html+='天干<b class="bz-c'+(liuGanWx==='木'?'m':liuGanWx==='火'?'f':liuGanWx==='土'?'e':liuGanWx==='金'?'g':'w')+'">'+liuGan+'</b>('+liuGanWx+') 地支<b class="bz-c'+(liuZhiWx==='木'?'m':liuZhiWx==='火'?'f':liuZhiWx==='土'?'e':liuZhiWx==='金'?'g':'w')+'">'+liuZhi+'</b>('+liuZhiWx+')<br>';
+    // 简单判断流年吉凶
+    var liuNianGood = false;
+    if (xiShenFull.indexOf(liuGanWx) >= 0 || xiShenFull.indexOf(liuZhiWx) >= 0) {
+        html+='<span style="color:var(--bz-green);">✅ 流年与喜用神呼应，运势较顺。</span>';
+        liuNianGood = true;
+    } else if (liuGanWx === most || liuZhiWx === most) {
+        html+='<span style="color:var(--bz-red);">⚠️ 流年犯忌神五行，需多加谨慎。</span>';
+    } else {
+        html+='<span style="color:var(--bz-dim);">📌 流年平顺，无大冲克。</span>';
+    }
+    html+='</div>';
+    // 8d. 大运整体评价
+    html+='<div style="font-size:0.78rem;font-weight:700;margin:8px 0 4px;color:var(--jin-se);">📈 十步大运总评</div>';
+    html+='<div style="font-size:0.82rem;line-height:1.7;">';
+    // 统计喜用神大运数量
+    var goodDyCount = 0;
+    for (var ei = 1; ei < dayunList.length; ei++) {
+        var edy = dayunList[ei];
+        var egz = edy.getGanZhi();
+        var ewx = BZ_WX[egz.charAt(0)] || '';
+        if (xiShenFull.indexOf(ewx) >= 0) goodDyCount++;
+    }
     html+=dyTips+'<br>';
-    html+='宜把握喜用神五行机遇，注意忌神流年波折。';
+    var totalDy = dayunList.length - 1;
+    html+='总步数：<b style="color:var(--bz-gold);">'+totalDy+'步大运</b> · 喜用神大运：<b style="color:var(--bz-green);">'+goodDyCount+'步</b> · 忌神大运：<b style="color:var(--bz-red);">'+(totalDy-goodDyCount)+'步</b><br>';
+    var peakAge1 = startAge, peakAge2 = startAge;
+    for (var ai = 1; ai < dayunList.length; ai++) {
+        var ady = dayunList[ai];
+        var agz = ady.getGanZhi();
+        var awx = BZ_WX[agz.charAt(0)] || '';
+        if (xiShenFull.indexOf(awx) >= 0) {
+            if (peakAge1 === startAge) peakAge1 = startAge + (ai - 1) * 10;
+            else peakAge2 = startAge + (ai - 1) * 10;
+        }
+    }
+    if (goodDyCount > 0) {
+        html+='运势高峰期：<b style="color:var(--bz-green);">'+peakAge1+'岁后</b>';
+        if (peakAge2 > peakAge1) html+=' 和 <b style="color:var(--bz-green);">'+peakAge2+'岁后</b>';
+        html+='<br>';
+    }
+    html+= '</div>';
     html+='</div>';
 
     // ⑨ 性格概要
