@@ -1022,9 +1022,10 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <h3>收藏对比</h3>
             <p>心仪号码收藏，多组对比分析</p>
         </div>
-        <div class="feat-card vip-card" onclick="navigateTo('vip')">
+        <div class="feat-card vip-card" onclick="navigateTo('service')">
             <div class="feat-icon" style="color:var(--jin-se);">❤️</div>
-            <!-- 打赏内容已移除 -->
+            <h3>客服支持</h3>
+            <p>联系客服 · 反馈问题 · 咨询VIP</p>
         </div>
     </div>
     <div class="card" style="margin-top:28px;">
@@ -1327,6 +1328,29 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     <div class="card">
         <div class="card-title">📝 常见问题</div>
         <div id="faqContentStatic"></div>
+    </div>
+    <div class="card" style="text-align:center;">
+        <div class="card-title">❤️ 支持易彩</div>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">
+            如果您觉得易彩对您有帮助，欢迎赞助支持，让我们持续优化服务
+        </p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+            <div style="text-align:center;">
+                <div style="width:160px;height:160px;background:var(--bg-light);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-color);margin:0 auto 8px;">
+                    <span style="font-size:2.5rem;color:var(--text-muted);">💳</span>
+                </div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">微信/支付宝</div>
+            </div>
+            <div style="text-align:center;">
+                <div style="width:160px;height:160px;background:var(--bg-light);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-color);margin:0 auto 8px;">
+                    <span style="font-size:2.5rem;color:var(--text-muted);">💰</span>
+                </div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">联系客服获取</div>
+            </div>
+        </div>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:12px;">
+            赞助金额不限，您的支持是我们前进的动力 🙏
+        </p>
     </div>
 </div>
 
@@ -2532,6 +2556,11 @@ function navigateTo(section) {
     if (section === 'register') {
         if (typeof openAuthModal === 'function') openAuthModal();
         return;
+    }
+    // 别名/重定向
+    if (section === 'vip') {
+        console.log('[易彩] vip已重定向到service');
+        section = 'service';
     }
     document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
     const link = document.querySelector('nav a[data-section="' + section + '"]');
