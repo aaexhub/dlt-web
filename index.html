@@ -8,14 +8,14 @@
     <meta name="keywords" content="大乐透选号,大乐透推荐号码,易经选号,智能选号,免费选号工具">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
     <!-- 备用CDN（主CDN加载失败时使用） -->
     <script>
 // 确保lunar-javascript库可用（双重保障）
 if (typeof Solar === 'undefined') {
     console.warn('[易彩] lunar-javascript主CDN未就绪，尝试备用加载');
     var backupScript = document.createElement('script');
-    backupScript.src = 'https://unpkg.com/lunar-javascript@1.7.7/index.min.js';
+    backupScript.src = 'https://unpkg.com/lunar-javascript@1.7.7/lunar.js';
     backupScript.onload = function() { console.log('[易彩] 备用CDN加载成功'); };
     document.head.appendChild(backupScript);
 }
@@ -1831,7 +1831,7 @@ function doBaziPaiPan() {
         if (typeof Solar === 'undefined' || typeof Solar.fromYmdHms !== 'function') {
             // 尝试再次加载CDN
             var scr = document.createElement('script');
-            scr.src = 'https://unpkg.com/lunar-javascript@1.7.7/index.min.js';
+            scr.src = 'https://unpkg.com/lunar-javascript@1.7.7/lunar.js';
             scr.onload = function() {
                 // CDN加载成功，重试排盘
                 if (typeof Solar !== 'undefined' && typeof Solar.fromYmdHms === 'function') {
