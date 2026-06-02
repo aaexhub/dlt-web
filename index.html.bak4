@@ -2307,7 +2307,7 @@ function bzLocalAnalysis(data) {
         else if (xiShenFull.indexOf('水') >= 0 && qwx === '水') q_xiShenMatch = true;
         else if (xiShenFull.indexOf('土') >= 0 && qwx === '土') q_xiShenMatch = true;
         html+='<div style="flex:0 0 72px;text-align:center;padding:8px 4px;border-radius:8px;background:'+(qi_isCur?'rgba(212,165,116,0.12)':'rgba(22,22,42,0.6)')+';border:1px solid '+(qi_isCur?'var(--jin-se)':'rgba(212,165,116,0.06)')+';scroll-snap-align:start;">';
-        html+='<span style="font-family:\'Noto Serif SC\',serif;font-size:0.9rem;font-weight:700;display:block;" class="'+qwxCls+'">'+qgz+'</span>';
+        html+='<span style="font-family:'Noto Serif SC',serif;font-size:0.9rem;font-weight:700;display:block;" class="'+qwxCls+'">'+qgz+'</span>';
         html+='<span style="font-size:0.6rem;color:var(--text-muted);display:block;">'+qs+'~'+qe+'岁</span>';
         html+='<span style="font-size:0.65rem;display:block;'+(q_xiShenMatch?'color:var(--bz-green);font-weight:700;':'color:var(--bz-dim);')+'">'+(q_xiShenMatch?'✅用神运':'—')+'</span>';
         html+='</div>';
@@ -4300,100 +4300,31 @@ function generateSharePoster() {
 })();
 </script>
 
-
-// ====== 关键函数全局暴露安全网 ======
-(function() {
-    var fns = ['initAnalysis', 'initIChingPage', 'initDataTable', 'renderFavorites', 
-               'renderPickHistory', 'generatePick', 'doBaziPaiPan', 'bzLocalAnalysis',
-               'showToast', 'addExportButtonToData', 'updateDailyCount'];
-    fns.forEach(function(name) {
-        if (typeof window[name] === 'function') return;
-        try {
-            if (typeof eval(name) === 'function') {
-                window[name] = eval(name);
-                console.log('[易彩安全网] 暴露函数:', name);
-            }
-        } catch(e) {
-            // 部分函数可能未定义，不报错
-        }
-    });
-})();
-
 <!-- ========== 导航修复安全网 ========== -->
 <script>
 // 导航修复安全网 - 在页面底部同步执行，确保所有导航功能正常
 (function() {
     'use strict';
 
-    // 1. 确保navigateTo和goToSection全局可用（完整版，含所有section初始化）
+    // 1. 确保navigateTo和goToSection全局可用
     if (typeof window.navigateTo !== 'function') {
-        console.log('[易彩安全网] navigateTo未定义，使用完整版含初始化');
+        console.error('[易彩安全网] navigateTo未定义，需要重建');
+        // 重建一个简易版navigateTo
         window.navigateTo = function(section) {
-            console.log('[易彩安全网] navigateTo (完整):', section);
+            console.log('[易彩安全网] navigateTo (fallback):', section);
             try {
-                // 导航高亮
-                try {
+                document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+                var target = document.getElementById('section-' + section);
+                if (target) {
+                    target.classList.add('active');
                     document.querySelectorAll('nav a').forEach(function(l) { l.classList.remove('active'); });
                     var link = document.querySelector('nav a[data-section="' + section + '"]');
                     if (link) link.classList.add('active');
-                } catch(e2) {}
-                
-                // 切换section
-                document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
-                var target = document.getElementById('section-' + section);
-                if (!target) {
-                    console.error('[易彩安全网] 找不到section:', section);
-                    return;
                 }
-                target.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // 修复父链display:none
-                try {
-                    var p = target.parentElement;
-                    while (p && p !== document.body) {
-                        var ps = window.getComputedStyle ? window.getComputedStyle(p) : { display: '' };
-                        if (ps.display === 'none' || String(ps.opacity) === '0') {
-                            p.style.display = 'block';
-                            p.style.opacity = '1';
-                        }
-                        p = p.parentElement;
-                    }
-                } catch(e3) {}
-                
-                // ====== 各section初始化 ======
-                if (section === 'analysis') {
-                    if (typeof window.initAnalysis === 'function') {
-                        window.initAnalysis();
-                    } else {
-                        console.warn('[易彩安全网] initAnalysis未定义');
-                    }
-                }
-                if (section === 'iching') {
-                    if (typeof window.initIChingPage === 'function') {
-                        window.initIChingPage();
-                    }
-                }
-                if (section === 'data') {
-                    if (typeof window.initDataTable === 'function') window.initDataTable();
-                    if (typeof window.addExportButtonToData === 'function') window.addExportButtonToData();
-                }
-                if (section === 'fav' && typeof window.renderFavorites === 'function') {
-                    window.renderFavorites();
-                }
-                if (section === 'vip' && typeof window.updateDailyCount === 'function') {
-                    window.updateDailyCount();
-                }
-                if (section === 'service' && typeof window.renderServicePage === 'function') {
-                    window.renderServicePage();
-                }
-                if (section === 'promote' && typeof window.renderPromotePage === 'function') {
-                    window.renderPromotePage();
-                }
-                // pick 和 home 不需要额外初始化
             } catch(e) {
-                console.error('[易彩安全网] navigateTo出错:', e.message);
+                console.error('[易彩安全网] navigateTo出错:', e);
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
     }
     if (typeof window.goToSection !== 'function') {
