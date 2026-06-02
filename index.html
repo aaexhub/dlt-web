@@ -976,7 +976,6 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <!-- 客服和推广暂时隐藏 -->
             <!-- <a data-section="service" style="color:#4ecdc4;">💬 客服</a> -->
             <!-- <a data-section="promote">📣 推广</a> -->
-            <!-- 打赏已移除 -->
             <!-- 登录/注册暂时隐藏，后续推广阶段再启用 -->
             <!-- <a id="navRegisterBtn" data-section="register" style="color:var(--jin-se);font-weight:bold;cursor:pointer;">🔑 登录/注册</a> -->
             <span class="theme-dot" onclick="cycleTheme()" title="切换主题背景" style="flex-shrink:0;">
@@ -1022,10 +1021,10 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <h3>收藏对比</h3>
             <p>心仪号码收藏，多组对比分析</p>
         </div>
-        <div class="feat-card vip-card" onclick="navigateTo('service')">
+        <div class="feat-card vip-card" onclick="navigateTo('donate')">
             <div class="feat-icon" style="color:var(--jin-se);">❤️</div>
-            <h3>客服支持</h3>
-            <p>联系客服 · 反馈问题 · 咨询VIP</p>
+            <h3>赞助支持</h3>
+            <p>赞助易彩，升级VIP享更多功能</p>
         </div>
     </div>
     <div class="card" style="margin-top:28px;">
@@ -1317,6 +1316,41 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     </div>
 </div>
 
+<!-- ==================== 打赏页面 ==================== -->
+<div class="section" id="section-donate">
+    <h2 class="section-title">❤️ 赞助支持</h2>
+    <p class="section-desc">如果易彩对您有帮助，欢迎赞助，我们会持续优化</p>
+    <div class="card" style="text-align:center;">
+        <div class="card-title">📱 扫码赞助</div>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;">微信/支付宝 扫码付款后可联系微信客服获取VIP</p>
+        <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;">
+            <div style="text-align:center;">
+                <div style="width:140px;height:140px;background:var(--bg-light);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-color);margin:0 auto 8px;flex-direction:column;">
+                    <span style="font-size:2rem;">📱</span>
+                    <span style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">微信</span>
+                </div>
+                <div style="font-size:0.78rem;color:var(--text-muted);">扫一扫 →</div>
+            </div>
+            <div style="text-align:center;">
+                <div style="width:140px;height:140px;background:var(--bg-light);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-color);margin:0 auto 8px;flex-direction:column;">
+                    <span style="font-size:2rem;">💳</span>
+                    <span style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">支付宝</span>
+                </div>
+                <div style="font-size:0.78rem;color:var(--text-muted);">扫一扫 →</div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="text-align:center;">
+        <div class="card-title">💬 联系客服</div>
+        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">赞助后联系客服开通VIP</p>
+        <div class="service-grid" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="https://t.me/OpenClawBot" target="_blank" class="btn btn-gold" style="text-decoration:none;">🤖 Telegram客服</a>
+            <a href="mailto:copeland02169@hotmail.com" class="btn btn-primary" style="text-decoration:none;">📧 邮件联系</a>
+        </div>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:12px;">客服工作时间 08:00—24:00 · 感谢您的支持 🙏</p>
+    </div>
+</div>
+
 <!-- ==================== VIP会员页 ==================== -->
 <div class="section" id="section-service">
     <h2 class="section-title">💬 客服中心</h2>
@@ -1329,27 +1363,11 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         <div class="card-title">📝 常见问题</div>
         <div id="faqContentStatic"></div>
     </div>
+    </div>
     <div class="card" style="text-align:center;">
-        <div class="card-title">❤️ 支持易彩</div>
+        <div class="card-title">❤️ 赞助支持</div>
         <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">
-            如果您觉得易彩对您有帮助，欢迎赞助支持，让我们持续优化服务
-        </p>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-            <div style="text-align:center;">
-                <div style="width:160px;height:160px;background:var(--bg-light);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-color);margin:0 auto 8px;">
-                    <span style="font-size:2.5rem;color:var(--text-muted);">💳</span>
-                </div>
-                <div style="font-size:0.8rem;color:var(--text-muted);">微信/支付宝</div>
-            </div>
-            <div style="text-align:center;">
-                <div style="width:160px;height:160px;background:var(--bg-light);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-color);margin:0 auto 8px;">
-                    <span style="font-size:2.5rem;color:var(--text-muted);">💰</span>
-                </div>
-                <div style="font-size:0.8rem;color:var(--text-muted);">联系客服获取</div>
-            </div>
-        </div>
-        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:12px;">
-            赞助金额不限，您的支持是我们前进的动力 🙏
+            前往 <a href="#" onclick="navigateTo('donate');return false;" style="color:var(--jin-se);">打赏赞助页</a> 赞助后可升级VIP
         </p>
     </div>
 </div>
@@ -2559,8 +2577,8 @@ function navigateTo(section) {
     }
     // 别名/重定向
     if (section === 'vip') {
-        console.log('[易彩] vip已重定向到service');
-        section = 'service';
+        console.log('[易彩] vip已重定向到donate');
+        section = 'donate';
     }
     document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
     const link = document.querySelector('nav a[data-section="' + section + '"]');
@@ -4412,6 +4430,9 @@ function generateSharePoster() {
                 }
                 if (section === 'vip' && typeof window.updateDailyCount === 'function') {
                     window.updateDailyCount();
+                }
+                if (section === 'donate' && typeof window.renderDonatePage === 'function') {
+                    window.renderDonatePage();
                 }
                 if (section === 'service' && typeof window.renderServicePage === 'function') {
                     window.renderServicePage();
