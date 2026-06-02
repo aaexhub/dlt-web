@@ -448,6 +448,66 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px 60px; position: relative; z-index: 1; }
     .section { display: none; }
     .section.active { display: block; opacity: 1; transition: opacity 0.3s ease; }
+    /* 八字排盘样式 */
+    .bz-btn {
+        width: 100%; padding: 14px; background: linear-gradient(135deg, var(--jin-se) 0%, #c49230 100%);
+        border: none; border-radius: 12px; color: var(--deep-blue); font-size: 1rem; font-weight: 700;
+        cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; letter-spacing: 2px; margin-top: 8px;
+    }
+    .bz-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(212,168,83,0.3); }
+    .bz-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .bz-spinner {
+        width: 40px; height: 40px; border: 3px solid var(--border-color);
+        border-top-color: var(--jin-se); border-radius: 50%; animation: bz-spin 0.8s linear infinite;
+        margin: 0 auto 12px;
+    }
+    @keyframes bz-spin { to { transform: rotate(360deg); } }
+    .bz-sizhu-grid {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 500px; margin: 0 auto;
+    }
+    .bz-pillar {
+        text-align: center; background: var(--bg-card); border-radius: 12px;
+        padding: 12px 8px; border: 1px solid var(--border-color);
+    }
+    .bz-pillar .pl { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+    .bz-pillar .tg {
+        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
+    }
+    .bz-pillar .dz {
+        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
+    }
+    .bz-pillar .ss { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+    .bz-pillar .cg { font-size: 0.65rem; color: var(--jin-se); opacity: 0.55; margin-top: 2px; }
+    .bz-cm { color: var(--wuxing-wood); } .bz-cf { color: var(--wuxing-fire); }
+    .bz-ce { color: var(--wuxing-earth); } .bz-cg { color: var(--wuxing-metal); }
+    .bz-cw { color: var(--wuxing-water); }
+    .bz-dayun-table {
+        width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 8px;
+    }
+    .bz-dayun-table th {
+        background: var(--bg-card); color: var(--text-muted); font-weight: 400;
+        font-size: 0.78rem; padding: 8px; border-bottom: 1px solid var(--border-color);
+    }
+    .bz-dayun-table td {
+        padding: 8px; text-align: center; font-size: 0.82rem; border-bottom: 1px solid var(--border-color);
+    }
+    .bz-dayun-table .current-row {
+        background: rgba(212,168,83,0.08);
+    }
+    .bz-dayun-table .current-row td { color: var(--jin-se-light); font-weight: 700; }
+    .bz-disclaimer {
+        text-align: center; font-size: 0.72rem; color: var(--text-muted); opacity: 0.5; padding: 16px;
+    }
+    #section-bazi input, #section-bazi select {
+        background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px;
+        color: var(--text-primary); padding: 10px 14px; font-size: 0.9rem; width: 100%;
+    }
+    #section-bazi input:focus, #section-bazi select:focus {
+        outline: none; border-color: var(--jin-se); box-shadow: 0 0 0 3px rgba(212,168,83,0.1);
+    }
+    @media (max-width: 600px) {
+        .bz-sizhu-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     .section-title { font-size: 1.4rem; color: var(--jin-se); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
     .vip-card { cursor: pointer; border: 1px solid var(--jin-se); transition: all 0.3s; }
     .vip-card:hover { box-shadow: 0 0 20px rgba(212,175,55,0.3); transform: translateY(-3px); }
@@ -1044,88 +1104,6 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 
 <!-- ==================== 八字排盘·命理分析（方案二：纯前端完整版） ==================== -->
 <div class="section" id="section-bazi">
-    <style>
-    #section-bazi {
-        --bz-bg: #0f0d11;
-        --bz-card: #1a1720;
-        --bz-card2: #231f2c;
-        --bz-text: #e2dcd5;
-        --bz-dim: #a3968a;
-        --bz-gold: #d4a853;
-        --bz-gold2: #eac67a;
-        --bz-green: #5d8f5a;
-        --bz-red: #c7533e;
-        --bz-brown: #b8925c;
-        --bz-gray: #8a9ba1;
-        --bz-blue: #4a7c9e;
-        --bz-border: #2d2838;
-        --bz-accent: #8b6fc4;
-    }
-    #section-bazi input, #section-bazi select {
-        background: var(--bz-card2); border: 1px solid var(--bz-border); border-radius: 10px;
-        color: var(--bz-text); padding: 10px 14px; font-size: 0.9rem; width: 100%;
-    }
-    #section-bazi input:focus, #section-bazi select:focus {
-        outline: none; border-color: var(--bz-gold); box-shadow: 0 0 0 3px rgba(212,168,83,0.1);
-    }
-    .bz-btn {
-        width: 100%; padding: 14px; background: linear-gradient(135deg, var(--bz-gold) 0%, #c49230 100%);
-        border: none; border-radius: 12px; color: #1a1720; font-size: 1rem; font-weight: 700;
-        cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; letter-spacing: 2px; margin-top: 8px;
-    }
-    .bz-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(212,168,83,0.3); }
-    .bz-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .bz-spinner {
-        width: 40px; height: 40px; border: 3px solid var(--bz-border);
-        border-top-color: var(--bz-gold); border-radius: 50%; animation: bz-spin 0.8s linear infinite;
-        margin: 0 auto 12px;
-    }
-    @keyframes bz-spin { to { transform: rotate(360deg); } }
-    .bz-card-title {
-        font-size: 0.9rem; color: var(--bz-gold); margin-bottom: 14px;
-        padding-bottom: 10px; border-bottom: 1px solid var(--bz-border);
-        display: flex; align-items: center; gap: 8px;
-    }
-    .bz-sizhu-grid {
-        display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 500px; margin: 0 auto;
-    }
-    .bz-pillar {
-        text-align: center; background: var(--bz-card2); border-radius: 12px;
-        padding: 12px 8px; border: 1px solid rgba(212,168,83,0.15);
-    }
-    .bz-pillar .pl { font-size: 0.75rem; color: var(--bz-dim); margin-bottom: 4px; }
-    .bz-pillar .tg {
-        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
-    }
-    .bz-pillar .dz {
-        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
-    }
-    .bz-pillar .ss { font-size: 0.72rem; color: var(--bz-dim); margin-top: 4px; }
-    .bz-pillar .cg { font-size: 0.65rem; color: var(--bz-gold); opacity: 0.55; margin-top: 2px; }
-    .bz-cm { color: var(--bz-green); } .bz-cf { color: var(--bz-red); }
-    .bz-ce { color: var(--bz-brown); } .bz-cg { color: var(--bz-gray); }
-    .bz-cw { color: var(--bz-blue); }
-    .bz-dayun-table {
-        width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 8px;
-    }
-    .bz-dayun-table th {
-        background: var(--bz-card2); color: var(--bz-dim); font-weight: 400;
-        font-size: 0.78rem; padding: 8px; border-bottom: 1px solid var(--bz-border);
-    }
-    .bz-dayun-table td {
-        padding: 8px; text-align: center; font-size: 0.82rem; border-bottom: 1px solid rgba(45,40,56,0.5);
-    }
-    .bz-dayun-table .current-row {
-        background: rgba(212,168,83,0.08);
-    }
-    .bz-dayun-table .current-row td { color: var(--bz-gold2); font-weight: 700; }
-    .bz-disclaimer {
-        text-align: center; font-size: 0.72rem; color: var(--bz-dim); opacity: 0.5; padding: 16px;
-    }
-    @media (max-width: 600px) {
-        .bz-sizhu-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    </style>
 
     <h2 class="section-title" style="display:none;">八字排盘</h2>
 
