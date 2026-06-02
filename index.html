@@ -459,65 +459,158 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px 60px; position: relative; z-index: 1; }
     .section { display: none; }
     .section.active { display: block; opacity: 1; transition: opacity 0.3s ease; }
-    /* 八字排盘样式 */
+    /* ========== 八字排盘 古风视觉升级 ========== */
+    /* 主按钮 */
     .bz-btn {
-        width: 100%; padding: 14px; background: linear-gradient(135deg, var(--jin-se) 0%, #c49230 100%);
+        width: 100%; padding: 14px;
+        background: linear-gradient(135deg, var(--jin-se) 0%, #c49230 100%);
         border: none; border-radius: 12px; color: var(--deep-blue); font-size: 1rem; font-weight: 700;
-        cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; letter-spacing: 2px; margin-top: 8px;
+        cursor: pointer; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); letter-spacing: 2px; margin-top: 8px;
+        position: relative; overflow: hidden;
     }
-    .bz-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(212,168,83,0.3); }
+    .bz-btn::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    }
+    .bz-btn:hover {
+        transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,168,83,0.35);
+    }
+    .bz-btn:active { transform: translateY(0); }
     .bz-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* 加载动画 */
     .bz-spinner {
-        width: 40px; height: 40px; border: 3px solid var(--border-color);
-        border-top-color: var(--jin-se); border-radius: 50%; animation: bz-spin 0.8s linear infinite;
-        margin: 0 auto 12px;
+        width: 44px; height: 44px;
+        border: 3px solid rgba(212,165,116,0.15);
+        border-top-color: var(--jin-se);
+        border-radius: 50%; animation: bz-spin 0.8s cubic-bezier(0.4,0,0.2,1) infinite;
+        margin: 0 auto 16px;
+        box-shadow: 0 0 20px rgba(212,165,116,0.1);
     }
     @keyframes bz-spin { to { transform: rotate(360deg); } }
+
+    /* 四柱排盘展示 */
     .bz-sizhu-grid {
-        display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 500px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 520px; margin: 0 auto;
     }
     .bz-pillar {
-        text-align: center; background: var(--bg-card); border-radius: 12px;
-        padding: 12px 8px; border: 1px solid var(--border-color);
+        text-align: center;
+        background: linear-gradient(180deg, rgba(22,22,42,0.95) 0%, rgba(15,15,26,0.98) 100%);
+        border-radius: 14px; padding: 18px 8px 14px;
+        border: 1px solid rgba(212,165,116,0.2);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        position: relative; overflow: hidden;
+        transition: transform 0.25s, box-shadow 0.25s;
     }
-    .bz-pillar .pl { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+    .bz-pillar::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, transparent, rgba(212,165,116,0.6), transparent);
+    }
+    .bz-pillar:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+    .bz-pillar .pl {
+        font-size: 0.72rem; color: var(--text-muted); letter-spacing: 2px;
+        margin-bottom: 6px; font-family: 'Noto Serif SC', serif;
+    }
     .bz-pillar .tg {
-        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
+        font-family: 'Noto Serif SC', serif; font-size: 1.8rem; font-weight: 900;
+        display: block; line-height: 1.2; letter-spacing: 6px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
     .bz-pillar .dz {
-        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
+        font-family: 'Noto Serif SC', serif; font-size: 1.8rem; font-weight: 900;
+        display: block; line-height: 1.2; letter-spacing: 6px;
+        margin-top: 2px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
-    .bz-pillar .ss { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
-    .bz-pillar .cg { font-size: 0.65rem; color: var(--jin-se); opacity: 0.55; margin-top: 2px; }
-    .bz-cm { color: var(--wuxing-wood); } .bz-cf { color: var(--wuxing-fire); }
-    .bz-ce { color: var(--wuxing-earth); } .bz-cg { color: var(--wuxing-metal); }
-    .bz-cw { color: var(--wuxing-water); }
-    .bz-dayun-table {
-        width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 8px;
+    .bz-pillar .ss { font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; letter-spacing: 1px; }
+    .bz-pillar .cg { font-size: 0.62rem; color: var(--jin-se); opacity: 0.5; margin-top: 3px; letter-spacing: 1px; }
+
+    /* 五行颜色 */
+    .bz-cm { color: #4CAF50; } .bz-cf { color: #FF7043; }
+    .bz-ce { color: #FFD54F; } .bz-cg { color: #B0BEC5; }
+    .bz-cw { color: #42A5F5; }
+
+    /* 大运卡样式 */
+    .bz-dayun-scroll {
+        display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px;
+        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
     }
-    .bz-dayun-table th {
-        background: var(--bg-card); color: var(--text-muted); font-weight: 400;
-        font-size: 0.78rem; padding: 8px; border-bottom: 1px solid var(--border-color);
+    .bz-dayun-scroll::-webkit-scrollbar { height: 4px; }
+    .bz-dayun-scroll::-webkit-scrollbar-thumb { background: var(--jin-se-dim); border-radius: 4px; }
+    .bz-dayun-item {
+        flex: 0 0 90px; scroll-snap-align: start;
+        text-align: center; padding: 12px 8px;
+        background: linear-gradient(180deg, rgba(22,22,42,0.8) 0%, rgba(15,15,26,0.9) 100%);
+        border-radius: 12px; border: 1px solid rgba(212,165,116,0.12);
+        transition: all 0.2s;
     }
-    .bz-dayun-table td {
-        padding: 8px; text-align: center; font-size: 0.82rem; border-bottom: 1px solid var(--border-color);
+    .bz-dayun-item:hover { border-color: rgba(212,165,116,0.3); transform: translateY(-2px); }
+    .bz-dayun-item .dy-name { font-family: 'Noto Serif SC', serif; font-size: 1rem; font-weight: 700; display: block; }
+    .bz-dayun-item .dy-age { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; display: block; }
+    .bz-dayun-item .dy-desc { font-size: 0.65rem; color: var(--jin-se); opacity: 0.6; margin-top: 2px; display: block; }
+    .bz-dayun-item.current {
+        border-color: var(--jin-se);
+        background: linear-gradient(180deg, rgba(212,165,116,0.1) 0%, rgba(212,165,116,0.05) 100%);
+        box-shadow: 0 0 12px rgba(212,165,116,0.15);
     }
-    .bz-dayun-table .current-row {
-        background: rgba(212,168,83,0.08);
+    .bz-dayun-item.current .dy-name { color: var(--jin-se-light); }
+    .bz-dayun-item.current .dy-age { color: var(--jin-se); }
+
+    /* 命理分析卡片标题 */
+    .bz-card-title {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 0.95rem; font-weight: 700;
+        background: linear-gradient(135deg, rgba(212,165,116,0.08) 0%, transparent 100%);
+        border-left: 3px solid var(--jin-se);
+        padding: 8px 12px; margin-bottom: 10px; border-radius: 0 6px 6px 0;
+        letter-spacing: 1px;
     }
-    .bz-dayun-table .current-row td { color: var(--jin-se-light); font-weight: 700; }
+
+    /* 分析内容区 */
+    #bzAnalysis {
+        font-size: 0.85rem; line-height: 1.9;
+    }
+    #bzAnalysis .bz-stat-bar {
+        height: 12px; border-radius: 6px; display: inline-block;
+    }
+
+    /* 底部免责声明 */
     .bz-disclaimer {
         text-align: center; font-size: 0.72rem; color: var(--text-muted); opacity: 0.5; padding: 16px;
+        border-top: 1px solid rgba(212,165,116,0.08); margin-top: 16px;
     }
+
+    /* 输入区美化 */
     #section-bazi input, #section-bazi select {
-        background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px;
-        color: var(--text-primary); padding: 10px 14px; font-size: 0.9rem; width: 100%;
+        background: linear-gradient(135deg, rgba(22,22,42,0.9) 0%, rgba(22,22,42,0.7) 100%);
+        border: 1px solid rgba(212,165,116,0.15); border-radius: 10px;
+        color: var(--text-primary); padding: 12px 16px; font-size: 0.9rem; width: 100%;
+        transition: all 0.2s;
     }
     #section-bazi input:focus, #section-bazi select:focus {
-        outline: none; border-color: var(--jin-se); box-shadow: 0 0 0 3px rgba(212,168,83,0.1);
+        outline: none; border-color: var(--jin-se);
+        box-shadow: 0 0 0 3px rgba(212,168,83,0.12), 0 0 20px rgba(212,168,83,0.05);
     }
+    #section-bazi input:hover, #section-bazi select:hover {
+        border-color: rgba(212,165,116,0.3);
+    }
+
+    /* 四柱卡片中的装饰线 */
+    .bz-sep-line {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(212,165,116,0.15), transparent);
+        margin: 12px 0;
+    }
+
+    /* 古籍引用样式 */
+    .bz-classical-quote {
+        font-style: italic; color: var(--jin-se-dim); opacity: 0.7;
+        font-size: 0.75rem; padding: 4px 10px;
+        border-left: 2px solid rgba(212,165,116,0.15); margin: 4px 0;
+    }
+
     @media (max-width: 600px) {
-        .bz-sizhu-grid { grid-template-columns: repeat(2, 1fr); }
+        .bz-sizhu-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .bz-dayun-item { flex: 0 0 76px; padding: 10px 4px; }
     }
     .section-title { font-size: 1.4rem; color: var(--jin-se); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
     .vip-card { cursor: pointer; border: 1px solid var(--jin-se); transition: all 0.3s; }
@@ -1918,21 +2011,24 @@ function doBaziPaiPan() {
             
             var dayunHtml = '<p style="margin-bottom:10px;color:var(--bz-dim);font-size:0.82rem;">' +
                 startAge + '岁起运（' + startYear + '年）</p>';
-            dayunHtml += '<table class="bz-dayun-table"><thead><tr><th>大运</th><th>年龄</th><th>干支</th></tr></thead><tbody>';
+            dayunHtml += '<div class="bz-dayun-scroll">';
             for (var di = 1; di < dayunList.length; di++) {
                 var dy = dayunList[di];
                 var aS = startAge + (di - 1) * 10;
                 var aE = aS + 9;
-                // 注意：该库lunar.js v1.7.7的DaYun.getGanZhi()对index=0返回空字符串，需从index=1开始
                 var gz = dy.getGanZhi();
-                var style = di === 1 ? ' class="current-row"' : '';
-                dayunHtml += '<tr' + style + '>';
-                dayunHtml += '<td>第' + di + '步</td>';
-                dayunHtml += '<td>' + aS + '-' + aE + '岁</td>';
-                dayunHtml += '<td style="color:var(--bz-gold);font-weight:700;">' + gz + '</td>';
-                dayunHtml += '</tr>';
+                var isCur = (data.year >= aS && data.year <= aE);
+                var cls = isCur ? ' current' : '';
+                var gan = gz.charAt(0);
+                var wx = BZ_WX[gan] || '';
+                var wxClass = 'bz-c' + (wx==='木'?'m':wx==='火'?'f':wx==='土'?'e':wx==='金'?'g':wx==='水'?'w':'');
+                dayunHtml += '<div class="bz-dayun-item' + cls + '">';
+                dayunHtml += '<span class="dy-name ' + wxClass + '">' + gz + '</span>';
+                dayunHtml += '<span class="dy-age">' + aS + '~' + aE + '岁</span>';
+                dayunHtml += '<span class="dy-desc">第' + di + '步</span>';
+                dayunHtml += '</div>';
             }
-            dayunHtml += '</tbody></table>';
+            dayunHtml += '</div>';
             document.getElementById('bzDayunContent').innerHTML = dayunHtml;
         } catch(e) {
             document.getElementById('bzDayunContent').innerHTML =
@@ -1978,6 +2074,10 @@ function bzLocalAnalysis(data) {
     // ========== 1. 五行量化（含藏干加权） ==========
     var wx={金:0,木:0,水:0,火:0,土:0};
     function addWx(g,v){var w=BZ_WX[g];if(w&&wx[w]!==undefined)wx[w]+=v;}
+    var xgMap={甲:'正直仁厚·有领导力',乙:'温和灵活·善协调',丙:'热情开朗·有感染力',
+       丁:'细腻温润·洞察秋毫',戊:'敦厚稳重·重实际',己:'包容谦逊·善规划',
+       庚:'果断刚毅·有魄力',辛:'细致敏锐·追求完美',壬:'豁达智慧·有远见',癸:'沉静柔和·有灵性'};
+
     [yG,mG,dG,tG].forEach(function(g){addWx(g,1.5);});
     var cgFull={
         子:{癸:1},丑:{己:1,癸:0.5,辛:0.3},寅:{甲:1,丙:0.5,戊:0.3},
@@ -2120,72 +2220,91 @@ function bzLocalAnalysis(data) {
 
     // ========== 生成HTML ==========
     var html='';
-    // ①
-    html+='<div class="bz-card-title" style="border-bottom:none;margin-bottom:8px;">① 日主旺衰 <span style="font-size:0.65rem;color:var(--bz-dim);">—《滴天髓》</span></div>';
-    html+='日主<b style="color:var(--bz-gold);">'+dG+'</b>（'+riGanWx+'），判定：<b style="color:'+statusColor+';">'+shenStatus+'</b><br>';
-    html+='• '+(deLing?'得令：生于'+mZ+'月（'+yueWx+'），与日主同五行 ✓':'不得令：生于'+mZ+'月（'+yueWx+'），与日主异五行 ✗')+'<br>';
-    html+='• '+(deDi?'得地：地支有长生/帝旺/墓库 ✓':'不得地：地支无根 ✗')+'<br>';
-    html+='• 得势：同类天干出现'+(deShi+1)+'次（含日主）<br>';
-    html+='《滴天髓》：「'+(deLing?'得令者旺，受生者强':'失令者衰，受克者弱')+'」';
+    // ① 日主旺衰
+    html+='<div class="bz-card-title">① 日主旺衰 <span style="font-size:0.65rem;color:var(--bz-dim);">—《滴天髓》《千里命稿》</span></div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
+    html+='日主<b style="color:var(--bz-gold);font-size:1.02rem;">'+dG+'</b>（'+riGanWx+'）<br>';
+    html+='旺衰判定：<b style="color:'+statusColor+';font-size:1.05rem;">'+shenStatus+'</b><br>';
+    html+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;">';
+    html+='<span>'+(deLing?'✅ 得令：'+mZ+'月('+yueWx+')同五行':'❌ 不得令：'+mZ+'月('+yueWx+')异五行')+'</span>';
+    html+='<span>'+(deDi?'✅ 得地：有根 ✓':'❌ 不得地：无根 ✗')+'</span>';
+    html+='<span>📊 得势：同类天干'+(deShi+1)+'次(含日主)</span>';
+    html+='</div>';
+    html+='<div class="bz-classical-quote">《滴天髓》「'+(deLing?'得令者旺，受生者强':'失令者衰，受克者弱')+'」</div>';
+    html+='</div>';
 
-    // ②
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">② 十神·四柱 <span style="font-size:0.65rem;color:var(--bz-dim);">—《渊海子平》《千里命稿》</span></div>';
+    // ② 十神·四柱展开
+    html+='<div class="bz-card-title" style="margin-top:16px;">② 十神·四柱 <span style="font-size:0.65rem;color:var(--bz-dim);">—《渊海子平》《千里命稿》</span></div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
     html+=sizhuHtml;
-    html+='<div style="font-size:0.78rem;color:var(--bz-dim);margin-top:2px;">宫位：年柱祖上/幼年 · 月柱父母/青年 · 日柱自己/中年 · 时柱子女/晚年</div>';
+    html+='<div style="margin-top:6px;font-size:0.78rem;color:var(--text-muted);">📖 宫位对应：年柱祖上·月柱父母·日柱自己·时柱子女（《千里命稿》）</div>';
+    html+='</div>';
 
-    // ③
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">③ 五行平衡 <span style="font-size:0.65rem;color:var(--bz-dim);">—含藏干加权</span></div>';
-    html+='<div style="font-family:monospace;font-size:0.82rem;line-height:1.55;background:var(--bz-card2);padding:10px;border-radius:8px;">';
+    // ③ 五行平衡（含藏干加权）
+    html+='<div class="bz-card-title" style="margin-top:16px;">③ 五行平衡 <span style="font-size:0.65rem;color:var(--bz-dim);">—含藏干加权</span></div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
+    html+='<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:8px;">';
     for(var wk in wx){
         var p=total>0?Math.round(wx[wk]/total*100):0;
-        var bar='';for(var b=0;b<Math.round(p/8);b++)bar+='█';
-        var col=wk===most?'color:var(--bz-gold);font-weight:700;':'';
-        html+='<span style="display:inline-block;width:36px;'+col+'">'+wk+'</span> '+bar+' '+p+'%<br>';
+        var barW=Math.min(p*2,100);
+        var col=wk===most?'var(--bz-gold)':wk===least?'var(--bz-red)':'var(--text-primary)';
+        html+='<div style="display:flex;align-items:center;gap:6px;"><span style="width:24px;color:'+col+';font-weight:'+(wk===most||wk===least?'700':'400')+';">'+wk+'</span>';
+        html+='<div style="flex:1;height:10px;background:rgba(212,165,116,0.08);border-radius:5px;overflow:hidden;">';
+        html+='<div style="height:100%;width:'+barW+'%;background:linear-gradient(90deg,'+(wk===most?'var(--jin-se)':wk===least?'#C7533E':'rgba(212,165,116,0.3)')+',transparent);border-radius:5px;"></div></div>';
+        html+='<span style="font-size:0.75rem;color:var(--text-muted);min-width:30px;text-align:right;">'+p+'%</span></div>';
     }
     html+='</div>';
-    html+='<p style="margin-top:4px;">最旺：<b style="color:var(--bz-gold);">'+most+'</b>（'+Math.round(wx[most]/total*100)+'%）· ';
-    html+='最缺：<b style="color:var(--bz-gold);">'+least+'</b>（'+Math.round(wx[least]/total*100)+'%）</p>';
+    html+='<span style="color:var(--bz-gold);font-weight:700;">最旺：'+most+'</span> · <span style="color:var(--bz-red);font-weight:700;">最缺：'+least+'</span>';
+    html+='<div style="font-size:0.7rem;color:var(--text-muted);opacity:0.6;margin-top:4px;">（天干1.5× + 藏干本气1× 中气0.5× 余气0.3×）</div>';
+    html+='</div>';
 
-    // ④
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">④ 格局 <span style="font-size:0.65rem;color:var(--bz-dim);">—《子平真诠》</span></div>';
-    html+='月干「'+mG+'」为<b style="color:var(--bz-green);">'+yueSS+'</b> → <b style="color:var(--bz-gold);">'+geJu+'</b><br>';
-    html+='《子平真诠》：「格局以清纯为贵，用神一位为上。」';
+    // ④ 格局
+    html+='<div class="bz-card-title" style="margin-top:16px;">④ 格局 <span style="font-size:0.65rem;color:var(--bz-dim);">—《子平真诠》</span></div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
+    html+='月干「<b style="color:var(--bz-green);">'+mG+'</b>」→ <b style="color:var(--bz-gold);font-size:1.05rem;">'+yueSS+'</b><br>';
+    html+='格局判定：<b style="color:var(--bz-gold);font-size:1.1rem;">'+geJu+'</b>';
+    html+='<div class="bz-classical-quote">《子平真诠》：「格局以清纯为贵，用神一位为上。」</div>';
+    html+='</div>';
 
-    // ⑤
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">⑤ 喜用神·调候·忌神</div>';
-    if(tuneShen)html+='《穷通宝典》调候（'+dG+'日·'+data.month+'月）：<b style="color:var(--bz-green);">'+tuneShen+'</b><br>';
-    html+='扶抑法喜用：<b style="color:var(--bz-green);">'+xiShenFull+'</b><br>';
-    html+='忌神：<b style="color:var(--bz-red);">'+jiShenStr+'</b>（最旺五行，压制日主）<br>';
-    html+='《神峰通考》：「有病方为贵，无病不为奇。」';
+    // ⑤ 喜用神·调候·忌神
+    html+='<div class="bz-card-title" style="margin-top:16px;">⑤ 喜用神·调候·忌神 <span style="font-size:0.65rem;color:var(--bz-dim);">—《穷通宝典》《神峰通考》</span></div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
+    if(tuneShen)html+='《穷通宝典》调候（<b>'+dG+'</b>日·'+data.month+'月）：<b style="color:var(--bz-green);">'+tuneShen+'</b><br>';
+    html+='扶抑法喜用：<b style="color:var(--bz-green);font-size:1.02rem;">'+xiShenFull+'</b><br>';
+    html+='忌神：<b style="color:var(--bz-red);font-size:1.02rem;">'+jiShenStr+'</b>（最旺五行）<br>';
+    html+='<div class="bz-classical-quote">《神峰通考》：「有病方为贵，无病不为奇。」宜顺势补泄。</div>';
+    html+='</div>';
 
-    // ⑥
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">⑥ 十二长生</div>';
-    html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">'+csHtml+'</div>';
+    // ⑥ 十二长生
+    html+='<div class="bz-card-title" style="margin-top:16px;">⑥ 十二长生 <span style="font-size:0.65rem;color:var(--bz-dim);">—阴阳顺逆</span></div>';
+    html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:4px;">'+csHtml+'</div>';
 
-    // ⑦
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">⑦ 神煞 <span style="font-size:0.65rem;color:var(--bz-dim);">—《三命通会》《协纪辨方书》</span></div>';
-    if(sha.length)html+=sha.join(' · ')+'<br>';
-    html+='《三命通会》：「天乙贵人解厄·文昌聪慧·桃花人缘·华盖清贵」';
+    // ⑦ 神煞
+    html+='<div class="bz-card-title" style="margin-top:16px;">⑦ 神煞 <span style="font-size:0.65rem;color:var(--bz-dim);">—《三命通会》《协纪辨方书》</span></div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
+    if(sha.length)html+=sha.join(' · ');
+    else html+='无显著神煞';
+    html+='<div class="bz-classical-quote">《三命通会》：「天乙贵人解厄·文昌聪慧·桃花人缘·华盖清贵」</div>';
+    html+='</div>';
 
-    // ⑧
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">⑧ 大运·流年提示</div>';
+    // ⑧ 大运·流年提示
+    html+='<div class="bz-card-title" style="margin-top:16px;">⑧ 大运·流年提示</div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
     html+=dyTips+'<br>';
     html+='宜把握喜用神五行机遇，注意忌神流年波折。';
+    html+='</div>';
 
-    // 性格概要
-    var xgMap={甲:'正直仁厚·有领导力',乙:'温和灵活·善协调',丙:'热情开朗·有感染力',
-       丁:'细腻温润·洞察秋毫',戊:'敦厚稳重·重实际',己:'包容谦逊·善规划',
-       庚:'果断刚毅·有魄力',辛:'细致敏锐·追求完美',壬:'豁达智慧·有远见',癸:'沉静柔和·有灵性'};
-    html+='<div class="bz-card-title" style="border-bottom:none;margin:14px 0 8px;">⑨ 性格概要 <span style="font-size:0.65rem;color:var(--bz-dim);">—参考《渊海子平》</span></div>';
+    // ⑨ 性格概要
+    html+='<div class="bz-card-title" style="margin-top:16px;">⑨ 性格概要 <span style="font-size:0.65rem;color:var(--bz-dim);">—参考《渊海子平》</span></div>';
+    html+='<div style="background:linear-gradient(135deg,rgba(212,165,116,0.04) 0%,transparent 100%);border-radius:10px;padding:10px 14px;">';
     html+='日干<b style="color:var(--bz-gold);">'+dG+'</b>：'+(xgMap[dG]||'综合型')+'<br>';
-    html+='配喜用神颜色（'+(xiShenFull.match(/[木火土金水]/g)||[]).map(function(x){
+    html+='宜用颜色：'+(xiShenFull.match(/[木火土金水]/g)||[]).map(function(x){
         var cm={木:'🧣绿',火:'🧧红',土:'🧶黄',金:'👔白',水:'👕黑'};
         return cm[x]||x;
-    }).join('、')+'），以助运势流通。';
-
-    html+='<div style="margin-top:14px;padding:10px;background:var(--bz-card2);border-radius:8px;font-size:0.76rem;color:var(--bz-dim);text-align:center;">';
-    html+='⚠️ 基于传统子平命理，仅供文化研究参考。人生在于自身的努力与选择。';
+    }).join('、');
     html+='</div>';
+
+    html+='<div class="bz-disclaimer">⚠️ 基于传统子平命理，仅供文化研究参考。人生在于自身的努力与选择。</div>';
 
     el.innerHTML = html;
 }
