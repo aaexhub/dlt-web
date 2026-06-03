@@ -973,6 +973,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <a data-section="data">📋 数据</a>
             <a data-section="bazi">☯ 八字</a>
             <a data-section="fav">⭐ 收藏</a>
+            <a data-section="donate" style="color:#F44336;font-weight:bold;">🎁 捐助</a>
             <!-- 客服和推广暂时隐藏 -->
             <!-- <a data-section="service" style="color:#4ecdc4;">💬 客服</a> -->
             <!-- <a data-section="promote">📣 推广</a> -->
@@ -1021,7 +1022,11 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <h3>收藏对比</h3>
             <p>心仪号码收藏，多组对比分析</p>
         </div>
-        <!-- 赞助支持已删除 -->
+        <div class="feat-card" onclick="navigateTo('donate')" style="border:1px solid rgba(244,67,54,0.25);">
+            <div class="feat-icon" style="color:#F44336;">❤️</div>
+            <h3>捐助支持</h3>
+            <p>您的支持是持续优化的动力</p>
+        </div>
     </div>
     <div class="card" style="margin-top:28px;">
         <div class="card-title">🌀 选号流程</div>
@@ -1309,6 +1314,34 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     <div class="card" id="compareSection" style="display:none;">
         <div class="card-title">🔄 对比分析</div>
         <div id="comparePanel" class="compare-panel"></div>
+    </div>
+</div>
+
+<!-- ==================== 捐助支持页 ==================== -->
+<div class="section" id="section-donate">
+    <h2 class="section-title">❤️ 捐助支持</h2>
+    <p class="section-desc">您的每一份支持，都是我们持续优化易彩的动力</p>
+    
+    <div class="card" style="text-align:center;padding:30px 20px;">
+        <div class="card-title">📱 微信扫码捐助</div>
+        <p style="color:var(--text-secondary);margin:10px 0 20px;font-size:0.9rem;">长按或扫码识别，慷慨打赏，感恩有您🙏</p>
+        <div style="display:inline-block;padding:16px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.3);">
+            <img src="wechat-pay.jpg" alt="微信收款二维码" style="width:280px;max-width:90vw;height:auto;border-radius:8px;display:block;">
+        </div>
+        <p style="color:var(--text-muted);font-size:0.78rem;margin-top:18px;line-height:1.8;">
+            ❤️ 您的捐助将用于：服务器维护、算法优化、新功能开发<br>
+            🙏 感谢每一位支持的朋友，祝您好运连连！
+        </p>
+    </div>
+    
+    <div class="card" style="text-align:center;padding:20px;">
+        <div class="card-title">💝 捐助鸣谢</div>
+        <p style="color:var(--text-secondary);font-size:0.85rem;">所有捐助用户将在后续版本中获得专属标识与VIP体验</p>
+        <div style="margin-top:16px;">
+            <span style="display:inline-block;background:rgba(212,165,116,0.12);color:var(--jin-se);padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">🌟 感恩有您</span>
+            <span style="display:inline-block;background:rgba(244,67,54,0.1);color:#F44336;padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">❤️ 功德无量</span>
+            <span style="display:inline-block;background:rgba(76,175,80,0.1);color:#4CAF50;padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">🍀 好运常在</span>
+        </div>
     </div>
 </div>
 
