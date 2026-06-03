@@ -12,17 +12,44 @@
     <meta name="version" content="2026-06-03-v7">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
-    <!-- 备用CDN（主CDN加载失败时使用） -->
+    <!-- lunar-javascript 排盘库 - 用同步加载确保函数可用 -->
     <script>
-// 确保lunar-javascript库可用（双重保障）
-if (typeof Lunar === 'undefined') {
-    console.warn('[易彩] lunar-javascript主CDN未就绪，尝试备用加载');
-    var backupScript = document.createElement('script');
-    backupScript.src = 'https://unpkg.com/lunar-javascript@1.7.7/lunar.js';
-    backupScript.onload = function() { console.log('[易彩] 备用CDN加载成功'); };
-    document.head.appendChild(backupScript);
-}
+(function() {
+    function loadLunarLib(callback) {
+        if (typeof Lunar !== 'undefined' && typeof Lunar.fromYmdHms === 'function') {
+            if (callback) callback();
+            return;
+        }
+        var urls = [
+            'https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js',
+            'https://unpkg.com/lunar-javascript@1.7.7/lunar.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/lunar-javascript/1.7.7/lunar.js'
+        ];
+        function tryLoad(idx) {
+            if (idx >= urls.length) {
+                console.error('[易彩] 所有CDN均无法加载lunar-javascript');
+                window._lunarLoadFailed = true;
+                if (callback) callback();
+                return;
+            }
+            var scr = document.createElement('script');
+            scr.src = urls[idx];
+            scr.onload = function() {
+                console.log('[易彩] lunar-javascript加载成功:', urls[idx]);
+                window._lunarLoadFailed = false;
+                if (callback) callback();
+            };
+            scr.onerror = function() {
+                console.warn('[易彩] CDN加载失败，尝试下一个:', urls[idx]);
+                tryLoad(idx + 1);
+            };
+            scr.async = false;
+            document.head.appendChild(scr);
+        }
+        tryLoad(0);
+    }
+    loadLunarLib();
+})();
     </script>
     <script defer>
 // 大乐透历史开奖数据（自动生成，含140期真实数据）
@@ -1942,26 +1969,46 @@ function doBaziPaiPan() {
     document.getElementById('bzResult').style.display = 'none';
     
     try {
+        // 排盘库就绪检查（使用全局加载器，支持3个CDN轮询）
         if (typeof Lunar === 'undefined' || typeof Lunar.fromYmdHms !== 'function') {
-            // 尝试再次加载CDN
-            var scr = document.createElement('script');
-            scr.src = 'https://unpkg.com/lunar-javascript@1.7.7/lunar.js';
-            scr.onload = function() {
+            setTimeout(function() {
+                // 检查刚才的异步加载是否已完成
                 if (typeof Lunar !== 'undefined' && typeof Lunar.fromYmdHms === 'function') {
                     doBaziPaiPan();
                 } else {
-                    bzError('排盘库加载失败，请使用现代浏览器或刷新页面后重试');
-                    document.getElementById('bzFormCard').style.display = 'block';
-                    document.getElementById('bzLoading').style.display = 'none';
+                    // 手动追加script重试
+                    var urls = [
+                        'https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js',
+                        'https://unpkg.com/lunar-javascript@1.7.7/lunar.js',
+                        'https://cdnjs.cloudflare.com/ajax/libs/lunar-javascript/1.7.7/lunar.js'
+                    ];
+                    function tryLoad(idx) {
+                        if (idx >= urls.length) {
+                            bzError('排盘库加载失败，请刷新页面或检查网络后重试');
+                            document.getElementById('bzFormCard').style.display = 'block';
+                            document.getElementById('bzLoading').style.display = 'none';
+                            return;
+                        }
+                        var scr = document.createElement('script');
+                        scr.src = urls[idx];
+                        scr.onload = function() {
+                            setTimeout(function() {
+                                if (typeof Lunar !== 'undefined' && typeof Lunar.fromYmdHms === 'function') {
+                                    doBaziPaiPan();
+                                } else {
+                                    bzError('排盘库加载异常，请刷新页面重试');
+                                    document.getElementById('bzFormCard').style.display = 'block';
+                                    document.getElementById('bzLoading').style.display = 'none';
+                                }
+                            }, 500);
+                        };
+                        scr.onerror = function() { tryLoad(idx + 1); };
+                        document.head.appendChild(scr);
+                    }
+                    bzError('正在加载排盘库...');
+                    tryLoad(0);
                 }
-            };
-            scr.onerror = function() {
-                bzError('排盘库加载失败，请检查网络连接后刷新页面重试');
-                document.getElementById('bzFormCard').style.display = 'block';
-                document.getElementById('bzLoading').style.display = 'none';
-            };
-            document.head.appendChild(scr);
-            bzError('正在加载排盘库，请稍候...');
+            }, 1000);
             return;
         }
         var dt = new Date(dateVal + 'T' + (timeVal || '12:00'));
