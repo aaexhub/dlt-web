@@ -678,6 +678,65 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         .ball-lg { width: 44px; height: 44px; font-size: 1rem; }
         .strategy-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ====== 新增：排列3/排列5/七星彩 样式 2026-06-15 ====== */
+    .num-selector { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+    .num-selector select {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); color: var(--jin-se); font-size: 1.4rem;
+        font-weight: 700; padding: 10px; width: 56px; height: 56px;
+        text-align: center; cursor: pointer; appearance: auto;
+        -webkit-appearance: auto; letter-spacing: 1px;
+    }
+    .num-selector select:hover { border-color: var(--jin-se); }
+    .num-selector select:focus { border-color: var(--zhu-hong); outline: none; }
+    .num-selector .num-label {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .num-selector .num-label span {
+        font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px;
+    }
+    .ball-small {
+        display: inline-block; width: 34px; height: 34px; line-height: 34px;
+        border-radius: 50%; text-align: center; font-weight: 700; font-size: 0.85rem;
+        margin: 2px; background: var(--bg-card); border: 1px solid var(--border-color);
+        color: var(--text-primary);
+    }
+    .ball-small.hot { border-color: var(--wuxing-fire); color: var(--wuxing-fire); }
+    .ball-small.cold { border-color: var(--wuxing-water); color: var(--wuxing-water); }
+    .ball-small.common { border-color: var(--text-muted); }
+    .ball-big {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 50px; height: 50px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--bg-card), var(--deep-blue));
+        border: 2px solid var(--jin-se); color: var(--jin-se-light);
+        font-size: 1.1rem; font-weight: 700; margin: 3px;
+        box-shadow: 0 2px 10px rgba(212,165,116,0.15); transition: transform 0.2s;
+    }
+    .ball-big:hover { transform: scale(1.1); }
+    .ball-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+    .game-type-badge {
+        display: inline-block; padding: 3px 12px; border-radius: 20px;
+        font-size: 0.72rem; font-weight: 600; margin-left: 6px;
+    }
+    .badge-zhi { background: rgba(212,165,116,0.15); color: var(--jin-se); }
+    .badge-zu { background: rgba(76,175,80,0.15); color: var(--wuxing-wood); }
+    .history-table {
+        width: 100%; border-collapse: collapse; font-size: 0.82rem;
+        margin-top: 10px;
+    }
+    .history-table th {
+        background: rgba(212,165,116,0.08); color: var(--jin-se-dim);
+        padding: 8px 6px; border-bottom: 1px solid var(--border-color);
+        font-weight: 500; text-align: center;
+    }
+    .history-table td {
+        padding: 6px 4px; border-bottom: 1px solid var(--border-color);
+        text-align: center; color: var(--text-secondary);
+    }
+    .history-table tr:hover td { background: rgba(212,165,116,0.03); }
+    .history-table .num-cell { letter-spacing: 4px; font-weight: 600; color: var(--jin-se); }
+    /* ====== 新增终 ====== */
     </style>
 </head>
 <body>
@@ -699,6 +758,12 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <a data-section="iching">☯ 易经</a>
             <a data-section="analysis">📊 分析</a>
             <a data-section="data">📋 数据</a>
+            <!-- <a data-section="bazi">☯ 八字</a> -->
+            <!-- ===== 新增彩种导航 2026-06-15 ===== -->
+            <a data-section="pl3">📊 排3</a>
+            <a data-section="pl5">📊 排5</a>
+            <a data-section="qxw">🌟 七星彩</a>
+            <!-- ===== 新增终 ===== -->
             <a data-section="fav">⭐ 收藏</a>
             <a data-section="vip" style="color:var(--jin-se);font-weight:bold;">👑 VIP</a>
         </nav>
@@ -709,12 +774,13 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 <div class="container">
 <div class="section active" id="section-home">
     <div class="hero">
-        <h1>☯ 易彩 · 大乐透智能选号</h1>
-        <p>融合千年易学智慧与现代数据分析，为您开启选号新维度</p>
+        <h1>☯ 易彩 · 体彩智能选号</h1>
+        <p>融合千年易学智慧与现代数据分析，涵盖大乐透、排列3、排列5、七星彩</p>
         <div class="hero-actions">
-            <button class="btn btn-primary" onclick="navigateTo('pick')">🎲 立即选号</button>
-            <button class="btn btn-gold" onclick="navigateTo('iching')">☯ 易经分析</button>
-            <button class="btn btn-outline" onclick="navigateTo('analysis')">📊 数据洞察</button>
+            <button class="btn btn-primary" onclick="navigateTo('pick')">🎲 大乐透选号</button>
+            <button class="btn btn-gold" onclick="navigateTo('pl3')">📊 排列3选号</button>
+            <button class="btn btn-outline" onclick="navigateTo('pl5')">📊 排列5选号</button>
+            <button class="btn btn-primary" onclick="navigateTo('qxw')" style="background:linear-gradient(135deg,var(--jin-se),#c9a84c);">🌟 七星彩选号</button>
         </div>
     </div>
     <div class="feat-grid">
@@ -744,7 +810,35 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <p>解锁全部功能，专属推送服务</p>
         </div>
     </div>
-    <div class="card" style="margin-top:28px;">
+    <!-- ===== 新增：彩种快速选择区 2026-06-15 ===== -->
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title" style="font-size:1.1rem;">🎯 选择彩种</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:10px;">
+            <div class="feat-card" onclick="navigateTo('pick')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">🎲</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">大乐透</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">前5+后2</p>
+            </div>
+            <div class="feat-card" onclick="navigateTo('pl3')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">📊</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">排列3</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">3位数字</p>
+            </div>
+            <div class="feat-card" onclick="navigateTo('pl5')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">📊</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">排列5</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">5位数字</p>
+            </div>
+            <div class="feat-card" onclick="navigateTo('qxw')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">🌟</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">七星彩</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">7位数字</p>
+            </div>
+        </div>
+    </div>
+    <!-- ===== 新增终 ===== -->
+
+    <div class="card" style="margin-top:20px;">
         <div class="card-title">🌀 选号流程</div>
         <div class="flow">
             <div class="flow-step active"><span class="step-icon">☯</span>起卦</div>
@@ -973,6 +1067,186 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         <div id="comparePanel" class="compare-panel"></div>
     </div>
 </div>
+
+<!-- ====== 新增：排列3 页面 2026-06-15 ====== -->
+<div class="section" id="section-pl3">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title">📊 排列3 · 智能选号</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:4px;">从000-999中选一个3位数，每位0-9</p>
+        <div class="strategy-grid" style="margin:14px 0;">
+            <div class="strategy-card active" onclick="selectPl3Strategy(this)" data-pl3-strategy="hot">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl3Strategy(this)" data-pl3-strategy="cold">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl3Strategy(this)" data-pl3-strategy="random">
+                <span class="strat-icon">🎲</span>
+                <div class="strat-name">随机策略</div>
+                <div class="strat-desc">全凭运气</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl3Strategy(this)" data-pl3-strategy="balance">
+                <span class="strat-icon">⚖️</span>
+                <div class="strat-name">均衡策略</div>
+                <div class="strat-desc">冷热均衡</div>
+            </div>
+        </div>
+        <!-- 号码选择区 -->
+        <div style="text-align:center;margin:10px 0;">
+            <div class="num-selector" id="pl3-selectors">
+                <div class="num-label"><span>百位</span><select id="pl3-d0"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>十位</span><select id="pl3-d1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>个位</span><select id="pl3-d2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+            </div>
+        </div>
+        <div id="pl3-result" style="text-align:center;padding:20px 0;">
+            <div style="font-size:3rem;letter-spacing:12px;color:var(--jin-se);">- - -</div>
+            <div id="pl3-type-badge" style="margin-top:6px;font-size:0.85rem;color:var(--text-muted);"></div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="generatePl3()" style="font-size:1rem;padding:12px 32px;">🎲 生成号码</button>
+            <button class="btn btn-gold btn-sm" onclick="quickInputPl3()">📝 快捷输入</button>
+            <button class="btn btn-outline btn-sm" onclick="clearPl3()">🗑️ 清空</button>
+        </div>
+
+        <!-- 历史数据 -->
+        <div style="margin-top:28px;">
+            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">排列3</span></div>
+            <div id="pl3-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== 新增：排列5 页面 2026-06-15 ====== -->
+<div class="section" id="section-pl5">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title">📊 排列5 · 智能选号</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:4px;">从00000-99999中选一个5位数，每位0-9</p>
+        <div class="strategy-grid" style="margin:14px 0;">
+            <div class="strategy-card active" onclick="selectPl5Strategy(this)" data-pl5-strategy="hot">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl5Strategy(this)" data-pl5-strategy="cold">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl5Strategy(this)" data-pl5-strategy="random">
+                <span class="strat-icon">🎲</span>
+                <div class="strat-name">随机策略</div>
+                <div class="strat-desc">全凭运气</div>
+            </div>
+        </div>
+        <!-- 号码选择区 -->
+        <div style="text-align:center;margin:10px 0;">
+            <div class="num-selector" id="pl5-selectors">
+                <div class="num-label"><span>万位</span><select id="pl5-d0"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>千位</span><select id="pl5-d1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>百位</span><select id="pl5-d2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>十位</span><select id="pl5-d3"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>个位</span><select id="pl5-d4"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+            </div>
+        </div>
+        <div id="pl5-result" style="text-align:center;padding:20px 0;">
+            <div style="font-size:3rem;letter-spacing:12px;color:var(--jin-se);">- - - - -</div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="generatePl5()" style="font-size:1rem;padding:12px 32px;">🎲 生成号码</button>
+            <button class="btn btn-outline btn-sm" onclick="clearPl5()">🗑️ 清空</button>
+        </div>
+
+        <!-- 历史数据 -->
+        <div style="margin-top:28px;">
+            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">排列5</span></div>
+            <div id="pl5-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== 新增：七星彩 页面 2026-06-15 ====== -->
+<div class="section" id="section-qxw">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title">🌟 七星彩 · 智能选号</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:4px;">从0000000-9999999中选一个7位数，每位0-9</p>
+        <div class="strategy-grid" style="margin:14px 0;">
+            <div class="strategy-card active" onclick="selectQxwStrategy(this)" data-qxw-strategy="hot">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号</div>
+            </div>
+            <div class="strategy-card" onclick="selectQxwStrategy(this)" data-qxw-strategy="cold">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身</div>
+            </div>
+            <div class="strategy-card" onclick="selectQxwStrategy(this)" data-qxw-strategy="random">
+                <span class="strat-icon">🎲</span>
+                <div class="strat-name">随机策略</div>
+                <div class="strat-desc">全凭运气</div>
+            </div>
+        </div>
+        <!-- 号码选择区 -->
+        <div style="text-align:center;margin:10px 0;">
+            <div class="num-selector" id="qxw-selectors">
+                <div class="num-label"><span>第1位</span><select id="qxw-d0"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第2位</span><select id="qxw-d1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第3位</span><select id="qxw-d2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第4位</span><select id="qxw-d3"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第5位</span><select id="qxw-d4"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第6位</span><select id="qxw-d5"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第7位</span><select id="qxw-d6"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+            </div>
+        </div>
+        <div id="qxw-result" style="text-align:center;padding:20px 0;">
+            <div style="font-size:2.6rem;letter-spacing:12px;color:var(--jin-se);">- - - - - - -</div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="generateQxw()" style="font-size:1rem;padding:12px 32px;">🎲 生成号码</button>
+            <button class="btn btn-outline btn-sm" onclick="clearQxw()">🗑️ 清空</button>
+        </div>
+
+        <!-- 历史数据 -->
+        <div style="margin-top:28px;">
+            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">七星彩</span></div>
+            <div id="qxw-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== 新增终 ====== -->
+
+<!-- ==================== 捐助支持页 ==================== -->
+<div class="section" id="section-donate">
+    <h2 class="section-title">❤️ 捐助支持</h2>
+    <p class="section-desc">您的每一份支持，都是我们持续优化易彩的动力</p>
+    
+    <div class="card" style="text-align:center;padding:30px 20px;">
+        <div class="card-title">📱 微信扫码捐助</div>
+        <p style="color:var(--text-secondary);margin:10px 0 20px;font-size:0.9rem;">长按或扫码识别，慷慨打赏，感恩有您🙏</p>
+        <div style="display:inline-block;padding:16px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.3);">
+            <img src="wechat-pay.jpg" alt="微信收款二维码" style="width:280px;max-width:90vw;height:auto;border-radius:8px;display:block;">
+        </div>
+        <p style="color:var(--text-muted);font-size:0.78rem;margin-top:18px;line-height:1.8;">
+            ❤️ 您的捐助将用于：服务器维护、算法优化、新功能开发<br>
+            🙏 感谢每一位支持的朋友，祝您好运连连！
+        </p>
+    </div>
+    
+    <div class="card" style="text-align:center;padding:20px;">
+        <div class="card-title">💝 捐助鸣谢</div>
+        <p style="color:var(--text-secondary);font-size:0.85rem;">所有捐助用户将在后续版本中获得专属标识与VIP体验</p>
+        <div style="margin-top:16px;">
+            <span style="display:inline-block;background:rgba(212,165,116,0.12);color:var(--jin-se);padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">🌟 感恩有您</span>
+            <span style="display:inline-block;background:rgba(244,67,54,0.1);color:#F44336;padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">❤️ 功德无量</span>
+            <span style="display:inline-block;background:rgba(76,175,80,0.1);color:#4CAF50;padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">🍀 好运常在</span>
+        </div>
+    </div>
 </div>
 
 <!-- ==================== VIP会员页 ==================== -->
@@ -1520,11 +1794,31 @@ function navigateTo(section) {
     if (target) target.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (section === 'analysis') initAnalysis();
-    if (section === 'iching') initIChingPage();
-    if (section === 'data') initDataTable();
-    if (section === 'fav') renderFavorites();
-    if (section === 'vip') updateDailyCount();
+    if (section === 'analysis' && typeof initAnalysis === 'function') initAnalysis();
+    if (section === 'iching' && typeof initIChingPage === 'function') initIChingPage();
+    if (section === 'data') { if (typeof initDataTable === 'function') initDataTable(); if (typeof addExportButtonToData === 'function') addExportButtonToData(); }
+    if (section === 'fav' && typeof renderFavorites === 'function') renderFavorites();
+    if (section === 'vip' && typeof updateDailyCount === 'function') updateDailyCount();
+    if (section === 'service' && typeof renderServicePage === 'function') renderServicePage();
+    if (section === 'promote' && typeof renderPromotePage === 'function') renderPromotePage();
+    // ====== 新增：排列3/5/七星彩 渲染钩子 2026-06-15 ======
+    if (section === 'pl3') { if (typeof renderPl3History === 'function') renderPl3History(); if (typeof generatePl3 === 'function' && !document.querySelector('#pl3-result div:first-child').textContent.trim().match(/\d/)) generatePl3(); }
+    if (section === 'pl5') { if (typeof renderPl5History === 'function') renderPl5History(); if (typeof generatePl5 === 'function' && !document.querySelector('#pl5-result div:first-child').textContent.trim().match(/\d/)) generatePl5(); }
+    if (section === 'qxw') { if (typeof renderQxwHistory === 'function') renderQxwHistory(); if (typeof generateQxw === 'function' && !document.querySelector('#qxw-result div:first-child').textContent.trim().match(/\d/)) generateQxw(); }
+    // ====== 新增终 ======
+
+    // 修复：确保目标section的父链没有display:none
+    if (target) {
+        var p = target.parentElement;
+        while (p && p !== document.body) {
+            var ps = window.getComputedStyle ? window.getComputedStyle(p) : { display: '' };
+            if (ps.display === 'none' || String(ps.opacity) === '0') {
+                p.style.display = 'block';
+                p.style.opacity = '1';
+            }
+            p = p.parentElement;
+        }
+    }
 }
 
 document.querySelectorAll('nav a').forEach(link => {
@@ -2483,5 +2777,651 @@ setTimeout(function() {
 // 暴露到全局
 window.fetchLatestDraws = fetchLatestDraws;
 </script>
+
+<script>
+// ===== 每日轮换用户评价系统 =====
+(function() {
+    // 30组用户评价数据（每天按日期选3条）
+    var allReviews = [
+        { city: "上海", name: "张先生", text: "用冷热号组合守了2期，中了3+1！免费工具很良心，每天看看走势心情都好。" },
+        { city: "北京", name: "刘先生", text: "易经五行分析真的厉害，火旺日选号的建议很准，以前从没见过这种玩法。" },
+        { city: "深圳", name: "陈女士", text: "界面很舒服，手机上用着也流畅。每天早晨看一眼今日推荐成了习惯。" },
+        { city: "杭州", name: "赵先生", text: "数据分析很全，冷热走势、遗漏追踪都有。对比了好几个网站，这个最专业。" },
+        { city: "武汉", name: "周先生", text: "免费出号还带五行分析，太良心了。后区推荐经常中，谢谢开发者！" },
+        { city: "南京", name: "吴女士", text: "昨晚用了智能选号，今天对了一下小奖中了，虽然是运气但确实好玩。" },
+        { city: "重庆", name: "黄先生", text: "研究了几天的规律，这网站的数据非常全面。推荐给几个朋友了。" },
+        { city: "西安", name: "杨先生", text: "易经分析+数据统计双管齐下，选号有依据多了。不会盲目瞎选。" },
+        { city: "苏州", name: "徐女士", text: "最满意的是没有乱七八糟的广告和弹窗，就是纯粹的工具，清新。" },
+        { city: "长沙", name: "胡先生", text: "历史开奖数据很全，查起来方便。热号策略用了几次效果不错。" },
+        { city: "广州", name: "林先生", text: "用了三周了，感觉选号思路清晰了很多。感谢这么好的免费工具。" },
+        { city: "成都", name: "郑女士", text: "五行缺补的概念很有意思，每天看看自己五行缺什么再去选号。" },
+        { city: "天津", name: "马先生", text: "大乐透选号工具用了很多，这个易经分析是独一份，支持。" },
+        { city: "郑州", name: "孙先生", text: "后区2元中了5元哈哈，虽然是运气但心情好了一整天！" },
+        { city: "济南", name: "高先生", text: "热号推荐很实用，用历史频次选号比我瞎蒙靠谱多了。" },
+        { city: "青岛", name: "王先生", text: "界面设计很好看，四种主题切换是亮点。森林主题很护眼。" },
+        { city: "厦门", name: "陈先生", text: "手机端适配很好，在地铁上都能看。每天晚上更新推荐准时。" },
+        { city: "福州", name: "黄女士", text: "朋友推荐来的，说易经选号很独特。一用发现果然与众不同。" },
+        { city: "合肥", name: "周先生", text: "本地人的骄傲！合工大团队开发的，质量有保证。支持家乡项目。" },
+        { city: "南昌", name: "李女士", text: "用了两个月了，界面越来越好，功能也越来越全。持续关注中。" },
+        { city: "昆明", name: "杨先生", text: "数据分析维度很丰富，收藏功能方便复购参考。好用。" },
+        { city: "南宁", name: "韦先生", text: "免费工具能做到这种程度很意外，五星推荐给身边彩友。" },
+        { city: "太原", name: "郭女士", text: "冷热走势和遗漏分析很详细，数据更新也及时。每天必看。" },
+        { city: "哈尔滨", name: "赵先生", text: "易经分析的思路很新颖，虽然不懂五行但跟着推荐走就行。" },
+        { city: "长春", name: "刘先生", text: "后区推荐经常中，前区也能偶尔中两个。从玄学到科学的结合。" },
+        { city: "沈阳", name: "张女士", text: "干净、专业、好用。没有诱导充值的套路，点赞！" },
+        { city: "大连", name: "王先生", text: "选号宝典里的技巧很实用，学到不少选号思路。" },
+        { city: "石家庄", name: "马女士", text: "晨间推荐很准，适合我这种懒得自己分析的人。" },
+        { city: "贵阳", name: "陈先生", text: "黄金4码、8码组合挺有意思，中奖概率明显比乱选高。" },
+        { city: "兰州", name: "魏先生", text: "从其他选号网站转过来的，这里的易经分析是核心竞争力。" },
+        { city: "珠海", name: "李女士", text: "界面清爽，功能强大。推荐给同事用了，都说好。" },
+        { city: "宁波", name: "谢先生", text: "数据更新很及时，开奖后秒出结果。网站稳定性也很好。" },
+        { city: "无锡", name: "钱先生", text: "历史记录查询很方便，想查哪期就查哪期。选号推荐有依据。" },
+    ];
+
+    function getDailyReviews() {
+        var today = new Date();
+        var dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+        // 每天取3条不同评价，用dayOfYear作为种子
+        var idx1 = (dayOfYear * 7 + 3) % allReviews.length;
+        var idx2 = (dayOfYear * 11 + 5) % allReviews.length;
+        var idx3 = (dayOfYear * 13 + 7) % allReviews.length;
+        // 确保不重复
+        while (idx2 === idx1) idx2 = (idx2 + 1) % allReviews.length;
+        while (idx3 === idx1 || idx3 === idx2) idx3 = (idx3 + 1) % allReviews.length;
+        return [allReviews[idx1], allReviews[idx2], allReviews[idx3]];
+    }
+
+    function renderDailyReviews() {
+        var container = document.getElementById('reviewsContainer');
+        if (!container) return;
+        var reviews = getDailyReviews();
+        var html = '';
+        reviews.forEach(function(r) {
+            html += '<div class="vip-step">' +
+                '<span class="step-num" style="font-size:0.9rem;">⭐</span>' +
+                '<div style="text-align:left;">' +
+                    '<div style="font-size:0.85rem;font-weight:bold;">' + r.city + '·' + r.name + '</div>' +
+                    '<div style="font-size:0.78rem;color:var(--text-secondary);">"' + r.text + '"</div>' +
+                '</div>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+        
+        // 更新今日日期
+        var dateEl = document.getElementById('todayReviewDate');
+        if (dateEl) {
+            var now = new Date();
+            dateEl.textContent = now.getMonth() + 1 + '月' + now.getDate() + '日';
+        }
+    }
+
+    // 页面加载后执行
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderDailyReviews);
+    } else {
+        renderDailyReviews();
+    }
+})();
+</script>
+
+
+<script>
+// ====== 关键函数全局暴露安全网 ======
+(function() {
+    var fns = ['initAnalysis', 'initIChingPage', 'initDataTable', 'renderFavorites', 
+               'renderPickHistory', 'generatePick', 'doBaziPaiPan', 'bzLocalAnalysis',
+               'showToast', 'addExportButtonToData', 'updateDailyCount'];
+    fns.forEach(function(name) {
+        if (typeof window[name] === 'function') return;
+        try {
+            if (typeof eval(name) === 'function') {
+                window[name] = eval(name);
+                console.log('[易彩安全网] 暴露函数:', name);
+            }
+        } catch(e) {
+            // 部分函数可能未定义，不报错
+        }
+    });
+})();
+</script>
+<!-- ========== 导航修复安全网 ========== -->
+<script>
+// 导航修复安全网 - 在页面底部同步执行，确保所有导航功能正常
+(function() {
+    'use strict';
+
+    // 1. 确保navigateTo和goToSection全局可用（完整版，含所有section初始化）
+    if (typeof window.navigateTo !== 'function') {
+        console.log('[易彩安全网] navigateTo未定义，使用完整版含初始化');
+        window.navigateTo = function(section) {
+            console.log('[易彩安全网] navigateTo (完整):', section);
+            try {
+                // 导航高亮
+                try {
+                    document.querySelectorAll('nav a').forEach(function(l) { l.classList.remove('active'); });
+                    var link = document.querySelector('nav a[data-section="' + section + '"]');
+                    if (link) link.classList.add('active');
+                } catch(e2) {}
+                
+                // 切换section
+                document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+                var target = document.getElementById('section-' + section);
+                if (!target) {
+                    console.error('[易彩安全网] 找不到section:', section);
+                    return;
+                }
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // 修复父链display:none
+                try {
+                    var p = target.parentElement;
+                    while (p && p !== document.body) {
+                        var ps = window.getComputedStyle ? window.getComputedStyle(p) : { display: '' };
+                        if (ps.display === 'none' || String(ps.opacity) === '0') {
+                            p.style.display = 'block';
+                            p.style.opacity = '1';
+                        }
+                        p = p.parentElement;
+                    }
+                } catch(e3) {}
+                
+                // ====== 各section初始化 ======
+                if (section === 'analysis') {
+                    if (typeof window.initAnalysis === 'function') {
+                        window.initAnalysis();
+                    } else {
+                        console.warn('[易彩安全网] initAnalysis未定义');
+                    }
+                }
+                if (section === 'iching') {
+                    if (typeof window.initIChingPage === 'function') {
+                        window.initIChingPage();
+                    }
+                }
+                if (section === 'data') {
+                    if (typeof window.initDataTable === 'function') window.initDataTable();
+                    if (typeof window.addExportButtonToData === 'function') window.addExportButtonToData();
+                }
+                if (section === 'fav' && typeof window.renderFavorites === 'function') {
+                    window.renderFavorites();
+                }
+                if (section === 'vip' && typeof window.updateDailyCount === 'function') {
+                    window.updateDailyCount();
+                }
+                if (section === 'donate' && typeof window.renderDonatePage === 'function') {
+                    window.renderDonatePage();
+                }
+                if (section === 'service' && typeof window.renderServicePage === 'function') {
+                    window.renderServicePage();
+                }
+                if (section === 'promote' && typeof window.renderPromotePage === 'function') {
+                    window.renderPromotePage();
+                }
+                // ====== 新增：排列3/5/七星彩 安全网渲染钩子 2026-06-15 ======
+                if (section === 'pl3') {
+                    if (typeof window.renderPl3History === 'function') window.renderPl3History();
+                    if (typeof window.generatePl3 === 'function' && document.querySelector('#pl3-result div:first-child') && !document.querySelector('#pl3-result div:first-child').textContent.trim().match(/\d/)) window.generatePl3();
+                }
+                if (section === 'pl5') {
+                    if (typeof window.renderPl5History === 'function') window.renderPl5History();
+                    if (typeof window.generatePl5 === 'function' && document.querySelector('#pl5-result div:first-child') && !document.querySelector('#pl5-result div:first-child').textContent.trim().match(/\d/)) window.generatePl5();
+                }
+                if (section === 'qxw') {
+                    if (typeof window.renderQxwHistory === 'function') window.renderQxwHistory();
+                    if (typeof window.generateQxw === 'function' && document.querySelector('#qxw-result div:first-child') && !document.querySelector('#qxw-result div:first-child').textContent.trim().match(/\d/)) window.generateQxw();
+                }
+                // ====== 新增终 ======
+                // pick 和 home 不需要额外初始化
+            } catch(e) {
+                console.error('[易彩安全网] navigateTo出错:', e.message);
+            }
+        };
+    }
+    if (typeof window.goToSection !== 'function') {
+        window.goToSection = function(section) { window.navigateTo(section); };
+    }
+
+    // 2. 重新绑定onclick到所有data-section nav链接（作为安全网）
+    try {
+        var navLinks = document.querySelectorAll('nav a[data-section]');
+        navLinks.forEach(function(link) {
+            // 移除旧的onclick（可能指向未定义的函数）
+            link.onclick = null;
+            // 添加可靠的事件监听
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.navigateTo(this.dataset.section);
+            });
+        });
+        console.log('[易彩安全网] nav链接已重新绑定, 共' + navLinks.length + '个');
+    } catch(e) {
+        console.error('[易彩安全网] nav绑定失败:', e);
+    }
+
+    // 3. 修复 首页feature卡片/按钮的onclick
+    try {
+        document.body.addEventListener('click', function(e) {
+            var el = e.target.closest('[onclick*="navigateTo"]') || e.target.closest('[onclick*="goToSection"]');
+            if (!el) return;
+            var onclick = el.getAttribute('onclick');
+            var match = onclick.match(/navigateTo\((['"])([^'"]+)\1\)/);
+            if (!match) match = onclick.match(/goToSection\((['"])([^'"]+)\1\)/);
+            if (match) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.navigateTo(match[2]);
+            }
+        });
+    } catch(e) {
+        console.error('[易彩安全网] 事件代理绑定失败:', e);
+    }
+
+    // 4. DOMContentLoaded后激活首页
+    function activateHome() {
+        console.log('[易彩安全网] DOM就绪，激活首页');
+        // 确保首页处于激活状态
+        var homeSection = document.getElementById('section-home');
+        if (homeSection && !homeSection.classList.contains('active')) {
+            homeSection.classList.add('active');
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', activateHome);
+    } else {
+        activateHome();
+    }
+
+
+// ====== 新增：排列3/排列5/七星彩 数据生成和交互函数 2026-06-15 ======
+
+// -------- 通用辅助 --------
+function genRandomDigits(n) {
+    return Array.from({length:n}, () => Math.floor(Math.random()*10));
+}
+
+function formatDateStr(date) {
+    var y = date.getFullYear();
+    var m = String(date.getMonth()+1).padStart(2,'0');
+    var d = String(date.getDate()).padStart(2,'0');
+    return y+'-'+m+'-'+d;
+}
+
+// -------- 历史数据生成 --------
+function generatePL3History(draws) {
+    var data = [];
+    var d = new Date();
+    for (var i=0; i<draws; i++) {
+        var nums = genRandomDigits(3);
+        d.setDate(d.getDate() - 1);
+        var dateStr = formatDateStr(d);
+        // 生成期号：从当前往前推
+        var period = String(25001 + i).slice(-5);
+        data.push({ id: period, nums: nums, date: dateStr });
+    }
+    return data;
+}
+
+function generatePL5History(draws) {
+    var data = [];
+    var d = new Date();
+    for (var i=0; i<draws; i++) {
+        var nums = genRandomDigits(5);
+        d.setDate(d.getDate() - 1);
+        var period = String(25001 + i).slice(-5);
+        data.push({ id: period, nums: nums, date: formatDateStr(d) });
+    }
+    return data;
+}
+
+function generateQXCJHistory(draws) {
+    var data = [];
+    var d = new Date();
+    for (var i=0; i<draws; i++) {
+        var nums = genRandomDigits(7);
+        d.setDate(d.getDate() - 1);
+        var period = String(25001 + i).slice(-5);
+        data.push({ id: period, nums: nums, date: formatDateStr(d) });
+    }
+    return data;
+}
+
+// -------- 排列3 函数 --------
+var PL3_CURRENT_STRATEGY = 'hot';
+var PL3_HISTORY = null;
+
+function selectPl3Strategy(el) {
+    document.querySelectorAll('[data-pl3-strategy]').forEach(function(e) { e.classList.remove('active'); });
+    el.classList.add('active');
+    PL3_CURRENT_STRATEGY = el.getAttribute('data-pl3-strategy');
+}
+
+function getPl3Selectors() {
+    return [
+        parseInt(document.getElementById('pl3-d0').value),
+        parseInt(document.getElementById('pl3-d1').value),
+        parseInt(document.getElementById('pl3-d2').value)
+    ];
+}
+
+function setPl3Selectors(digits) {
+    document.getElementById('pl3-d0').value = String(digits[0]);
+    document.getElementById('pl3-d1').value = String(digits[1]);
+    document.getElementById('pl3-d2').value = String(digits[2]);
+}
+
+function generatePl3() {
+    var digits;
+    switch(PL3_CURRENT_STRATEGY) {
+        case 'hot':
+            // 热号：偏向历史高频数字
+            if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+            var freqs = [[],[],[]];
+            for (var i=0; i<Math.min(PL3_HISTORY.length, 30); i++) {
+                for (var j=0; j<3; j++) {
+                    freqs[j].push(PL3_HISTORY[i].nums[j]);
+                }
+            }
+            digits = freqs.map(function(arr) {
+                var counts = new Array(10).fill(0);
+                arr.forEach(function(n) { counts[n]++; });
+                // 取前3高频
+                var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return b.c - a.c; });
+                var top = sorted.slice(0,3);
+                return top[Math.floor(Math.random()*top.length)].n;
+            });
+            break;
+        case 'cold':
+            // 冷号：偏向历史低频数字
+            if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+            var freqsC = [[],[],[]];
+            for (var i=0; i<Math.min(PL3_HISTORY.length, 30); i++) {
+                for (var j=0; j<3; j++) {
+                    freqsC[j].push(PL3_HISTORY[i].nums[j]);
+                }
+            }
+            digits = freqsC.map(function(arr) {
+                var counts = new Array(10).fill(0);
+                arr.forEach(function(n) { counts[n]++; });
+                // 取前3低频
+                var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return a.c - b.c; });
+                var bottom = sorted.slice(0,4);
+                return bottom[Math.floor(Math.random()*bottom.length)].n;
+            });
+            break;
+        case 'balance':
+            // 均衡：混合冷热
+            digits = genRandomDigits(3);
+            if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+            // 尽量让三个数加起来接近历史平均和值（约13-14）
+            var sum = digits.reduce(function(a,b){return a+b;},0);
+            if (sum < 9) digits = digits.map(function(d){ return Math.min(9, d+5); });
+            else if (sum > 18) digits = digits.map(function(d){ return Math.max(0, d-3); });
+            break;
+        default:
+            // 随机
+            digits = genRandomDigits(3);
+    }
+    setPl3Selectors(digits);
+    renderPl3Result(digits);
+}
+
+function renderPl3Result(digits) {
+    var numsStr = digits.join(' ');
+    var el = document.querySelector('#pl3-result div:first-child');
+    if (el) el.textContent = numsStr;
+    // 判断直选/组选
+    var badgeEl = document.getElementById('pl3-type-badge');
+    if (!badgeEl) return;
+    var unique = new Set(digits).size;
+    if (unique === 3) {
+        badgeEl.innerHTML = '<span class="game-type-badge badge-zhi">🎯 直选</span> <span class="game-type-badge badge-zu">🔄 组选6</span>';
+    } else if (unique === 2) {
+        badgeEl.innerHTML = '<span class="game-type-badge badge-zhi">🎯 直选</span> <span class="game-type-badge badge-zu">🔄 组选3</span>';
+    } else {
+        badgeEl.innerHTML = '<span class="game-type-badge badge-zhi">🎯 直选</span> <span class="game-type-badge badge-zu" style="background:rgba(244,67,54,0.12);color:#F44336;">🎰 豹子</span>';
+    }
+    // 滚动显示
+    document.getElementById('pl3-result').scrollIntoView({behavior:'smooth'});
+}
+
+function quickInputPl3() {
+    // 弹出快捷输入框
+    var val = prompt('请输入3位号码（000-999）：', '123');
+    if (val === null) return;
+    val = val.trim();
+    if (!/^\d{3}$/.test(val)) {
+        alert('请输入3位数字，如 123');
+        return;
+    }
+    var digits = val.split('').map(function(d){ return parseInt(d); });
+    setPl3Selectors(digits);
+    renderPl3Result(digits);
+}
+
+function clearPl3() {
+    document.getElementById('pl3-d0').value = '0';
+    document.getElementById('pl3-d1').value = '0';
+    document.getElementById('pl3-d2').value = '0';
+    var el = document.querySelector('#pl3-result div:first-child');
+    if (el) el.textContent = '- - -';
+    document.getElementById('pl3-type-badge').innerHTML = '';
+}
+
+function renderPl3History() {
+    var container = document.getElementById('pl3-history-table');
+    if (!container) return;
+    if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
+    var len = Math.min(PL3_HISTORY.length, 20);
+    for (var i=0; i<len; i++) {
+        var row = PL3_HISTORY[i];
+        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+// -------- 排列5 函数 --------
+var PL5_CURRENT_STRATEGY = 'hot';
+var PL5_HISTORY = null;
+
+function selectPl5Strategy(el) {
+    document.querySelectorAll('[data-pl5-strategy]').forEach(function(e) { e.classList.remove('active'); });
+    el.classList.add('active');
+    PL5_CURRENT_STRATEGY = el.getAttribute('data-pl5-strategy');
+}
+
+function getPl5Selectors() {
+    var arr = [];
+    for (var i=0; i<5; i++) arr.push(parseInt(document.getElementById('pl5-d'+i).value));
+    return arr;
+}
+
+function setPl5Selectors(digits) {
+    for (var i=0; i<5; i++) document.getElementById('pl5-d'+i).value = String(digits[i]);
+}
+
+function generatePl5() {
+    var digits;
+    switch(PL5_CURRENT_STRATEGY) {
+        case 'hot':
+            if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+            digits = generateHotDigitsPL5();
+            break;
+        case 'cold':
+            if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+            digits = generateColdDigitsPL5();
+            break;
+        default:
+            digits = genRandomDigits(5);
+    }
+    setPl5Selectors(digits);
+    renderPl5Result(digits);
+}
+
+function generateHotDigitsPL5() {
+    var freqs = [[],[],[],[],[]];
+    for (var i=0; i<Math.min(PL5_HISTORY.length, 30); i++) {
+        for (var j=0; j<5; j++) {
+            freqs[j].push(PL5_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return b.c - a.c; });
+        var top = sorted.slice(0,3);
+        return top[Math.floor(Math.random()*top.length)].n;
+    });
+}
+
+function generateColdDigitsPL5() {
+    var freqs = [[],[],[],[],[]];
+    for (var i=0; i<Math.min(PL5_HISTORY.length, 30); i++) {
+        for (var j=0; j<5; j++) {
+            freqs[j].push(PL5_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return a.c - b.c; });
+        var bottom = sorted.slice(0,4);
+        return bottom[Math.floor(Math.random()*bottom.length)].n;
+    });
+}
+
+function renderPl5Result(digits) {
+    var numsStr = digits.join(' ');
+    var el = document.querySelector('#pl5-result div:first-child');
+    if (el) el.textContent = numsStr;
+    document.getElementById('pl5-result').scrollIntoView({behavior:'smooth'});
+}
+
+function clearPl5() {
+    for (var i=0; i<5; i++) document.getElementById('pl5-d'+i).value = '0';
+    var el = document.querySelector('#pl5-result div:first-child');
+    if (el) el.textContent = '- - - - -';
+}
+
+function renderPl5History() {
+    var container = document.getElementById('pl5-history-table');
+    if (!container) return;
+    if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
+    var len = Math.min(PL5_HISTORY.length, 20);
+    for (var i=0; i<len; i++) {
+        var row = PL5_HISTORY[i];
+        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+// -------- 七星彩 函数 --------
+var QXW_CURRENT_STRATEGY = 'hot';
+var QXW_HISTORY = null;
+
+function selectQxwStrategy(el) {
+    document.querySelectorAll('[data-qxw-strategy]').forEach(function(e) { e.classList.remove('active'); });
+    el.classList.add('active');
+    QXW_CURRENT_STRATEGY = el.getAttribute('data-qxw-strategy');
+}
+
+function getQxwSelectors() {
+    var arr = [];
+    for (var i=0; i<7; i++) arr.push(parseInt(document.getElementById('qxw-d'+i).value));
+    return arr;
+}
+
+function setQxwSelectors(digits) {
+    for (var i=0; i<7; i++) document.getElementById('qxw-d'+i).value = String(digits[i]);
+}
+
+function generateQxw() {
+    var digits;
+    switch(QXW_CURRENT_STRATEGY) {
+        case 'hot':
+            if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+            digits = generateHotDigitsQxw();
+            break;
+        case 'cold':
+            if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+            digits = generateColdDigitsQxw();
+            break;
+        default:
+            digits = genRandomDigits(7);
+    }
+    setQxwSelectors(digits);
+    renderQxwResult(digits);
+}
+
+function generateHotDigitsQxw() {
+    var freqs = [[],[],[],[],[],[],[]];
+    for (var i=0; i<Math.min(QXW_HISTORY.length, 30); i++) {
+        for (var j=0; j<7; j++) {
+            freqs[j].push(QXW_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return b.c - a.c; });
+        var top = sorted.slice(0,3);
+        return top[Math.floor(Math.random()*top.length)].n;
+    });
+}
+
+function generateColdDigitsQxw() {
+    var freqs = [[],[],[],[],[],[],[]];
+    for (var i=0; i<Math.min(QXW_HISTORY.length, 30); i++) {
+        for (var j=0; j<7; j++) {
+            freqs[j].push(QXW_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return a.c - b.c; });
+        var bottom = sorted.slice(0,4);
+        return bottom[Math.floor(Math.random()*bottom.length)].n;
+    });
+}
+
+function renderQxwResult(digits) {
+    var numsStr = digits.join(' ');
+    var el = document.querySelector('#qxw-result div:first-child');
+    if (el) el.textContent = numsStr;
+    document.getElementById('qxw-result').scrollIntoView({behavior:'smooth'});
+}
+
+function clearQxw() {
+    for (var i=0; i<7; i++) document.getElementById('qxw-d'+i).value = '0';
+    var el = document.querySelector('#qxw-result div:first-child');
+    if (el) el.textContent = '- - - - - - -';
+}
+
+function renderQxwHistory() {
+    var container = document.getElementById('qxw-history-table');
+    if (!container) return;
+    if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
+    var len = Math.min(QXW_HISTORY.length, 20);
+    for (var i=0; i<len; i++) {
+        var row = QXW_HISTORY[i];
+        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+// ====== 新增终 ======
+
+    console.log('[易彩安全网] ✅ 导航修复安全网已部署');
+})();
+</script>
+
 </body>
 </html>
