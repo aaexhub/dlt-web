@@ -3415,6 +3415,21 @@ function renderQxwHistory() {
 
 // ====== 新增终 ======
 
+    // 全局暴露排列3/5/七星彩函数，使onclick按钮可调用（安全网IIFE内定义的函数对全局不可见）
+    window.generatePl3 = generatePl3;
+    window.renderPl3History = renderPl3History;
+    window.generatePl5 = generatePl5;
+    window.renderPl5History = renderPl5History;
+    window.generateQxw = generateQxw;
+    window.renderQxwHistory = renderQxwHistory;
+    window.selectPl3Strategy = selectPl3Strategy;
+    window.selectPl5Strategy = selectPl5Strategy;
+    window.selectQxwStrategy = selectQxwStrategy;
+    window.quickInputPl3 = quickInputPl3;
+    window.clearPl3 = clearPl3;
+    window.clearPl5 = clearPl5;
+    window.clearQxw = clearQxw;
+
     console.log('[易彩安全网] ✅ 导航修复安全网已部署');
 })();
 </script>
