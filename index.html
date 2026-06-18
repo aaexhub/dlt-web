@@ -754,17 +754,17 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         </div>
         <nav>
             <a class="active" data-section="home">🏠 首页</a>
-            <a data-section="pick">🎲 选号</a>
             <a data-section="iching">☯ 易经</a>
             <a data-section="analysis">📊 分析</a>
             <a data-section="data">📋 数据</a>
-            <!-- <a data-section="bazi">☯ 八字</a> -->
             <!-- ===== 新增彩种导航 2026-06-15 ===== -->
+            <a data-section="pick">🎲 大乐透</a>
             <a data-section="pl3">📊 排3</a>
             <a data-section="pl5">📊 排5</a>
             <a data-section="qxw">🌟 七星彩</a>
             <!-- ===== 新增终 ===== -->
             <a data-section="fav">⭐ 收藏</a>
+            <!-- <a data-section="bazi">☯ 八字</a> -->
             <!-- VIP已隐藏 -->
         </nav>
     </div>
@@ -3146,14 +3146,25 @@ function formatDateStr(date) {
 }
 
 // -------- 历史数据生成 --------
+// ========== 固定种子生成器 ==========
+// 使用线性同余生成器取代 Math.random，确保每次生成一致的历史数据
+var FIXED_SEED = 48879;
+function seededRand() {
+    FIXED_SEED = (FIXED_SEED * 1664525 + 1013904223) & 0x7fffffff;
+    return FIXED_SEED / 0x7fffffff;
+}
+function seededInt(min, max) {
+    return Math.floor(seededRand() * (max - min + 1)) + min;
+}
+
 function generatePL3History(draws) {
     var data = [];
     var d = new Date();
+    FIXED_SEED = 48879;
     for (var i=0; i<draws; i++) {
-        var nums = genRandomDigits(3);
+        var nums = [seededInt(0,9), seededInt(0,9), seededInt(0,9)];
         d.setDate(d.getDate() - 1);
         var dateStr = formatDateStr(d);
-        // 生成期号：从当前往前推
         var period = String(25001 + i).slice(-5);
         data.push({ id: period, nums: nums, date: dateStr });
     }
@@ -3163,8 +3174,9 @@ function generatePL3History(draws) {
 function generatePL5History(draws) {
     var data = [];
     var d = new Date();
+    FIXED_SEED = 48879;
     for (var i=0; i<draws; i++) {
-        var nums = genRandomDigits(5);
+        var nums = [seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9)];
         d.setDate(d.getDate() - 1);
         var period = String(25001 + i).slice(-5);
         data.push({ id: period, nums: nums, date: formatDateStr(d) });
@@ -3175,8 +3187,9 @@ function generatePL5History(draws) {
 function generateQXCJHistory(draws) {
     var data = [];
     var d = new Date();
+    FIXED_SEED = 48879;
     for (var i=0; i<draws; i++) {
-        var nums = genRandomDigits(7);
+        var nums = [seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9)];
         d.setDate(d.getDate() - 1);
         var period = String(25001 + i).slice(-5);
         data.push({ id: period, nums: nums, date: formatDateStr(d) });
