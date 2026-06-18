@@ -1018,13 +1018,37 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 <!-- ==================== 历史数据页 ==================== -->
 <div class="section" id="section-data">
     <h2 class="section-title">📋 历史开奖</h2>
-    <p class="section-desc">大乐透近期开奖数据一览</p>
+    <p class="section-desc">多彩种近期开奖数据一览</p>
     <div class="stats-bar" id="dataStats"></div>
+    <div class="tabs" id="dataTabs">
+        <div class="tab active" data-dt="dlt" onclick="switchDataTab(this)">🎯 大乐透</div>
+        <div class="tab" data-dt="pl3" onclick="switchDataTab(this)">📊 排列3</div>
+        <div class="tab" data-dt="pl5" onclick="switchDataTab(this)">📊 排列5</div>
+        <div class="tab" data-dt="qxw" onclick="switchDataTab(this)">🌟 七星彩</div>
+    </div>
     <div class="card">
-        <div class="data-table-wrap">
+        <div class="data-table-wrap" id="dataTableWrap_dlt">
             <table class="data-table">
                 <thead><tr><th>期号</th><th>日期</th><th>前区</th><th>后区</th><th>前区特征</th><th>后区特征</th></tr></thead>
                 <tbody id="dataTableBody"></tbody>
+            </table>
+        </div>
+        <div class="data-table-wrap" id="dataTableWrap_pl3" style="display:none;">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <tbody id="dataTableBody_pl3"></tbody>
+            </table>
+        </div>
+        <div class="data-table-wrap" id="dataTableWrap_pl5" style="display:none;">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <tbody id="dataTableBody_pl5"></tbody>
+            </table>
+        </div>
+        <div class="data-table-wrap" id="dataTableWrap_qxw" style="display:none;">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <tbody id="dataTableBody_qxw"></tbody>
             </table>
         </div>
     </div>
@@ -1792,7 +1816,7 @@ function navigateTo(section) {
 
     if (section === 'analysis' && typeof initAnalysis === 'function') initAnalysis();
     if (section === 'iching' && typeof initIChingPage === 'function') initIChingPage();
-    if (section === 'data') { if (typeof initDataTable === 'function') initDataTable(); if (typeof addExportButtonToData === 'function') addExportButtonToData(); }
+    if (section === 'data') { if (typeof initDataTable === 'function') initDataTable(); if (typeof addExportButtonToData === 'function') addExportButtonToData(); if (typeof switchDataTab !== 'undefined') { var activeTab = document.querySelector('#dataTabs .tab.active'); if (!activeTab) { var dft = document.querySelector('#dataTabs .tab[data-dt="dlt"]'); if (dft) dft.classList.add('active'); } if (typeof window.switchDataTab === 'function') window.switchDataTab(document.querySelector('#dataTabs .tab.active')); } }
     if (section === 'fav' && typeof renderFavorites === 'function') renderFavorites();
     if (section === 'vip' && typeof updateDailyCount === 'function') updateDailyCount();
     if (section === 'service' && typeof renderServicePage === 'function') renderServicePage();
@@ -2453,6 +2477,7 @@ function renderMissingChart() {
 
 // ========== 历史数据表 ==========
 let dataTableInitialized = false;
+let dataTabInitialized = {};
 
 function initDataTable() {
     if (dataTableInitialized) return;
@@ -2478,6 +2503,73 @@ function initDataTable() {
         '<div class="stat-item"><div class="stat-value" style="color:#FF6B6B;">' + frontFreq.filter(f => f >= 5).length + '</div><div class="stat-label">🔥 前区热号</div></div>' +
         '<div class="stat-item"><div class="stat-value" style="color:#6BB5FF;">' + frontFreq.filter(f => f <= 2).length + '</div><div class="stat-label">❄️ 前区冷号</div></div>' +
         '<div class="stat-item"><div class="stat-value">' + new Set(DRAWS.flatMap(d => d.front)).size + '</div><div class="stat-label">前区号码种类</div></div>';
+}
+
+// 数据页面：彩种切换
+function switchDataTab(el) {
+    document.querySelectorAll('#dataTabs .tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    var dt = el.getAttribute('data-dt');
+    var types = ['dlt','pl3','pl5','qxw'];
+    types.forEach(function(t) {
+        var wrap = document.getElementById('dataTableWrap_' + t);
+        if (wrap) wrap.style.display = t === dt ? '' : 'none';
+    });
+    // 首次切换时初始化对应彩种的数据
+    if (!dataTabInitialized[dt]) {
+        dataTabInitialized[dt] = true;
+        if (dt === 'pl3') renderDataPl3();
+        else if (dt === 'pl5') renderDataPl5();
+        else if (dt === 'qxw') renderDataQxw();
+    }
+}
+
+function renderDataPl3() {
+    if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+    var tbody = document.getElementById('dataTableBody_pl3');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var len = Math.min(PL3_HISTORY.length, 100);
+    for (var i=0; i<len; i++) {
+        var row = PL3_HISTORY[i];
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
+            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
+            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+        tbody.appendChild(tr);
+    }
+}
+
+function renderDataPl5() {
+    if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+    var tbody = document.getElementById('dataTableBody_pl5');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var len = Math.min(PL5_HISTORY.length, 100);
+    for (var i=0; i<len; i++) {
+        var row = PL5_HISTORY[i];
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
+            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
+            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+        tbody.appendChild(tr);
+    }
+}
+
+function renderDataQxw() {
+    if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+    var tbody = document.getElementById('dataTableBody_qxw');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var len = Math.min(QXW_HISTORY.length, 100);
+    for (var i=0; i<len; i++) {
+        var row = QXW_HISTORY[i];
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
+            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
+            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+        tbody.appendChild(tr);
+    }
 }
 
 // ========== 收藏功能 ==========
@@ -2866,7 +2958,8 @@ window.fetchLatestDraws = fetchLatestDraws;
 (function() {
     var fns = ['initAnalysis', 'initIChingPage', 'initDataTable', 'renderFavorites', 
                'renderPickHistory', 'generatePick', 'doBaziPaiPan', 'bzLocalAnalysis',
-               'showToast', 'addExportButtonToData', 'updateDailyCount'];
+               'showToast', 'addExportButtonToData', 'updateDailyCount',
+               'switchDataTab', 'renderDataPl3', 'renderDataPl5', 'renderDataQxw'];
     fns.forEach(function(name) {
         if (typeof window[name] === 'function') return;
         try {
@@ -2938,6 +3031,14 @@ window.fetchLatestDraws = fetchLatestDraws;
                 if (section === 'data') {
                     if (typeof window.initDataTable === 'function') window.initDataTable();
                     if (typeof window.addExportButtonToData === 'function') window.addExportButtonToData();
+                    if (typeof window.switchDataTab === 'function') {
+                        var activeTab = document.querySelector('#dataTabs .tab.active');
+                        if (!activeTab) {
+                            var dft = document.querySelector('#dataTabs .tab[data-dt="dlt"]');
+                            if (dft) dft.classList.add('active');
+                        }
+                        window.switchDataTab(document.querySelector('#dataTabs .tab.active'));
+                    }
                 }
                 if (section === 'fav' && typeof window.renderFavorites === 'function') {
                     window.renderFavorites();
