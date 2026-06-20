@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>大乐透选号推荐 - 易经智能解析号码 | 免费在线选号</title>
-    <meta name="description" content="大乐透智能选号系统，融合易经五行八卦与现代数据分析，免费生成推荐号码、冷热走势、遗漏追踪。立即在线使用。">
-    <meta name="keywords" content="大乐透选号,大乐透推荐号码,易经选号,智能选号,免费选号工具">
+    <title>易彩 · 大乐透智能选号系统</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/index.min.js"></script>
     <script defer>
 // 大乐透历史开奖数据（自动生成，含140期真实数据）
 // 数据来源：500.com 天启算法引擎
-// 共 140 期
-window.DRAWS = [{"id":"25096","front":[2,11,17,22,24],"back":[7,9],"date":"2025-08-23"},{"id":"25097","front":[5,24,25,32,34],"back":[1,9],"date":"2025-08-25"},{"id":"25098","front":[1,7,9,10,23],"back":[10,12],"date":"2025-08-27"},{"id":"25099","front":[6,12,20,26,31],"back":[2,4],"date":"2025-08-30"},{"id":"25101","front":[5,7,19,26,32],"back":[8,9],"date":"2025-09-03"},{"id":"25102","front":[9,10,13,26,28],"back":[2,4],"date":"2025-09-06"},{"id":"25103","front":[5,8,19,32,34],"back":[4,5],"date":"2025-09-08"},{"id":"25104","front":[2,6,9,22,34],"back":[2,8],"date":"2025-09-10"},{"id":"25105","front":[15,16,25,28,34],"back":[10,12],"date":"2025-09-13"},{"id":"25106","front":[5,6,11,26,29],"back":[5,10],"date":"2025-09-15"},{"id":"25107","front":[5,7,8,15,33],"back":[6,10],"date":"2025-09-17"},{"id":"25108","front":[14,18,21,24,29],"back":[3,6],"date":"2025-09-20"},{"id":"25109","front":[4,8,10,13,26],"back":[9,10],"date":"2025-09-22"},{"id":"25110","front":[1,15,22,30,31],"back":[2,8],"date":"2025-09-24"},{"id":"25111","front":[2,9,14,21,26],"back":[2,12],"date":"2025-09-27"},{"id":"25112","front":[3,4,21,23,24],"back":[9,12],"date":"2025-09-29"},{"id":"25113","front":[1,14,18,28,35],"back":[2,3],"date":"2025-10-06"},{"id":"25114","front":[3,8,9,12,16],"back":[1,5],"date":"2025-10-08"},{"id":"25115","front":[3,12,14,21,35],"back":[1,5],"date":"2025-10-11"},{"id":"25116","front":[2,6,16,22,29],"back":[8,12],"date":"2025-10-13"},{"id":"25117","front":[5,10,18,21,29],"back":[5,7],"date":"2025-10-15"},{"id":"25118","front":[2,8,9,12,21],"back":[4,5],"date":"2025-10-18"},{"id":"25119","front":[8,15,27,29,31],"back":[1,7],"date":"2025-10-20"},{"id":"25120","front":[11,13,22,26,35],"back":[2,8],"date":"2025-10-22"},{"id":"25121","front":[2,3,8,13,21],"back":[7,12],"date":"2025-10-25"},{"id":"25122","front":[2,3,6,16,17],"back":[4,5],"date":"2025-10-27"},{"id":"25123","front":[8,13,24,25,31],"back":[4,10],"date":"2025-10-29"},{"id":"25124","front":[6,9,14,26,27],"back":[8,9],"date":"2025-11-01"},{"id":"25125","front":[10,11,13,19,35],"back":[4,11],"date":"2025-11-03"},{"id":"25126","front":[1,8,18,27,30],"back":[6,7],"date":"2025-11-05"},{"id":"25127","front":[4,5,19,28,29],"back":[5,8],"date":"2025-11-08"},{"id":"25128","front":[3,6,26,30,33],"back":[11,12],"date":"2025-11-10"},{"id":"25129","front":[3,9,14,28,35],"back":[2,4],"date":"2025-11-12"},{"id":"25130","front":[1,13,16,27,29],"back":[2,11],"date":"2025-11-15"},{"id":"25131","front":[3,8,25,29,32],"back":[9,12],"date":"2025-11-17"},{"id":"25132","front":[1,9,10,12,19],"back":[6,7],"date":"2025-11-19"},{"id":"25133","front":[4,11,23,27,35],"back":[7,11],"date":"2025-11-22"},{"id":"25134","front":[7,12,18,27,33],"back":[9,10],"date":"2025-11-24"},{"id":"25135","front":[2,10,16,28,32],"back":[1,7],"date":"2025-11-26"},{"id":"25136","front":[7,11,15,16,23],"back":[9,11],"date":"2025-11-29"},{"id":"25137","front":[7,8,9,11,22],"back":[5,11],"date":"2025-12-01"},{"id":"25138","front":[1,3,19,21,23],"back":[7,11],"date":"2025-12-03"},{"id":"25139","front":[8,18,22,30,35],"back":[1,4],"date":"2025-12-06"},{"id":"25140","front":[4,5,13,18,34],"back":[2,8],"date":"2025-12-08"},{"id":"25141","front":[4,9,24,28,29],"back":[2,10],"date":"2025-12-10"},{"id":"25142","front":[9,10,14,27,29],"back":[2,9],"date":"2025-12-13"},{"id":"25143","front":[3,4,18,24,29],"back":[7,12],"date":"2025-12-15"},{"id":"25144","front":[2,5,13,15,28],"back":[5,8],"date":"2025-12-17"},{"id":"25145","front":[5,7,20,22,25],"back":[4,5],"date":"2025-12-20"},{"id":"25146","front":[6,11,13,16,22],"back":[2,3],"date":"2025-12-22"},{"id":"25147","front":[6,16,21,25,33],"back":[7,8],"date":"2025-12-24"},{"id":"25148","front":[3,4,14,30,32],"back":[8,12],"date":"2025-12-27"},{"id":"26001","front":[7,9,23,27,32],"back":[2,8],"date":"2026-01-03"},{"id":"26001","front":[7,9,23,27,32],"back":[2,8],"date":"2026-01-03"},{"id":"26002","front":[4,8,15,20,31],"back":[7,8],"date":"2026-01-05"},{"id":"26002","front":[4,8,15,20,31],"back":[7,8],"date":"2026-01-05"},{"id":"26003","front":[2,9,11,15,16],"back":[2,4],"date":"2026-01-07"},{"id":"26003","front":[2,9,11,15,16],"back":[2,4],"date":"2026-01-07"},{"id":"26004","front":[5,18,23,25,32],"back":[5,9],"date":"2026-01-10"},{"id":"26004","front":[5,18,23,25,32],"back":[5,9],"date":"2026-01-10"},{"id":"26005","front":[2,4,16,23,35],"back":[6,11],"date":"2026-01-12"},{"id":"26005","front":[2,4,16,23,35],"back":[6,11],"date":"2026-01-12"},{"id":"26006","front":[5,12,18,23,35],"back":[6,12],"date":"2026-01-14"},{"id":"26006","front":[5,12,18,23,35],"back":[6,12],"date":"2026-01-14"},{"id":"26007","front":[1,3,13,20,26],"back":[3,10],"date":"2026-01-17"},{"id":"26007","front":[1,3,13,20,26],"back":[3,10],"date":"2026-01-17"},{"id":"26008","front":[3,6,17,21,33],"back":[5,11],"date":"2026-01-19"},{"id":"26008","front":[3,6,17,21,33],"back":[5,11],"date":"2026-01-19"},{"id":"26009","front":[5,12,13,14,33],"back":[5,8],"date":"2026-01-21"},{"id":"26009","front":[5,12,13,14,33],"back":[5,8],"date":"2026-01-21"},{"id":"26010","front":[2,3,13,18,26],"back":[2,9],"date":"2026-01-24"},{"id":"26010","front":[2,3,13,18,26],"back":[2,9],"date":"2026-01-24"},{"id":"26011","front":[14,21,23,29,33],"back":[2,10],"date":"2026-01-26"},{"id":"26011","front":[14,21,23,29,33],"back":[2,10],"date":"2026-01-26"},{"id":"26012","front":[1,2,9,22,25],"back":[1,6],"date":"2026-01-28"},{"id":"26012","front":[1,2,9,22,25],"back":[1,6],"date":"2026-01-28"},{"id":"26013","front":[3,5,6,23,26],"back":[1,4],"date":"2026-01-31"},{"id":"26013","front":[3,5,6,23,26],"back":[1,4],"date":"2026-01-31"},{"id":"26014","front":[16,18,23,34,35],"back":[1,6],"date":"2026-02-02"},{"id":"26014","front":[16,18,23,34,35],"back":[1,6],"date":"2026-02-02"},{"id":"26015","front":[1,4,10,13,17],"back":[3,11],"date":"2026-02-04"},{"id":"26015","front":[1,4,10,13,17],"back":[3,11],"date":"2026-02-04"},{"id":"26016","front":[8,9,12,19,24],"back":[1,6],"date":"2026-02-07"},{"id":"26016","front":[8,9,12,19,24],"back":[1,6],"date":"2026-02-07"},{"id":"26017","front":[4,5,10,23,31],"back":[7,12],"date":"2026-02-09"},{"id":"26017","front":[4,5,10,23,31],"back":[7,12],"date":"2026-02-09"},{"id":"26018","front":[9,11,19,30,35],"back":[1,12],"date":"2026-02-11"},{"id":"26018","front":[9,11,19,30,35],"back":[1,12],"date":"2026-02-11"},{"id":"26019","front":[12,13,14,16,31],"back":[4,12],"date":"2026-02-25"},{"id":"26019","front":[12,13,14,16,31],"back":[4,12],"date":"2026-02-25"},{"id":"26020","front":[1,10,2,12,29],"back":[10,12],"date":"2026-02-28"},{"id":"26020","front":[1,10,2,12,29],"back":[10,12],"date":"2026-02-28"},{"id":"26021","front":[5,8,12,14,17],"back":[4,5],"date":"2026-03-02"},{"id":"26021","front":[5,8,12,14,17],"back":[4,5],"date":"2026-03-02"},{"id":"26022","front":[5,9,10,18,26],"back":[5,6],"date":"2026-03-04"},{"id":"26022","front":[5,9,10,18,26],"back":[5,6],"date":"2026-03-04"},{"id":"26023","front":[9,25,26,27,28],"back":[1,8],"date":"2026-03-07"},{"id":"26023","front":[9,25,26,27,28],"back":[1,8],"date":"2026-03-07"},{"id":"26024","front":[2,4,8,10,21],"back":[9,12],"date":"2026-03-09"},{"id":"26024","front":[2,4,8,10,21],"back":[9,12],"date":"2026-03-09"},{"id":"26025","front":[3,15,24,28,29],"back":[3,7],"date":"2026-03-11"},{"id":"26025","front":[3,15,24,28,29],"back":[3,7],"date":"2026-03-11"},{"id":"26026","front":[10,11,22,26,32],"back":[1,8],"date":"2026-03-14"},{"id":"26026","front":[10,11,22,26,32],"back":[1,8],"date":"2026-03-14"},{"id":"26027","front":[9,10,11,12,16],"back":[1,11],"date":"2026-03-16"},{"id":"26027","front":[9,10,11,12,16],"back":[1,11],"date":"2026-03-16"},{"id":"26028","front":[15,27,29,30,34],"back":[1,10],"date":"2026-03-18"},{"id":"26028","front":[15,27,29,30,34],"back":[1,10],"date":"2026-03-18"},{"id":"26029","front":[3,5,17,33,35],"back":[5,7],"date":"2026-03-21"},{"id":"26029","front":[3,5,17,33,35],"back":[5,7],"date":"2026-03-21"},{"id":"26030","front":[2,13,22,28,34],"back":[5,12],"date":"2026-03-23"},{"id":"26030","front":[2,13,22,28,34],"back":[5,12],"date":"2026-03-23"},{"id":"26031","front":[6,8,22,29,34],"back":[5,7],"date":"2026-03-25"},{"id":"26031","front":[6,8,22,29,34],"back":[5,7],"date":"2026-03-25"},{"id":"26032","front":[3,4,19,26,32],"back":[1,12],"date":"2026-03-28"},{"id":"26032","front":[3,4,19,26,32],"back":[1,12],"date":"2026-03-28"},{"id":"26033","front":[3,5,7,9,18],"back":[2,10],"date":"2026-03-30"},{"id":"26033","front":[3,5,7,9,18],"back":[2,10],"date":"2026-03-30"},{"id":"26034","front":[11,12,25,26,27],"back":[8,11],"date":"2026-04-01"},{"id":"26034","front":[11,12,25,26,27],"back":[8,11],"date":"2026-04-01"},{"id":"26035","front":[2,22,30,33,34],"back":[8,12],"date":"2026-04-04"},{"id":"26035","front":[2,22,30,33,34],"back":[8,12],"date":"2026-04-04"},{"id":"26036","front":[4,7,16,26,32],"back":[5,8],"date":"2026-04-06"},{"id":"26036","front":[4,7,16,26,32],"back":[5,8],"date":"2026-04-06"},{"id":"26037","front":[7,12,13,28,32],"back":[6,8],"date":"2026-04-08"},{"id":"26037","front":[7,12,13,28,32],"back":[6,8],"date":"2026-04-08"},{"id":"26038","front":[8,17,21,33,35],"back":[6,7],"date":"2026-04-11"},{"id":"26038","front":[8,17,21,33,35],"back":[6,7],"date":"2026-04-11"},{"id":"26039","front":[9,11,20,26,27],"back":[6,9],"date":"2026-04-13"},{"id":"26039","front":[9,11,20,26,27],"back":[6,9],"date":"2026-04-13"},{"id":"26040","front":[6,12,13,21,34],"back":[8,9],"date":"2026-04-15"},{"id":"26040","front":[6,12,13,21,34],"back":[8,9],"date":"2026-04-15"},{"id":"26041","front":[24,25,27,29,34],"back":[2,6],"date":"2026-04-18"},{"id":"26041","front":[24,25,27,29,34],"back":[2,6],"date":"2026-04-18"},{"id":"26042","front":[2,7,13,19,24],"back":[3,8],"date":"2026-04-20"},{"id":"26042","front":[2,7,13,19,24],"back":[3,8],"date":"2026-04-20"},{"id":"26043","front":[8,12,14,19,22],"back":[11,12],"date":"2026-04-22"},{"id":"26043","front":[8,12,14,19,22],"back":[11,12],"date":"2026-04-22"},{"id":"26044","front":[3,8,22,26,29],"back":[7,10],"date":"2026-04-25"},{"id":"26044","front":[3,8,22,26,29],"back":[7,10],"date":"2026-04-25"},{"id":"26045","date":"2026-04-27","front":[1,15,21,26,33],"back":[4,7]},{"id":"26046","date":"2026-04-29","front":[1,13,18,27,33],"back":[4,7]},{"id":"26047","date":"2026-05-02","front":[9,20,21,23,28],"back":[6,11]},{"id":"26048","date":"2026-05-04","front":[11,17,20,23,35],"back":[1,10]},{"id":"26049","date":"2026-05-06","front":[1,6,14,15,17],"back":[2,3]},{"id":"26050","date":"2026-05-09","front":[6,10,14,23,33],"back":[8,10]},{"id":"26051","date":"2026-05-11","front":[13,18,28,32,33],"back":[2,11]},{"id":"26052","date":"2026-05-13","front":[2,3,20,28,33],"back":[2,12]},{"id":"26053","date":"2026-05-16","front":[2,9,14,20,31],"back":[5,9]},{"id":"26054","date":"2026-05-18","front":[2,6,14,22,24],"back":[8,11]},{"id":"26055","date":"2026-05-20","front":[9,10,20,33,35],"back":[4,11]},{"id":"26056","date":"2026-05-23","front":[6,7,18,21,30],"back":[1,5]},{"id":"26057","date":"2026-05-25","front":[23,25,26,27,34],"back":[4,10]},{"id":"26058","date":"2026-05-27","front":[7,12,13,18,34],"back":[1,5]}];
+// 共 110 期
+window.DRAWS = [{"id":"26058","date":"2026-05-27","front":[7,12,13,18,34],"back":[1,5]},{"id":"26057","date":"2026-05-25","front":[23,25,26,27,34],"back":[4,10]},{"id":"26056","date":"2026-05-23","front":[6,7,18,21,30],"back":[1,5]},{"id":"26055","date":"2026-05-20","front":[9,10,20,33,35],"back":[4,11]},{"id":"26054","date":"2026-05-18","front":[2,6,14,22,24],"back":[8,11]},{"id":"26053","date":"2026-05-16","front":[2,9,14,20,31],"back":[5,9]},{"id":"26052","date":"2026-05-13","front":[2,3,20,28,33],"back":[2,12]},{"id":"26051","date":"2026-05-11","front":[13,18,28,32,33],"back":[2,11]},{"id":"26050","date":"2026-05-09","front":[6,10,14,23,33],"back":[8,10]},{"id":"26049","date":"2026-05-06","front":[1,6,14,15,17],"back":[2,3]},{"id":"26048","date":"2026-05-04","front":[11,17,20,23,35],"back":[1,10]},{"id":"26047","date":"2026-05-02","front":[9,20,21,23,28],"back":[6,11]},{"id":"26046","date":"2026-04-29","front":[1,13,18,27,33],"back":[4,7]},{"id":"26045","date":"2026-04-27","front":[1,15,21,26,33],"back":[4,7]},{"id":"26044","front":[3,8,22,26,29],"back":[7,10],"date":"2026-04-25"},{"id":"26043","front":[8,12,14,19,22],"back":[11,12],"date":"2026-04-22"},{"id":"26042","front":[2,7,13,19,24],"back":[3,8],"date":"2026-04-20"},{"id":"26041","front":[24,25,27,29,34],"back":[2,6],"date":"2026-04-18"},{"id":"26040","front":[6,12,13,21,34],"back":[8,9],"date":"2026-04-15"},{"id":"26039","front":[9,11,20,26,27],"back":[6,9],"date":"2026-04-13"},{"id":"26038","front":[8,17,21,33,35],"back":[6,7],"date":"2026-04-11"},{"id":"26037","front":[7,12,13,28,32],"back":[6,8],"date":"2026-04-08"},{"id":"26036","front":[4,7,16,26,32],"back":[5,8],"date":"2026-04-06"},{"id":"26035","front":[2,22,30,33,34],"back":[8,12],"date":"2026-04-04"},{"id":"26034","front":[11,12,25,26,27],"back":[8,11],"date":"2026-04-01"},{"id":"26033","front":[3,5,7,9,18],"back":[2,10],"date":"2026-03-30"},{"id":"26032","front":[3,4,19,26,32],"back":[1,12],"date":"2026-03-28"},{"id":"26031","front":[6,8,22,29,34],"back":[5,7],"date":"2026-03-25"},{"id":"26030","front":[2,13,22,28,34],"back":[5,12],"date":"2026-03-23"},{"id":"26029","front":[3,5,17,33,35],"back":[5,7],"date":"2026-03-21"},{"id":"26028","front":[15,27,29,30,34],"back":[1,10],"date":"2026-03-18"},{"id":"26027","front":[9,10,11,12,16],"back":[1,11],"date":"2026-03-16"},{"id":"26026","front":[10,11,22,26,32],"back":[1,8],"date":"2026-03-14"},{"id":"26025","front":[3,15,24,28,29],"back":[3,7],"date":"2026-03-11"},{"id":"26024","front":[2,4,8,10,21],"back":[9,12],"date":"2026-03-09"},{"id":"26023","front":[9,25,26,27,28],"back":[1,8],"date":"2026-03-07"},{"id":"26022","front":[5,9,10,18,26],"back":[5,6],"date":"2026-03-04"},{"id":"26021","front":[5,8,12,14,17],"back":[4,5],"date":"2026-03-02"},{"id":"26020","front":[1,10,2,12,29],"back":[10,12],"date":"2026-02-28"},{"id":"26019","front":[12,13,14,16,31],"back":[4,12],"date":"2026-02-25"},{"id":"26018","front":[9,11,19,30,35],"back":[1,12],"date":"2026-02-11"},{"id":"26017","front":[4,5,10,23,31],"back":[7,12],"date":"2026-02-09"},{"id":"26016","front":[8,9,12,19,24],"back":[1,6],"date":"2026-02-07"},{"id":"26015","front":[1,4,10,13,17],"back":[3,11],"date":"2026-02-04"},{"id":"26014","front":[16,18,23,34,35],"back":[1,6],"date":"2026-02-02"},{"id":"26013","front":[3,5,6,23,26],"back":[1,4],"date":"2026-01-31"},{"id":"26012","front":[1,2,9,22,25],"back":[1,6],"date":"2026-01-28"},{"id":"26011","front":[14,21,23,29,33],"back":[2,10],"date":"2026-01-26"},{"id":"26010","front":[2,3,13,18,26],"back":[2,9],"date":"2026-01-24"},{"id":"26009","front":[5,12,13,14,33],"back":[5,8],"date":"2026-01-21"},{"id":"26008","front":[3,6,17,21,33],"back":[5,11],"date":"2026-01-19"},{"id":"26007","front":[1,3,13,20,26],"back":[3,10],"date":"2026-01-17"},{"id":"26006","front":[5,12,18,23,35],"back":[6,12],"date":"2026-01-14"},{"id":"26005","front":[2,4,16,23,35],"back":[6,11],"date":"2026-01-12"},{"id":"26004","front":[5,18,23,25,32],"back":[5,9],"date":"2026-01-10"},{"id":"26003","front":[2,9,11,15,16],"back":[2,4],"date":"2026-01-07"},{"id":"26002","front":[4,8,15,20,31],"back":[7,8],"date":"2026-01-05"},{"id":"26001","front":[7,9,23,27,32],"back":[2,8],"date":"2026-01-03"},{"id":"25148","front":[3,4,14,30,32],"back":[8,12],"date":"2025-12-27"},{"id":"25147","front":[6,16,21,25,33],"back":[7,8],"date":"2025-12-24"},{"id":"25146","front":[6,11,13,16,22],"back":[2,3],"date":"2025-12-22"},{"id":"25145","front":[5,7,20,22,25],"back":[4,5],"date":"2025-12-20"},{"id":"25144","front":[2,5,13,15,28],"back":[5,8],"date":"2025-12-17"},{"id":"25143","front":[3,4,18,24,29],"back":[7,12],"date":"2025-12-15"},{"id":"25142","front":[9,10,14,27,29],"back":[2,9],"date":"2025-12-13"},{"id":"25141","front":[4,9,24,28,29],"back":[2,10],"date":"2025-12-10"},{"id":"25140","front":[4,5,13,18,34],"back":[2,8],"date":"2025-12-08"},{"id":"25139","front":[8,18,22,30,35],"back":[1,4],"date":"2025-12-06"},{"id":"25138","front":[1,3,19,21,23],"back":[7,11],"date":"2025-12-03"},{"id":"25137","front":[7,8,9,11,22],"back":[5,11],"date":"2025-12-01"},{"id":"25136","front":[7,11,15,16,23],"back":[9,11],"date":"2025-11-29"},{"id":"25135","front":[2,10,16,28,32],"back":[1,7],"date":"2025-11-26"},{"id":"25134","front":[7,12,18,27,33],"back":[9,10],"date":"2025-11-24"},{"id":"25133","front":[4,11,23,27,35],"back":[7,11],"date":"2025-11-22"},{"id":"25132","front":[1,9,10,12,19],"back":[6,7],"date":"2025-11-19"},{"id":"25131","front":[3,8,25,29,32],"back":[9,12],"date":"2025-11-17"},{"id":"25130","front":[1,13,16,27,29],"back":[2,11],"date":"2025-11-15"},{"id":"25129","front":[3,9,14,28,35],"back":[2,4],"date":"2025-11-12"},{"id":"25128","front":[3,6,26,30,33],"back":[11,12],"date":"2025-11-10"},{"id":"25127","front":[4,5,19,28,29],"back":[5,8],"date":"2025-11-08"},{"id":"25126","front":[1,8,18,27,30],"back":[6,7],"date":"2025-11-05"},{"id":"25125","front":[10,11,13,19,35],"back":[4,11],"date":"2025-11-03"},{"id":"25124","front":[6,9,14,26,27],"back":[8,9],"date":"2025-11-01"},{"id":"25123","front":[8,13,24,25,31],"back":[4,10],"date":"2025-10-29"},{"id":"25122","front":[2,3,6,16,17],"back":[4,5],"date":"2025-10-27"},{"id":"25121","front":[2,3,8,13,21],"back":[7,12],"date":"2025-10-25"},{"id":"25120","front":[11,13,22,26,35],"back":[2,8],"date":"2025-10-22"},{"id":"25119","front":[8,15,27,29,31],"back":[1,7],"date":"2025-10-20"},{"id":"25118","front":[2,8,9,12,21],"back":[4,5],"date":"2025-10-18"},{"id":"25117","front":[5,10,18,21,29],"back":[5,7],"date":"2025-10-15"},{"id":"25116","front":[2,6,16,22,29],"back":[8,12],"date":"2025-10-13"},{"id":"25115","front":[3,12,14,21,35],"back":[1,5],"date":"2025-10-11"},{"id":"25114","front":[3,8,9,12,16],"back":[1,5],"date":"2025-10-08"},{"id":"25113","front":[1,14,18,28,35],"back":[2,3],"date":"2025-10-06"},{"id":"25112","front":[3,4,21,23,24],"back":[9,12],"date":"2025-09-29"},{"id":"25111","front":[2,9,14,21,26],"back":[2,12],"date":"2025-09-27"},{"id":"25110","front":[1,15,22,30,31],"back":[2,8],"date":"2025-09-24"},{"id":"25109","front":[4,8,10,13,26],"back":[9,10],"date":"2025-09-22"},{"id":"25108","front":[14,18,21,24,29],"back":[3,6],"date":"2025-09-20"},{"id":"25107","front":[5,7,8,15,33],"back":[6,10],"date":"2025-09-17"},{"id":"25106","front":[5,6,11,26,29],"back":[5,10],"date":"2025-09-15"},{"id":"25105","front":[15,16,25,28,34],"back":[10,12],"date":"2025-09-13"},{"id":"25104","front":[2,6,9,22,34],"back":[2,8],"date":"2025-09-10"},{"id":"25103","front":[5,8,19,32,34],"back":[4,5],"date":"2025-09-08"},{"id":"25102","front":[9,10,13,26,28],"back":[2,4],"date":"2025-09-06"},{"id":"25101","front":[5,7,19,26,32],"back":[8,9],"date":"2025-09-03"},{"id":"25099","front":[6,12,20,26,31],"back":[2,4],"date":"2025-08-30"},{"id":"25098","front":[1,7,9,10,23],"back":[10,12],"date":"2025-08-27"},{"id":"25097","front":[5,24,25,32,34],"back":[1,9],"date":"2025-08-25"},{"id":"25096","front":[2,11,17,22,24],"back":[7,9],"date":"2025-08-23"}];
 
 // 兼容旧版变量名
 const REAL_DRAWS = DRAWS;
@@ -152,13 +149,14 @@ const 推荐引擎 = {
             if (策略 === 'cold' && frontMiss[n-1] > 8) 彩经分 += 0.5;
             else if (策略 === 'cold' && frontMiss[n-1] > 5) 彩经分 += 0.3;
 
-            // 易经分
+            // 易经分 - 每次调用用不同随机种子确保多样性
             let 易经分 = 0.2;
             const wx = IChingAnalyzer.getWuxing(n);
             if (wx && 五行 && 五行.最缺五行.includes(wx)) 易经分 += 0.3;
             const yy = IChingAnalyzer.getYinYang(n);
             if (yy && 五行 && 五行.缺失阴阳 && yy === 五行.缺失阴阳) 易经分 += 0.2;
-            易经分 += Math.random() * 1.5;
+            // 大幅增加随机扰动，确保每次选号不同
+            易经分 += Math.random() * 5.0 + Math.sin(Date.now() * n) * 2.0;
 
             frontScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
         }
@@ -171,7 +169,7 @@ const 推荐引擎 = {
             if (策略 === 'cold' && backHC[n-1].status === '冷') 彩经分 += 0.4;
             if (策略 === 'cold' && backMiss[n-1] > 6) 彩经分 += 0.4;
 
-            let 易经分 = 0.2 + Math.random() * 1.5;
+            let 易经分 = 0.2 + Math.random() * 5.0 + Math.sin(Date.now() * n * 13) * 2.0;
             backScores[n] = w.易经 * 易经分 + w.彩经 * 彩经分;
         }
 
@@ -303,10 +301,11 @@ function 天启选号(策略, 组数) {
         // 每次重新跑评分，不复用之前的结果
         const 评分 = 推荐引擎.评分(api策略, draws);
         // 用强随机扰动确保每次结果不同
-        const seed1 = Math.random() * 10.0 + (_pickRandomSeed || Date.now()) % 100;
-        const seed2 = Math.random() * 10.0 + i * 7;
-        Object.keys(评分.前区评分).forEach(k => 评分.前区评分[k] += Math.random() * seed1);
-        Object.keys(评分.后区评分).forEach(k => 评分.后区评分[k] += Math.random() * seed2);
+        // 使用多层随机种子确保每组完全不同
+        const seed1 = Math.random() * 20.0 + (Date.now() % 1000) + i * 17;
+        const seed2 = Math.random() * 20.0 + i * 31 + Math.sin(Date.now() * (i+1)) * 5;
+        Object.keys(评分.前区评分).forEach(k => 评分.前区评分[k] += Math.random() * seed1 * 1.5);
+        Object.keys(评分.后区评分).forEach(k => 评分.后区评分[k] += Math.random() * seed2 * 1.5);
         // 重跑选号
         const 前区 = 推荐引擎.选号(评分.前区评分, 5);
         const 后区 = 推荐引擎.选号(评分.后区评分, 2);
@@ -401,24 +400,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             radial-gradient(ellipse at 50% 80%, rgba(26,26,46,0.8) 0%, transparent 50%);
         pointer-events: none;
         z-index: 0;
-        transition: background 0.5s ease;
     }
-    /* 主题色切换 */
-    .theme-dot {
-        display: inline-flex; align-items: center; gap: 3px;
-        margin-left: 6px; cursor: pointer;
-    }
-    .theme-dot span {
-        width: 16px; height: 16px; border-radius: 50%;
-        border: 2px solid transparent; transition: all 0.2s;
-        display: inline-block;
-    }
-    .theme-dot span:hover, .theme-dot span.active-dot { border-color: var(--jin-se); transform: scale(1.2); }
-    /* 主题色变体 */
-    body.theme-ocean { background: #0a1628; }
-    body.theme-forest { background: #0f1a0f; }
-    body.theme-wine { background: #1a0f0f; }
-    body.theme-night { background: var(--bg-dark); }
 
     /* Header */
     header {
@@ -447,67 +429,8 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     /* Container & Section */
     .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px 60px; position: relative; z-index: 1; }
     .section { display: none; }
-    .section.active { display: block; opacity: 1; transition: opacity 0.3s ease; }
-    /* 八字排盘样式 */
-    .bz-btn {
-        width: 100%; padding: 14px; background: linear-gradient(135deg, var(--jin-se) 0%, #c49230 100%);
-        border: none; border-radius: 12px; color: var(--deep-blue); font-size: 1rem; font-weight: 700;
-        cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; letter-spacing: 2px; margin-top: 8px;
-    }
-    .bz-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(212,168,83,0.3); }
-    .bz-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .bz-spinner {
-        width: 40px; height: 40px; border: 3px solid var(--border-color);
-        border-top-color: var(--jin-se); border-radius: 50%; animation: bz-spin 0.8s linear infinite;
-        margin: 0 auto 12px;
-    }
-    @keyframes bz-spin { to { transform: rotate(360deg); } }
-    .bz-sizhu-grid {
-        display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 500px; margin: 0 auto;
-    }
-    .bz-pillar {
-        text-align: center; background: var(--bg-card); border-radius: 12px;
-        padding: 12px 8px; border: 1px solid var(--border-color);
-    }
-    .bz-pillar .pl { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
-    .bz-pillar .tg {
-        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
-    }
-    .bz-pillar .dz {
-        font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 900; display: block; line-height: 1.3;
-    }
-    .bz-pillar .ss { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
-    .bz-pillar .cg { font-size: 0.65rem; color: var(--jin-se); opacity: 0.55; margin-top: 2px; }
-    .bz-cm { color: var(--wuxing-wood); } .bz-cf { color: var(--wuxing-fire); }
-    .bz-ce { color: var(--wuxing-earth); } .bz-cg { color: var(--wuxing-metal); }
-    .bz-cw { color: var(--wuxing-water); }
-    .bz-dayun-table {
-        width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 8px;
-    }
-    .bz-dayun-table th {
-        background: var(--bg-card); color: var(--text-muted); font-weight: 400;
-        font-size: 0.78rem; padding: 8px; border-bottom: 1px solid var(--border-color);
-    }
-    .bz-dayun-table td {
-        padding: 8px; text-align: center; font-size: 0.82rem; border-bottom: 1px solid var(--border-color);
-    }
-    .bz-dayun-table .current-row {
-        background: rgba(212,168,83,0.08);
-    }
-    .bz-dayun-table .current-row td { color: var(--jin-se-light); font-weight: 700; }
-    .bz-disclaimer {
-        text-align: center; font-size: 0.72rem; color: var(--text-muted); opacity: 0.5; padding: 16px;
-    }
-    #section-bazi input, #section-bazi select {
-        background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px;
-        color: var(--text-primary); padding: 10px 14px; font-size: 0.9rem; width: 100%;
-    }
-    #section-bazi input:focus, #section-bazi select:focus {
-        outline: none; border-color: var(--jin-se); box-shadow: 0 0 0 3px rgba(212,168,83,0.1);
-    }
-    @media (max-width: 600px) {
-        .bz-sizhu-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    .section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .section-title { font-size: 1.4rem; color: var(--jin-se); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
     .vip-card { cursor: pointer; border: 1px solid var(--jin-se); transition: all 0.3s; }
     .vip-card:hover { box-shadow: 0 0 20px rgba(212,175,55,0.3); transform: translateY(-3px); }
@@ -515,16 +438,6 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; gap: 12px; } }
     @media (max-width: 600px) { .qrcode-box { flex-direction: column; } }
     @media (max-width: 600px) { .qrcode-box .qrcode-placeholder { width: 140px; height: 140px; } }
-    @media (max-width: 600px) { .card { padding: 16px 14px; } }
-    @media (max-width: 600px) { .pricing-card { padding: 18px 14px; } }
-    @media (max-width: 600px) { .vip-step { padding: 12px 10px; gap: 10px; } }
-    @media (max-width: 600px) { .vip-step .step-num { width: 28px; height: 28px; font-size: 0.85rem; } }
-    @media (max-width: 480px) { .section-title { font-size: 1.2rem; } }
-    @media (max-width: 480px) { .pricing-card .price { font-size: 1.6rem; } }
-    @media (max-width: 480px) { .pricing-card ul { font-size: 0.78rem; } }
-    @media (max-width: 480px) { .qrcode-box .qrcode-placeholder { width: 120px; height: 120px; } }
-    @media (max-width: 480px) { .card .pricing-card .badge-hot { top: -6px; right: 6px; font-size: 0.65rem; } }
-    @media (max-width: 480px) { .badge-hot { font-size: 0.6rem; padding: 1px 6px; } }
     .pricing-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px 18px; text-align: center; transition: all 0.3s; position: relative; }
     .pricing-card.featured { border-color: var(--jin-se); box-shadow: 0 0 20px rgba(212,175,55,0.2); }
     .pricing-card .price { font-size: 2rem; font-weight: bold; color: var(--jin-se); margin: 12px 0; }
@@ -754,83 +667,6 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     }
     .toast.show { opacity: 1; }
 
-    /* Modal overlay */
-    .modal-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.6); z-index: 10000;
-        display: flex; align-items: center; justify-content: center;
-        opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    }
-    .modal-overlay.show { opacity: 1; pointer-events: auto; }
-    .modal-box {
-        background: var(--bg-dark); border: 1px solid var(--border-color);
-        border-radius: var(--radius); padding: 30px;
-        max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto;
-        box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-    }
-    .modal-box h2 { color: var(--jin-se); margin-bottom: 16px; text-align: center; }
-    .modal-box label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin: 10px 0 4px; }
-    .modal-box input[type=text], .modal-box input[type=password] {
-        width: 100%; padding: 10px; background: var(--bg-card);
-        border: 1px solid var(--border-color); border-radius: 6px;
-        color: var(--text-primary); font-size: 0.9rem; box-sizing: border-box;
-    }
-    .modal-actions { text-align: center; margin-top: 16px; }
-    .modal-link { font-size: 0.82rem; color: var(--jin-se-dim); cursor: pointer; }
-    .modal-link:hover { color: var(--jin-se); }
-    .modal-close {
-        float: right; cursor: pointer; font-size: 1.2rem;
-        color: var(--text-muted); background: none; border: none;
-    }
-    .modal-status {
-        text-align: center; font-size: 0.82rem; margin-top: 12px;
-        padding: 8px; border-radius: 6px;
-    }
-    .modal-status.success { background: rgba(76,175,80,0.1); color: #4CAF50; }
-    .modal-status.error { background: rgba(244,67,54,0.1); color: #F44336; }
-
-    /* Service page */
-    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
-    .service-card {
-        background: var(--bg-dark); border: 1px solid var(--border-color);
-        border-radius: var(--radius); padding: 20px; text-align: center;
-        transition: all 0.2s;
-    }
-    .service-card:hover { border-color: var(--jin-se); }
-    .service-card .s-icon { font-size: 2.5rem; margin-bottom: 10px; }
-    .service-card h3 { color: var(--jin-se); margin-bottom: 6px; }
-    .service-card p { font-size: 0.82rem; color: var(--text-muted); }
-
-    /* Promote page */
-    .promo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-    .promo-card {
-        background: var(--bg-dark); border: 1px solid var(--border-color);
-        border-radius: var(--radius); padding: 18px;
-        transition: all 0.2s;
-    }
-    .promo-card:hover { border-color: var(--jin-se); }
-    .promo-card .p-icon { font-size: 1.8rem; }
-    .promo-card h3 { color: var(--jin-se); margin-bottom: 4px; font-size: 0.95rem; }
-    .promo-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
-
-    /* Legal modals */
-    .legal-content { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; }
-    .legal-content h3 { color: var(--jin-se); margin: 16px 0 8px; }
-    .legal-content h4 { color: var(--jin-se-dim); margin: 12px 0 4px; }
-    .legal-content p { margin: 6px 0; }
-
-    /* Expandable section */
-    .expandable { border: 1px solid var(--border-color); border-radius: var(--radius-sm); margin: 8px 0; }
-    .expandable-header {
-        padding: 12px 14px; cursor: pointer; font-size: 0.88rem;
-        color: var(--text-secondary); display: flex; justify-content: space-between;
-        align-items: center; user-select: none;
-    }
-    .expandable-header:hover { background: rgba(212,165,116,0.03); }
-    .expandable-header .arrow { transition: transform 0.2s; }
-    .expandable-header.open .arrow { transform: rotate(180deg); }
-    .expandable-body { padding: 0 14px 12px; display: none; font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; }
-
     /* Responsive */
     @media (max-width: 768px) {
         .header-inner { flex-direction: column; height: auto; padding: 8px 0; gap: 6px; }
@@ -842,6 +678,65 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         .ball-lg { width: 44px; height: 44px; font-size: 1rem; }
         .strategy-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ====== 新增：排列3/排列5/七星彩 样式 2026-06-15 ====== */
+    .num-selector { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+    .num-selector select {
+        background: var(--bg-dark); border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm); color: var(--jin-se); font-size: 1.4rem;
+        font-weight: 700; padding: 10px; width: 56px; height: 56px;
+        text-align: center; cursor: pointer; appearance: auto;
+        -webkit-appearance: auto; letter-spacing: 1px;
+    }
+    .num-selector select:hover { border-color: var(--jin-se); }
+    .num-selector select:focus { border-color: var(--zhu-hong); outline: none; }
+    .num-selector .num-label {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .num-selector .num-label span {
+        font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px;
+    }
+    .ball-small {
+        display: inline-block; width: 34px; height: 34px; line-height: 34px;
+        border-radius: 50%; text-align: center; font-weight: 700; font-size: 0.85rem;
+        margin: 2px; background: var(--bg-card); border: 1px solid var(--border-color);
+        color: var(--text-primary);
+    }
+    .ball-small.hot { border-color: var(--wuxing-fire); color: var(--wuxing-fire); }
+    .ball-small.cold { border-color: var(--wuxing-water); color: var(--wuxing-water); }
+    .ball-small.common { border-color: var(--text-muted); }
+    .ball-big {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 50px; height: 50px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--bg-card), var(--deep-blue));
+        border: 2px solid var(--jin-se); color: var(--jin-se-light);
+        font-size: 1.1rem; font-weight: 700; margin: 3px;
+        box-shadow: 0 2px 10px rgba(212,165,116,0.15); transition: transform 0.2s;
+    }
+    .ball-big:hover { transform: scale(1.1); }
+    .ball-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+    .game-type-badge {
+        display: inline-block; padding: 3px 12px; border-radius: 20px;
+        font-size: 0.72rem; font-weight: 600; margin-left: 6px;
+    }
+    .badge-zhi { background: rgba(212,165,116,0.15); color: var(--jin-se); }
+    .badge-zu { background: rgba(76,175,80,0.15); color: var(--wuxing-wood); }
+    .history-table {
+        width: 100%; border-collapse: collapse; font-size: 0.82rem;
+        margin-top: 10px;
+    }
+    .history-table th {
+        background: rgba(212,165,116,0.08); color: var(--jin-se-dim);
+        padding: 8px 6px; border-bottom: 1px solid var(--border-color);
+        font-weight: 500; text-align: center;
+    }
+    .history-table td {
+        padding: 6px 4px; border-bottom: 1px solid var(--border-color);
+        text-align: center; color: var(--text-secondary);
+    }
+    .history-table tr:hover td { background: rgba(212,165,116,0.03); }
+    .history-table .num-cell { letter-spacing: 4px; font-weight: 600; color: var(--jin-se); }
+    /* ====== 新增终 ====== */
     </style>
 </head>
 <body>
@@ -859,24 +754,18 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         </div>
         <nav>
             <a class="active" data-section="home">🏠 首页</a>
-            <a data-section="pick">🎲 选号</a>
             <a data-section="iching">☯ 易经</a>
             <a data-section="analysis">📊 分析</a>
             <a data-section="data">📋 数据</a>
-            <a data-section="bazi">☯ 八字</a>
+            <!-- ===== 新增彩种导航 2026-06-15 ===== -->
+            <a data-section="pick">🎲 大乐透</a>
+            <a data-section="pl3">📊 排3</a>
+            <a data-section="pl5">📊 排5</a>
+            <a data-section="qxw">🌟 七星彩</a>
+            <!-- ===== 新增终 ===== -->
             <a data-section="fav">⭐ 收藏</a>
-            <!-- 客服和推广暂时隐藏 -->
-            <!-- <a data-section="service" style="color:#4ecdc4;">💬 客服</a> -->
-            <!-- <a data-section="promote">📣 推广</a> -->
-            <a data-section="vip" style="color:var(--jin-se);font-weight:bold;">🎁 打赏</a>
-            <!-- 登录/注册暂时隐藏，后续推广阶段再启用 -->
-            <!-- <a id="navRegisterBtn" data-section="register" style="color:var(--jin-se);font-weight:bold;cursor:pointer;">🔑 登录/注册</a> -->
-            <span class="theme-dot" onclick="cycleTheme()" title="切换主题背景" style="flex-shrink:0;">
-                <span id="themeDot1" class="active-dot" style="background:#0F0F1A;"></span>
-                <span id="themeDot2" style="background:#0a1628;"></span>
-                <span id="themeDot3" style="background:#0f1a0f;"></span>
-                <span id="themeDot4" style="background:#1a0f0f;"></span>
-            </span>
+            <!-- <a data-section="bazi">☯ 八字</a> -->
+            <!-- VIP已隐藏 -->
         </nav>
     </div>
 </header>
@@ -885,12 +774,13 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 <div class="container">
 <div class="section active" id="section-home">
     <div class="hero">
-        <h1>☯ 易彩 · 大乐透智能选号</h1>
-        <p>融合千年易学智慧与现代数据分析，为您开启选号新维度</p>
+        <h1>☯ 易彩 · 体彩智能选号</h1>
+        <p>融合千年易学智慧与现代数据分析，涵盖大乐透、排列3、排列5、七星彩</p>
         <div class="hero-actions">
-            <button class="btn btn-primary" onclick="navigateTo('pick')">🎲 立即选号</button>
-            <button class="btn btn-gold" onclick="navigateTo('iching')">☯ 易经分析</button>
-            <button class="btn btn-outline" onclick="navigateTo('analysis')">📊 数据洞察</button>
+            <button class="btn btn-primary" onclick="navigateTo('pick')">🎲 大乐透选号</button>
+            <button class="btn btn-gold" onclick="navigateTo('pl3')">📊 排列3选号</button>
+            <button class="btn btn-outline" onclick="navigateTo('pl5')">📊 排列5选号</button>
+            <button class="btn btn-primary" onclick="navigateTo('qxw')" style="background:linear-gradient(135deg,var(--jin-se),#c9a84c);">🌟 七星彩选号</button>
         </div>
     </div>
     <div class="feat-grid">
@@ -914,13 +804,37 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <h3>收藏对比</h3>
             <p>心仪号码收藏，多组对比分析</p>
         </div>
-        <div class="feat-card vip-card" onclick="navigateTo('vip')">
-            <div class="feat-icon" style="color:var(--jin-se);">❤️</div>
-            <h3 style="color:var(--jin-se);">打赏支持</h3>
-            <p>觉得好用，欢迎打赏鼓励</p>
+        <!-- VIP会员卡已隐藏 -->
+    </div>
+    <!-- ===== 新增：彩种快速选择区 2026-06-15 ===== -->
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title" style="font-size:1.1rem;">🎯 选择彩种</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:10px;">
+            <div class="feat-card" onclick="navigateTo('pick')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">🎲</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">大乐透</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">前5+后2</p>
+            </div>
+            <div class="feat-card" onclick="navigateTo('pl3')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">📊</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">排列3</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">3位数字</p>
+            </div>
+            <div class="feat-card" onclick="navigateTo('pl5')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">📊</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">排列5</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">5位数字</p>
+            </div>
+            <div class="feat-card" onclick="navigateTo('qxw')" style="cursor:pointer;border:1px solid rgba(212,175,55,0.3);text-align:center;padding:18px 12px;">
+                <div class="feat-icon" style="font-size:2rem;">🌟</div>
+                <h3 style="font-size:1rem;margin:6px 0 3px;">七星彩</h3>
+                <p style="font-size:0.75rem;color:var(--text-muted);">7位数字</p>
+            </div>
         </div>
     </div>
-    <div class="card" style="margin-top:28px;">
+    <!-- ===== 新增终 ===== -->
+
+    <div class="card" style="margin-top:20px;">
         <div class="card-title">🌀 选号流程</div>
         <div class="flow">
             <div class="flow-step active"><span class="step-icon">☯</span>起卦</div>
@@ -936,15 +850,18 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <div class="flow-step"><span class="step-icon">✅</span>出单</div>
         </div>
     </div>
-
-    <!-- SEO说明文本（帮助百度爬虫抓取关键词） -->
-    <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
-        <p>大乐透选号推荐，易经智能选号系统，免费在线生成大乐透号码。融合易经五行八卦与现代数据分析，提供冷热走势、遗漏追踪、历史开奖查询等全面功能。每日更新大乐透开奖数据，智能推荐号码供您参考。免费在线使用，无需注册即可体验易经选号的独特魅力。</p>
+    <div class="card" style="margin-top:8px;">
+        <div class="card-title">📢 免责声明</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.8;">
+            本系统基于《易经》传统文化与现代统计学原理，仅供娱乐参考。彩票中奖纯属随机事件，任何分析方法和推荐号码均不构成投资建议。请理性购彩，量力而行。
+        </p>
     </div>
 </div>
 
 <!-- ==================== 选号页 ==================== -->
 <div class="section" id="section-pick">
+    <h2 class="section-title">🎲 智能选号</h2>
+    <p class="section-desc">选择策略，融合易经智慧生成号码</p>
 
     <div class="card">
         <div class="card-title">🎯 选号策略</div>
@@ -978,7 +895,7 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
         <button class="btn btn-outline btn-sm" onclick="fetchLatestDraws()" style="margin-left:10px;" title="从体彩官方同步最新开奖数据">📡 更新数据</button>
     </div>
 
-        <div id="pickResult" style="display:none;">
+    <div id="pickResult" style="display:none;">
         <div class="card" id="pickDisplay"></div>
         <div class="card" id="pickIChing"></div>
         <div class="card" id="pickBackups" style="display:none;"></div>
@@ -986,10 +903,17 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
             <button class="btn btn-outline btn-sm" onclick="saveCurrentPick()">⭐ 收藏此注</button>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-title">📜 选号记录</div>
+        <div id="historyList"></div>
+    </div>
 </div>
 
 <!-- ==================== 易经分析页 ==================== -->
 <div class="section" id="section-iching">
+    <h2 class="section-title">☯ 易经分析</h2>
+    <p class="section-desc">基于易经五行、八卦、阴阳原理深度解读号码</p>
 
     <div class="card">
         <div class="card-title">🔢 输入号码分析</div>
@@ -1047,6 +971,8 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 
 <!-- ==================== 数据分析页 ==================== -->
 <div class="section" id="section-analysis">
+    <h2 class="section-title">📊 数据分析</h2>
+    <p class="section-desc">基于真实历史数据的频率统计与走势分析</p>
 
     <div class="stats-bar" id="analysisStats"></div>
 
@@ -1091,85 +1017,47 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
 
 <!-- ==================== 历史数据页 ==================== -->
 <div class="section" id="section-data">
+    <h2 class="section-title">📋 历史开奖</h2>
+    <p class="section-desc">多彩种近期开奖数据一览</p>
     <div class="stats-bar" id="dataStats"></div>
+    <div class="tabs" id="dataTabs">
+        <div class="tab active" data-dt="dlt" onclick="switchDataTab(this)">🎯 大乐透</div>
+        <div class="tab" data-dt="pl3" onclick="switchDataTab(this)">📊 排列3</div>
+        <div class="tab" data-dt="pl5" onclick="switchDataTab(this)">📊 排列5</div>
+        <div class="tab" data-dt="qxw" onclick="switchDataTab(this)">🌟 七星彩</div>
+    </div>
     <div class="card">
-        <div class="data-table-wrap">
+        <div class="data-table-wrap" id="dataTableWrap_dlt">
             <table class="data-table">
                 <thead><tr><th>期号</th><th>日期</th><th>前区</th><th>后区</th><th>前区特征</th><th>后区特征</th></tr></thead>
                 <tbody id="dataTableBody"></tbody>
             </table>
         </div>
-    </div>
-</div>
-
-<!-- ==================== 八字排盘·命理分析（方案二：纯前端完整版） ==================== -->
-<div class="section" id="section-bazi">
-
-    <h2 class="section-title" style="display:none;">八字排盘</h2>
-
-    <!-- 输入区 -->
-    <div class="card" id="bzFormCard">
-        <div class="card-title" style="font-family:'Noto Serif SC',serif;font-weight:700;">☯ 输入出生信息</div>
-        <div id="bzError" style="background:rgba(199,83,62,0.15);border:1px solid rgba(199,83,62,0.3);border-radius:10px;padding:12px;color:var(--bz-red);font-size:0.85rem;display:none;margin-bottom:12px;"></div>
-        
-        <div class="grid-2">
-            <div style="margin-bottom:14px;">
-                <label style="font-size:0.82rem;color:var(--bz-dim);display:block;margin-bottom:4px;">姓名</label>
-                <input id="bzName" placeholder="请输入姓名" maxlength="20">
-            </div>
-            <div style="margin-bottom:14px;">
-                <label style="font-size:0.82rem;color:var(--bz-dim);display:block;margin-bottom:4px;">性别</label>
-                <select id="bzGender"><option value="male">男</option><option value="female">女</option></select>
-            </div>
+        <div class="data-table-wrap" id="dataTableWrap_pl3" style="display:none;">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <tbody id="dataTableBody_pl3"></tbody>
+            </table>
         </div>
-        <div class="grid-2">
-            <div style="margin-bottom:14px;">
-                <label style="font-size:0.82rem;color:var(--bz-dim);display:block;margin-bottom:4px;">公历出生日期</label>
-                <input type="date" id="bzDate">
-            </div>
-            <div style="margin-bottom:14px;">
-                <label style="font-size:0.82rem;color:var(--bz-dim);display:block;margin-bottom:4px;">出生时间</label>
-                <input type="time" id="bzTime" value="12:00">
-            </div>
+        <div class="data-table-wrap" id="dataTableWrap_pl5" style="display:none;">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <tbody id="dataTableBody_pl5"></tbody>
+            </table>
         </div>
-        <button class="bz-btn" id="bzSubmit" onclick="doBaziPaiPan()">☯ 开始排盘 · 命理分析</button>
-    </div>
-
-    <!-- 加载 -->
-    <div id="bzLoading" style="display:none;text-align:center;padding:40px;">
-        <div class="bz-spinner"></div>
-        <p style="color:var(--bz-dim);font-size:0.9rem;">正在排盘分析中...</p>
-    </div>
-
-    <!-- 结果区 -->
-    <div id="bzResult" style="display:none;">
-        <div class="card">
-            <div class="card-title">📋 基本信息</div>
-            <div id="bzBasicInfo" style="font-size:0.88rem;line-height:1.8;"></div>
+        <div class="data-table-wrap" id="dataTableWrap_qxw" style="display:none;">
+            <table class="data-table">
+                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <tbody id="dataTableBody_qxw"></tbody>
+            </table>
         </div>
-        <div class="card">
-            <div class="card-title" style="text-align:center;font-family:'Noto Serif SC',serif;border-bottom:none;padding-bottom:0;">✦ 四柱八字 ✦</div>
-            <div class="bz-sizhu-grid" id="bzSizhuGrid"></div>
-        </div>
-        <div class="card">
-            <div class="card-title">📈 大运排列</div>
-            <div id="bzDayunContent"></div>
-        </div>
-        <div class="card">
-            <div class="card-title">🔮 命理分析</div>
-            <div id="bzAnalysis" style="font-size:0.85rem;line-height:1.9;">
-                <div style="text-align:center;padding:16px;color:var(--bz-dim);"><em>正在结合古籍智慧生成分析...</em></div>
-            </div>
-        </div>
-        <div style="display:flex;gap:10px;margin-bottom:16px;">
-            <button class="btn btn-secondary" onclick="bzReset()" style="flex:1;">← 重新输入</button>
-        </div>
-        <div class="bz-disclaimer">命理分析仅供文化研究参考，人生在于自身的努力与选择。</div>
     </div>
 </div>
 
 <!-- ==================== 收藏页 ==================== -->
 <div class="section" id="section-fav">
+    <h2 class="section-title">⭐ 号码收藏</h2>
+    <p class="section-desc">收藏心仪号码，多组对比分析</p>
 
     <div class="card">
         <div class="card-title">📥 手动添加</div>
@@ -1200,115 +1088,338 @@ console.log('  选用window.天启选号("balanced", 5) 生成5注');
     </div>
 </div>
 
-<!-- ==================== VIP会员页 ==================== -->
-<div class="section" id="section-service">
-    <h2 class="section-title">💬 客服中心</h2>
-    <p class="section-desc">联系客服 · 反馈问题 · 咨询VIP</p>
-    <div class="card">
-        <div class="card-title">🤖 智能客服</div>
-        <div class="service-grid" id="serviceGrid"></div>
-    </div>
-    <div class="card">
-        <div class="card-title">📝 常见问题</div>
-        <div id="faqContentStatic"></div>
-    </div>
-</div>
-
-<div class="section" id="section-promote">
-    <h2 class="section-title">📣 推广方案</h2>
-    <p class="section-desc">将易彩智能选号系统分享给更多人</p>
-    <div class="card" id="promoteContent">
-        <div class="card-title">🚀 推广方式</div>
-        <div class="promo-grid" id="promoGrid"></div>
-    </div>
-    <div class="card">
-        <div class="card-title">📈 推广建议</div>
-        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.8;padding:10px;" id="promoteTips"></div>
-    </div>
-    <div class="card" style="text-align:center;">
-        <div class="card-title">🖼️ 快速分享工具</div>
-        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">一键生成分享海报，发到朋友圈或微信群</p>
+<!-- ====== 新增：排列3 页面 2026-06-15 ====== -->
+<div class="section" id="section-pl3">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title">📊 排列3 · 智能选号</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:4px;">从000-999中选一个3位数，每位0-9</p>
+        <div class="strategy-grid" style="margin:14px 0;">
+            <div class="strategy-card active" onclick="selectPl3Strategy(this)" data-pl3-strategy="hot">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl3Strategy(this)" data-pl3-strategy="cold">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl3Strategy(this)" data-pl3-strategy="random">
+                <span class="strat-icon">🎲</span>
+                <div class="strat-name">随机策略</div>
+                <div class="strat-desc">全凭运气</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl3Strategy(this)" data-pl3-strategy="balance">
+                <span class="strat-icon">⚖️</span>
+                <div class="strat-name">均衡策略</div>
+                <div class="strat-desc">冷热均衡</div>
+            </div>
+        </div>
+        <!-- 号码选择区 -->
+        <div style="text-align:center;margin:10px 0;">
+            <div class="num-selector" id="pl3-selectors">
+                <div class="num-label"><span>百位</span><select id="pl3-d0"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>十位</span><select id="pl3-d1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>个位</span><select id="pl3-d2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+            </div>
+        </div>
+        <div id="pl3-result" style="text-align:center;padding:20px 0;">
+            <div style="font-size:3rem;letter-spacing:12px;color:var(--jin-se);">- - -</div>
+            <div id="pl3-type-badge" style="margin-top:6px;font-size:0.85rem;color:var(--text-muted);"></div>
+        </div>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-            <button class="btn btn-gold btn-sm" onclick="generateSharePoster()" style="font-size:0.9rem;">🖼️ 生成分享海报</button>
-            <button class="btn btn-primary btn-sm" onclick="shareToWechat()" style="font-size:0.9rem;">📱 分享到微信</button>
-            <button class="btn btn-outline btn-sm" onclick="copyShareLink()" style="font-size:0.9rem;">🔗 复制链接</button>
+            <button class="btn btn-primary" onclick="generatePl3()" style="font-size:1rem;padding:12px 32px;">🎲 生成号码</button>
+            <button class="btn btn-gold btn-sm" onclick="quickInputPl3()">📝 快捷输入</button>
+            <button class="btn btn-outline btn-sm" onclick="clearPl3()">🗑️ 清空</button>
         </div>
-        <div id="shareUrlDisplay" style="margin-top:10px;font-size:0.82rem;color:var(--text-muted);word-break:break-all;"></div>
+
+        <!-- 历史数据 -->
+        <div style="margin-top:28px;">
+            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">排列3</span></div>
+            <div id="pl3-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
+        </div>
     </div>
 </div>
 
-<div class="section" id="section-vip" style="text-align:center;">
+<!-- ====== 新增：排列5 页面 2026-06-15 ====== -->
+<div class="section" id="section-pl5">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title">📊 排列5 · 智能选号</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:4px;">从00000-99999中选一个5位数，每位0-9</p>
+        <div class="strategy-grid" style="margin:14px 0;">
+            <div class="strategy-card active" onclick="selectPl5Strategy(this)" data-pl5-strategy="hot">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl5Strategy(this)" data-pl5-strategy="cold">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身</div>
+            </div>
+            <div class="strategy-card" onclick="selectPl5Strategy(this)" data-pl5-strategy="random">
+                <span class="strat-icon">🎲</span>
+                <div class="strat-name">随机策略</div>
+                <div class="strat-desc">全凭运气</div>
+            </div>
+        </div>
+        <!-- 号码选择区 -->
+        <div style="text-align:center;margin:10px 0;">
+            <div class="num-selector" id="pl5-selectors">
+                <div class="num-label"><span>万位</span><select id="pl5-d0"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>千位</span><select id="pl5-d1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>百位</span><select id="pl5-d2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>十位</span><select id="pl5-d3"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>个位</span><select id="pl5-d4"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+            </div>
+        </div>
+        <div id="pl5-result" style="text-align:center;padding:20px 0;">
+            <div style="font-size:3rem;letter-spacing:12px;color:var(--jin-se);">- - - - -</div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="generatePl5()" style="font-size:1rem;padding:12px 32px;">🎲 生成号码</button>
+            <button class="btn btn-outline btn-sm" onclick="clearPl5()">🗑️ 清空</button>
+        </div>
 
-    <!-- 居中布局 -->
-    <div class="card" style="max-width:420px;margin:0 auto 12px;padding:20px;">
-        <div style="text-align:center;">
-            <p style="font-size:1.05rem;color:var(--jin-se);margin:0 0 4px 0;">🎉 全功能模式</p>
-            <p style="font-size:0.8rem;color:var(--text-muted);margin:0 0 18px 0;">无限选号 · 卦象解析 · 数据导出 全部免费</p>
-            <img src="wechat-pay.jpg" alt="微信收款码" style="width:140px;height:140px;border-radius:10px;object-fit:cover;display:block;margin:0 auto 14px;">
-            <p style="font-size:0.88rem;color:var(--text-secondary);margin:0;">💝 微信扫一扫，随心打赏</p>
+        <!-- 历史数据 -->
+        <div style="margin-top:28px;">
+            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">排列5</span></div>
+            <div id="pl5-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== 新增：七星彩 页面 2026-06-15 ====== -->
+<div class="section" id="section-qxw">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title">🌟 七星彩 · 智能选号</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:4px;">从0000000-9999999中选一个7位数，每位0-9</p>
+        <div class="strategy-grid" style="margin:14px 0;">
+            <div class="strategy-card active" onclick="selectQxwStrategy(this)" data-qxw-strategy="hot">
+                <span class="strat-icon">🔥</span>
+                <div class="strat-name">热号策略</div>
+                <div class="strat-desc">追高频号</div>
+            </div>
+            <div class="strategy-card" onclick="selectQxwStrategy(this)" data-qxw-strategy="cold">
+                <span class="strat-icon">❄️</span>
+                <div class="strat-name">冷号策略</div>
+                <div class="strat-desc">搏冷翻身</div>
+            </div>
+            <div class="strategy-card" onclick="selectQxwStrategy(this)" data-qxw-strategy="random">
+                <span class="strat-icon">🎲</span>
+                <div class="strat-name">随机策略</div>
+                <div class="strat-desc">全凭运气</div>
+            </div>
+        </div>
+        <!-- 号码选择区 -->
+        <div style="text-align:center;margin:10px 0;">
+            <div class="num-selector" id="qxw-selectors">
+                <div class="num-label"><span>第1位</span><select id="qxw-d0"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第2位</span><select id="qxw-d1"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第3位</span><select id="qxw-d2"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第4位</span><select id="qxw-d3"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第5位</span><select id="qxw-d4"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第6位</span><select id="qxw-d5"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+                <div class="num-label"><span>第7位</span><select id="qxw-d6"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+            </div>
+        </div>
+        <div id="qxw-result" style="text-align:center;padding:20px 0;">
+            <div style="font-size:2.6rem;letter-spacing:12px;color:var(--jin-se);">- - - - - - -</div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="generateQxw()" style="font-size:1rem;padding:12px 32px;">🎲 生成号码</button>
+            <button class="btn btn-outline btn-sm" onclick="clearQxw()">🗑️ 清空</button>
+        </div>
+
+        <!-- 历史数据 -->
+        <div style="margin-top:28px;">
+            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">七星彩</span></div>
+            <div id="qxw-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== 新增终 ====== -->
+
+<!-- ==================== 捐助支持页 ==================== -->
+<div class="section" id="section-donate">
+    <h2 class="section-title">❤️ 捐助支持</h2>
+    <p class="section-desc">您的每一份支持，都是我们持续优化易彩的动力</p>
+    
+    <div class="card" style="text-align:center;padding:30px 20px;">
+        <div class="card-title">📱 微信扫码捐助</div>
+        <p style="color:var(--text-secondary);margin:10px 0 20px;font-size:0.9rem;">长按或扫码识别，慷慨打赏，感恩有您🙏</p>
+        <div style="display:inline-block;padding:16px;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.3);">
+            <img src="wechat-pay.jpg" alt="微信收款二维码" style="width:280px;max-width:90vw;height:auto;border-radius:8px;display:block;">
+        </div>
+        <p style="color:var(--text-muted);font-size:0.78rem;margin-top:18px;line-height:1.8;">
+            ❤️ 您的捐助将用于：服务器维护、算法优化、新功能开发<br>
+            🙏 感谢每一位支持的朋友，祝您好运连连！
+        </p>
+    </div>
+    
+    <div class="card" style="text-align:center;padding:20px;">
+        <div class="card-title">💝 捐助鸣谢</div>
+        <p style="color:var(--text-secondary);font-size:0.85rem;">所有捐助用户将在后续版本中获得专属标识与VIP体验</p>
+        <div style="margin-top:16px;">
+            <span style="display:inline-block;background:rgba(212,165,116,0.12);color:var(--jin-se);padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">🌟 感恩有您</span>
+            <span style="display:inline-block;background:rgba(244,67,54,0.1);color:#F44336;padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">❤️ 功德无量</span>
+            <span style="display:inline-block;background:rgba(76,175,80,0.1);color:#4CAF50;padding:6px 16px;border-radius:20px;font-size:0.82rem;margin:3px;">🍀 好运常在</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== VIP会员页 ==================== -->
+<div class="section" id="section-vip">
+    <h2 class="section-title">👑 VIP会员 · 专属服务</h2>
+    <p class="section-desc">解锁全部功能，畅享易彩智能选号完整体验</p>
+
+    <!-- VIP特权介绍 -->
+    <div class="card">
+        <div class="card-title" style="color:var(--jin-se);">✨ VIP专属特权</div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>🎲 无限选号</h3>
+                <p style="font-size:0.82rem;color:var(--text-muted);">连出5注不限制次数</p>
+            </div>
+            <div class="pricing-card">
+                <h3>☯ 完整卦象</h3>
+                <p style="font-size:0.82rem;color:var(--text-muted);">每注附带独家易经详评</p>
+            </div>
+            <div class="pricing-card">
+                <h3>📊 数据导出</h3>
+                <p style="font-size:0.82rem;color:var(--text-muted);">历史数据Excel/PDF下载</p>
+            </div>
+            <div class="pricing-card">
+                <h3>💬 微信群推送</h3>
+                <p style="font-size:0.82rem;color:var(--text-muted);">每期精选号微信直达</p>
+            </div>
+            <div class="pricing-card">
+                <h3>🎯 胆拖方案</h3>
+                <p style="font-size:0.82rem;color:var(--text-muted);">智能胆拖组合推荐</p>
+            </div>
+            <div class="pricing-card">
+                <h3>📈 冷热追踪</h3>
+                <p style="font-size:0.82rem;color:var(--text-muted);">VIP专属深度走势报告</p>
+            </div>
         </div>
     </div>
 
-    <div class="card" style="max-width:420px;margin:0 auto;padding:12px 16px;">
-        <p style="font-size:0.78rem;color:var(--text-muted);margin:0;line-height:1.6;text-align:center;">
-            📢 号码推荐基于易经传统文化分析，仅供娱乐参考。彩票为随机事件，请理性购彩。
+    <!-- 定价方案 -->
+    <div class="card">
+        <div class="card-title" style="color:var(--jin-se);">💰 订阅方案</div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>📆 月度会员</h3>
+                <div class="price">¥19.9<small>/月</small></div>
+                <ul>
+                    <li>连出5注无限次</li>
+                    <li>每注易经详评</li>
+                    <li>胆拖方案推荐</li>
+                    <li class="no">微信群推送</li>
+                    <li class="no">数据导出</li>
+                </ul>
+            </div>
+            <div class="pricing-card featured">
+                <span class="badge-hot">🔥 推荐</span>
+                <h3>📆 季度会员</h3>
+                <div class="price">¥49.9<small>/季</small></div>
+                <ul>
+                    <li>连出5注无限次</li>
+                    <li>每注易经详评</li>
+                    <li>胆拖方案推荐</li>
+                    <li>微信群推送（3个月）</li>
+                    <li class="no">数据导出</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <h3>📆 年度会员</h3>
+                <div class="price">¥99.9<small>/年</small></div>
+                <ul>
+                    <li>连出5注无限次</li>
+                    <li>每注易经详评</li>
+                    <li>胆拖方案推荐</li>
+                    <li>微信群推送（全年）</li>
+                    <li>数据导出下载</li>
+                    <li>VIP专属冷热报告</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 如何购买 -->
+    <div class="card">
+        <div class="card-title" style="color:var(--jin-se);">📌 如何订阅</div>
+        <div class="vip-step">
+            <span class="step-num">1</span>
+            <div><strong>选择方案</strong><br><span style="font-size:0.82rem;color:var(--text-muted);">月度 ¥19.9 / 季度 ¥49.9 / 年度 ¥99.9</span></div>
+        </div>
+        <div class="vip-step">
+            <span class="step-num">2</span>
+            <div><strong>扫码付款</strong><br><span style="font-size:0.82rem;color:var(--text-muted);">微信/支付宝扫码支付对应金额</span></div>
+        </div>
+        <div class="vip-step">
+            <span class="step-num">3</span>
+            <div><strong>发送截图</strong><br><span style="font-size:0.82rem;color:var(--text-muted);">将付款截图发送至微信，24小时内开通VIP</span></div>
+        </div>
+        <div style="text-align:center;margin-top:18px;padding:16px;background:var(--bg-dark);border-radius:10px;">
+            <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:10px;">👇 扫码添加微信 · 发送付款截图开通VIP</p>
+            <div class="qrcode-box" style="display:inline-flex;">
+                <div class="qrcode-placeholder" id="vipWechatQr" style="background:linear-gradient(135deg,#f5f5f5,#e8e8e8);border:2px dashed #aaa;">
+                    <div style="text-align:center;color:#666;">
+                        <div style="font-size:2.5rem;margin-bottom:6px;">📱</div>
+                        <div style="font-size:0.85rem;">微信收款码</div>
+                        <div style="font-size:0.7rem;margin-top:4px;color:#999;">（请替换为实际收款码图片）</div>
+                    </div>
+                </div>
+                <p style="font-size:0.85rem;color:var(--jin-se);font-weight:bold;">联系微信号：<strong id="vipWechatId" style="color:#4ecdc4;font-size:1rem;">[待填写-联系管理员]</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 当前状态 -->
+    <div class="card">
+        <div class="card-title">🔑 当前状态</div>
+        <div id="vipStatusDisplay" style="text-align:center;padding:20px;">
+            <p style="font-size:1.1rem;">🎫 当前：<strong id="vipStatusLabel" style="color:var(--text-muted);">免费用户</strong></p>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:6px;">今日连出5注已用：<span id="dailyPickCount">0</span>/3 次</p>
+            <button class="btn btn-gold" onclick="document.getElementById('vip-pricing').scrollIntoView({behavior:'smooth'})" style="margin-top:10px;">👑 升级VIP</button>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:8px;">
+        <div class="card-title">📢 重要提示</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.8;">
+            本站所有号码推荐均基于天启算法与易经传统文化分析，仅供娱乐参考。
+            彩票中奖为小概率随机事件，请理性购彩，量力而行。
+            VIP付费解锁的是算法推荐服务和数据分析功能，不代表提升中奖概率。
         </p>
     </div>
 </div>
 
 <footer>
     <p>易彩 · 大乐透易经智能选号系统 v2.0 | 仅供娱乐参考，理性购彩</p>
-    <p style="margin-top:6px;font-size:0.8rem;color:var(--text-muted);">
-        👁️ <span id="visitorCount">1,234</span> 位彩友已访问 <span id="visitorLive" style="font-size:0.7rem;color:var(--text-muted);opacity:0.6;">· 实时</span>
-    </p>
-    <p style="margin-top:4px;font-size:0.75rem;">
-        联系邮箱：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se-dim);text-decoration:underline;">copeland02169@hotmail.com</a> | QQ：<a href="https://wpa.qq.com/msgrd?v=3&uin=41264815&site=qq&menu=yes" style="color:var(--jin-se-dim);text-decoration:underline;" target="_blank">41264815</a>
-        |
-        <a href="javascript:void(0)" onclick="showLegalModal('terms')" style="color:var(--text-muted);text-decoration:underline;">服务条款</a>
-        |
-        <a href="javascript:void(0)" onclick="showLegalModal('privacy')" style="color:var(--text-muted);text-decoration:underline;">隐私政策</a>
-        |
-        <a href="javascript:void(0)" onclick="showLegalModal('disclaimer')" style="color:var(--text-muted);text-decoration:underline;">免责声明</a>
-    </p>
     <p style="margin-top:4px;">© 2026 白玦团队 · 炙阳开发 ☀️</p>
+    <p style="margin-top:8px; font-size:0.75rem; opacity:0.5;">
+        <span id="busuanzi_container_page_pv">🌐 总浏览量：<span id="busuanzi_value_page_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span id="busuanzi_container_site_pv">👥 访问人次：<span id="busuanzi_value_site_pv"></span></span>
+    </p>
 </footer>
 
-<!-- ==================== 注册/登录弹窗 ==================== -->
-<div class="modal-overlay" id="authModal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeAuthModal()">✕</button>
-        <h2 id="authTitle">🔑 登录</h2>
-        <div id="authForm">
-            <label>昵称</label>
-            <input type="text" id="authUser" placeholder="输入昵称" maxlength="20">
-            <label>密码</label>
-            <input type="password" id="authPass" placeholder="输入密码" maxlength="30">
-            <div class="modal-actions">
-                <button class="btn btn-primary" id="authSubmitBtn" onclick="authSubmit()">登录</button>
-            </div>
-            <div style="text-align:center;margin-top:12px;">
-                <span class="modal-link" id="authToggle" onclick="toggleAuthMode()">还没有账号？立即注册</span>
-            </div>
-            <div id="authStatus" class="modal-status" style="display:none;"></div>
-        </div>
-        <div id="authLoggedIn" style="display:none;text-align:center;">
-            <p style="font-size:1rem;color:var(--text-secondary);margin:20px 0;">👋 欢迎回来，<strong id="authDisplayUser" style="color:var(--jin-se);"></strong></p>
-            <p style="font-size:0.85rem;color:var(--text-muted);">✨ 免费体验次数剩余：<strong id="authFreeRemaining">0</strong> 次</p>
-            <div style="margin-top:16px;">
-                <button class="btn btn-outline" onclick="logoutUser()">退出登录</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- 不蒜子统计 -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<!-- ==================== 法律条款弹窗 ==================== -->
-<div class="modal-overlay" id="legalModal">
-    <div class="modal-box" style="max-width:560px;">
-        <button class="modal-close" onclick="closeLegalModal()">✕</button>
-        <h2 id="legalTitle">服务条款</h2>
-        <div class="legal-content" id="legalContent"></div>
-    </div>
-</div>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4e052ac02b4b745da89975b9c38b63d4";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 <div class="toast" id="toast"></div>
 
@@ -1691,377 +1802,30 @@ function activateVip(days) {
 }
 setTimeout(updateDailyCount, 500);
 
-// ========== 主题背景切换 ==========
-var currentThemeIdx = 0;
-var themeData = [
-    { body: 'theme-night', dots: [1,0,0,0] },
-    { body: 'theme-ocean', dots: [0,1,0,0] },
-    { body: 'theme-forest', dots: [0,0,1,0] },
-    { body: 'theme-wine',  dots: [0,0,0,1] }
-];
-function cycleTheme() {
-    var last = currentThemeIdx;
-    currentThemeIdx = (currentThemeIdx + 1) % themeData.length;
-    var t = themeData[currentThemeIdx];
-    var body = document.body;
-    themeData.forEach(function(d, i) {
-        body.classList.remove(d.body);
-        document.getElementById('themeDot' + (i+1)).classList.remove('active-dot');
-    });
-    body.classList.add(t.body);
-    t.dots.forEach(function(v, i) {
-        if (v) document.getElementById('themeDot' + (i+1)).classList.add('active-dot');
-    });
-    // 同时调整body::before渐变
-    var overlay = document.querySelector('body::before');
-    if (t.body === 'theme-ocean') {
-        body.style.setProperty('--bg-card', '#0f1a2e');
-        body.style.setProperty('--bg-dark', '#060e1a');
-    } else if (t.body === 'theme-forest') {
-        body.style.setProperty('--bg-card', '#142014');
-        body.style.setProperty('--bg-dark', '#0a120a');
-    } else if (t.body === 'theme-wine') {
-        body.style.setProperty('--bg-card', '#2a1515');
-        body.style.setProperty('--bg-dark', '#1a0a0a');
-    } else {
-        body.style.setProperty('--bg-card', '#16162A');
-        body.style.setProperty('--bg-dark', '#0F0F1A');
-    }
-    try { localStorage.setItem('dlt_theme', currentThemeIdx); } catch(e) {}
-}
-// 恢复上次选择的主题
-(function() {
-    try {
-        var s = parseInt(localStorage.getItem('dlt_theme') || '0');
-        if (s > 0 && s < themeData.length) {
-            currentThemeIdx = s;
-            var t = themeData[currentThemeIdx];
-            var body = document.body;
-            themeData.forEach(function(d, i) { body.classList.remove(d.body); });
-            body.classList.add(t.body);
-            t.dots.forEach(function(v, i) {
-                if (v) document.getElementById('themeDot' + (i+1)).classList.add('active-dot');
-            });
-        }
-    } catch(e) {}
-})();
-
-// ========== 八字排盘引擎（方案二：基于lunar-javascript万年历） ==========
-// 五行对应颜色
-var BZ_COLORS = {
-    gan: {甲:'bz-cm',乙:'bz-cm',丙:'bz-cf',丁:'bz-cf',戊:'bz-ce',己:'bz-ce',庚:'bz-cg',辛:'bz-cg',壬:'bz-cw',癸:'bz-cw'},
-    zhi: {子:'bz-cw',丑:'bz-ce',寅:'bz-cm',卯:'bz-cm',辰:'bz-ce',巳:'bz-cf',午:'bz-cf',未:'bz-ce',申:'bz-cg',酉:'bz-cg',戌:'bz-ce',亥:'bz-cw'}
-};
-// 藏干表
-var BZ_CANGGAN = {
-    子:['癸'],丑:['己','癸','辛'],寅:['甲','丙','戊'],卯:['乙'],
-    辰:['戊','乙','癸'],巳:['丙','庚','戊'],午:['丁','己'],未:['己','丁','乙'],
-    申:['庚','壬','戊'],酉:['辛'],戌:['戊','辛','丁'],亥:['壬','甲']
-};
-// 五行表
-var BZ_WX = {甲:'木',乙:'木',丙:'火',丁:'火',戊:'土',己:'土',庚:'金',辛:'金',壬:'水',癸:'水',
-             子:'水',丑:'土',寅:'木',卯:'木',辰:'土',巳:'火',午:'火',未:'土',申:'金',酉:'金',戌:'土',亥:'水'};
-
-// 获取十神
-function bzShiShen(riGan, gan) {
-    if (!gan) return '';
-    var wx = {甲:'木',乙:'木',丙:'火',丁:'火',戊:'土',己:'土',庚:'金',辛:'金',壬:'水',癸:'水'};
-    var yy = {甲:'阳',乙:'阴',丙:'阳',丁:'阴',戊:'阳',己:'阴',庚:'阳',辛:'阴',壬:'阳',癸:'阴'};
-    var rw = wx[riGan], gw = wx[gan];
-    if (!rw || !gw) return '';
-    var shengWo = {木:'水',火:'木',土:'火',金:'土',水:'金'};
-    var woSheng = {木:'火',火:'土',土:'金',金:'水',水:'木'};
-    var keWo = {木:'金',火:'水',土:'木',金:'火',水:'土'};
-    var woKe = {木:'土',火:'金',土:'水',金:'木',水:'火'};
-    if (rw === gw) return yy[riGan] === yy[gan] ? '比肩' : '劫财';
-    if (shengWo[rw] === gw) return yy[riGan] === yy[gan] ? '偏印' : '正印';
-    if (woSheng[rw] === gw) return yy[riGan] === yy[gan] ? '食神' : '伤官';
-    if (keWo[rw] === gw) return yy[riGan] === yy[gan] ? '七杀' : '正官';
-    if (woKe[rw] === gw) return yy[riGan] === yy[gan] ? '偏财' : '正财';
-    return '';
-}
-
-// 显示错误
-function bzError(msg) {
-    var el = document.getElementById('bzError');
-    el.textContent = msg; el.style.display = 'block';
-}
-function bzHideError() {
-    document.getElementById('bzError').style.display = 'none';
-}
-
-// 重置
-function bzReset() {
-    document.getElementById('bzFormCard').style.display = 'block';
-    document.getElementById('bzLoading').style.display = 'none';
-    document.getElementById('bzResult').style.display = 'none';
-    bzHideError();
-    window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-// 核心排盘函数
-function doBaziPaiPan() {
-    bzHideError();
-    var name = document.getElementById('bzName').value.trim();
-    var dateVal = document.getElementById('bzDate').value;
-    var timeVal = document.getElementById('bzTime').value;
-    if (!name) { bzError('请输入姓名'); return; }
-    if (!dateVal) { bzError('请选择出生日期'); return; }
-    
-    document.getElementById('bzFormCard').style.display = 'none';
-    document.getElementById('bzLoading').style.display = 'block';
-    document.getElementById('bzResult').style.display = 'none';
-    
-    try {
-        if (typeof Solar === 'undefined') {
-            bzError('排盘库正在加载，请刷新页面后重试');
-            document.getElementById('bzFormCard').style.display = 'block';
-            document.getElementById('bzLoading').style.display = 'none';
-            return;
-        }
-        var dt = new Date(dateVal + 'T' + (timeVal || '12:00'));
-        var year = dt.getFullYear();
-        var month = dt.getMonth() + 1;
-        var day = dt.getDate();
-        var hour = dt.getHours();
-        var min = dt.getMinutes();
-        
-        // 使用 lunar-javascript 库排盘
-        var solar = Solar.fromYmdHms(year, month, day, hour, min, 0);
-        var lunar = solar.getLunar();
-        var ec = solar.getEightChar();
-        
-        // 四柱干支
-        var yG = ec.getYearGan(), yZ = ec.getYearZhi();
-        var mG = ec.getMonthGan(), mZ = ec.getMonthZhi();
-        var dG = ec.getDayGan(), dZ = ec.getDayZhi();
-        var tG = ec.getTimeGan(), tZ = ec.getTimeZhi();
-        
-        // 纳音
-        var yNY = ec.getYearNaYin(), mNY = ec.getMonthNaYin();
-        var dNY = ec.getDayNaYin(), tNY = ec.getTimeNaYin();
-        
-        // 生肖
-        var sx = lunar.getYearShengXiao();
-        var gender = document.getElementById('bzGender').value;
-        var genderText = gender === 'male' ? '男' : '女';
-        
-        // 构建四柱HTML
-        var pillars = [
-            {label:'年柱', gan:yG, zhi:yZ, ny:yNY},
-            {label:'月柱', gan:mG, zhi:mZ, ny:mNY},
-            {label:'日柱', gan:dG, zhi:dZ, ny:dNY},
-            {label:'时柱', gan:tG, zhi:tZ, ny:tNY}
-        ];
-        var sizhuHtml = '';
-        for (var i = 0; i < pillars.length; i++) {
-            var p = pillars[i];
-            var ss = p.label === '日柱' ? '—' : bzShiShen(dG, p.gan);
-            var cg = (BZ_CANGGAN[p.zhi] || []).join(' ');
-            var gCls = BZ_COLORS.gan[p.gan] || '';
-            var zCls = BZ_COLORS.zhi[p.zhi] || '';
-            sizhuHtml += '<div class="bz-pillar">' +
-                '<div class="pl">' + p.label + '</div>' +
-                '<span class="tg ' + gCls + '">' + p.gan + '</span>' +
-                '<span class="dz ' + zCls + '">' + p.zhi + '</span>' +
-                '<div class="ss">' + ss + '</div>' +
-                '<div class="cg">' + cg + '</div>' +
-                '<div style="font-size:0.65rem;color:var(--bz-dim);margin-top:4px;">' + p.ny + '</div>' +
-                '</div>';
-        }
-        document.getElementById('bzSizhuGrid').innerHTML = sizhuHtml;
-        
-        // 基础信息
-        var baziStr = yG+yZ + mG+mZ + dG+dZ + tG+tZ;
-        document.getElementById('bzBasicInfo').innerHTML =
-            '<strong>' + name + '</strong> · ' + genderText + ' · ' + sx + '年 · ' +
-            year + '年' + month + '月' + day + '日 ' +
-            (hour.toString().padStart(2,'0')) + ':' + (min.toString().padStart(2,'0')) +
-            '<br>八字：<span style="color:var(--bz-gold);">' + baziStr + '</span>';
-        
-        // 大运
-        try {
-            var yun = ec.getYun(gender === 'male' ? 1 : 0);
-            var startAge = yun.getStartYear();
-            var startYear = year + startAge;
-            var dayunList = yun.getDaYun();
-            
-            var dayunHtml = '<p style="margin-bottom:10px;color:var(--bz-dim);font-size:0.82rem;">' +
-                startAge + '岁起运（' + startYear + '年）</p>';
-            dayunHtml += '<table class="bz-dayun-table"><thead><tr><th>大运</th><th>年龄</th><th>干支</th></tr></thead><tbody>';
-            for (var di = 0; di < dayunList.length; di++) {
-                var dy = dayunList[di];
-                var aS = startAge + di * 10;
-                var aE = aS + 9;
-                var dGan = dy.getGan();
-                var dZhi = dy.getZhi();
-                var style = di === 0 ? ' class="current-row"' : '';
-                dayunHtml += '<tr' + style + '>';
-                dayunHtml += '<td>第' + (di+1) + '步</td>';
-                dayunHtml += '<td>' + aS + '-' + aE + '岁</td>';
-                dayunHtml += '<td style="color:var(--bz-gold);font-weight:700;">' + dGan + dZhi + '</td>';
-                dayunHtml += '</tr>';
-            }
-            dayunHtml += '</tbody></table>';
-            document.getElementById('bzDayunContent').innerHTML = dayunHtml;
-        } catch(e) {
-            document.getElementById('bzDayunContent').innerHTML =
-                '<p style="color:var(--bz-dim);font-size:0.85rem;">大运信息：' + e.message + '</p>';
-        }
-        
-        // 隐藏加载，显示结果
-        document.getElementById('bzLoading').style.display = 'none';
-        document.getElementById('bzResult').style.display = 'block';
-        document.getElementById('bzResult').scrollIntoView({behavior:'smooth',block:'start'});
-        
-        // AI命理分析（基于八字的本地智能分析，不调外部API）
-        bzLocalAnalysis({name:dG+dZ, gender:genderText, yG,yZ,mG,mZ,dG,dZ,tG,tZ, baziStr, sx,
-            ny:[yNY,mNY,dNY,tNY], year:year, nianGan:yG, nianZhi:yZ});
-        
-    } catch(e) {
-        document.getElementById('bzLoading').style.display = 'none';
-        document.getElementById('bzFormCard').style.display = 'block';
-        bzError('排盘出错：' + e.message);
-        console.error(e);
-    }
-}
-
-// ====== 本地智能命理分析（无需API） ======
-function bzLocalAnalysis(data) {
-    var el = document.getElementById('bzAnalysis');
-    
-    // 五行计数
-    var wx = {金:0,木:0,水:0,火:0,土:0};
-    var gz = [data.yG, data.yZ, data.mG, data.mZ, data.dG, data.dZ, data.tG, data.tZ];
-    gz.forEach(function(g) {
-        var w = BZ_WX[g];
-        if (w && wx[w] !== undefined) wx[w]++;
-    });
-    
-    var sorted = Object.keys(wx).sort(function(a,b){return wx[b]-wx[a];});
-    var most = sorted[0], least = sorted[sorted.length-1];
-    var total = Object.values(wx).reduce(function(a,b){return a+b;}, 0);
-    
-    // 日主分析
-    var riGan = data.dG;
-    var riGanWx = BZ_WX[riGan];
-    
-    // 月令判断（简化）
-    var yueWx = BZ_WX[data.mZ] || '';
-    var deLing = (riGanWx === yueWx);
-    
-    var wxDesc = '';
-    for (var k in wx) {
-        var pct = total > 0 ? Math.round(wx[k]/total*100) : 0;
-        var bar = '';
-        for (var b = 0; b < Math.round(pct/10); b++) bar += '█';
-        wxDesc += '<span style="display:inline-block;width:40px;">' + k + '</span> ' + bar + ' ' + pct + '%<br>';
-    }
-    
-    // 生成分析
-    var html = '';
-    
-    html += '<div class="bz-card-title" style="border-bottom:none;margin-bottom:6px;">① 日主旺衰</div>';
-    var shenQiang = deLing || wx[riGanWx] >= 3;
-    if (riGanWx === yueWx) {
-        html += '日主<span style="color:var(--bz-gold);">' + riGan + '</span>（' + riGanWx + '）得月令「' + data.mZ + '」（' + yueWx + '），为<span style="color:var(--bz-green);">身旺</span>。';
-    } else if (wx[riGanWx] >= 3) {
-        html += '日主<span style="color:var(--bz-gold);">' + riGan + '</span>（' + riGanWx + '）在四柱中出现' + wx[riGanWx] + '次，得势，为<span style="color:var(--bz-green);">身偏旺</span>。';
-    } else if (wx[riGanWx] <= 1) {
-        html += '日主<span style="color:var(--bz-gold);">' + riGan + '</span>（' + riGanWx + '）在四柱中仅出现' + wx[riGanWx] + '次，不得令势，为<span style="color:var(--bz-red);">身弱</span>。';
-    } else {
-        html += '日主<span style="color:var(--bz-gold);">' + riGan + '</span>（' + riGanWx + '）旺衰较为平衡，为<span style="color:var(--bz-gold);">身中和</span>。';
-    }
-    
-    html += '<div class="bz-card-title" style="border-bottom:none;margin:14px 0 6px;">② 五行分析</div>';
-    html += '<div style="font-family:monospace;font-size:0.82rem;line-height:1.6;background:var(--bz-card2);padding:12px;border-radius:8px;">' + wxDesc + '</div>';
-    html += '<p style="margin-top:8px;">五行最旺：<span style="color:var(--bz-gold);font-weight:700;">' + most + '</span>（' + Math.round(wx[most]/total*100) + '%） · ';
-    html += '五行最缺：<span style="color:var(--bz-gold);font-weight:700;">' + least + '</span>（' + Math.round(wx[least]/total*100) + '%）</p>';
-    
-    // 喜用神
-    var xiShen = '';
-    if (riGanWx === '木') xiShen = '火、土';
-    else if (riGanWx === '火') xiShen = '土、金';
-    else if (riGanWx === '土') xiShen = '金、水';
-    else if (riGanWx === '金') xiShen = '水、木';
-    else if (riGanWx === '水') xiShen = '木、火';
-    
-    html += '<div class="bz-card-title" style="border-bottom:none;margin:14px 0 6px;">③ 喜用神与忌神</div>';
-    html += '基于子平法，<span style="color:var(--bz-green);font-weight:700;">喜用神</span>为：' + xiShen + '；忌神为：' + most + '。<br>';
-    html += '建议在事业、居所上多补喜用神五行属性。';
-    
-    // 性格分析
-    var xingGeMap = {
-        '甲':'正直仁厚，有领导力', '乙':'温和灵活，善协调',
-        '丙':'热情开朗，有感染力', '丁':'细腻温润，有洞察力',
-        '戊':'敦厚稳重，重实际', '己':'包容谦逊，善于规划',
-        '庚':'果断刚毅，有魄力', '辛':'细致敏锐，追求完美',
-        '壬':'豁达智慧，有远见', '癸':'沉静柔和，有灵性'
-    };
-    var xingGe = xingGeMap[riGan] || '综合型';
-    
-    html += '<div class="bz-card-title" style="border-bottom:none;margin:14px 0 6px;">④ 性格概要</div>';
-    html += '日干<span style="color:var(--bz-gold);font-weight:700;">' + riGan + '</span>：' + xingGe + '。<br>';
-    
-    // 大运建议
-    html += '<div class="bz-card-title" style="border-bottom:none;margin:14px 0 6px;">⑤ 运势建议</div>';
-    html += '当前大运是人生的重要阶段，宜多把握五行「' + xiShen.split('、').join('」「') + '」相关的机遇。<br>';
-    html += '注意五行「' + most + '」过旺带来的挑战，适当地通过颜色、方位、数字进行调和。<br>';
-    html += '建议多使用喜用神对应的颜色（';
-    var colorMap = {木:'🧣绿色',火:'🧧红色',土:'🧶黄色',金:'👔白色',水:'👕黑色'};
-    xiShen.split('、').forEach(function(w, idx) {
-        if (idx > 0) html += '、';
-        html += colorMap[w] || w;
-    });
-    html += '），以助运势流通。';
-    
-    html += '<div style="margin-top:14px;padding:10px;background:var(--bz-card2);border-radius:8px;font-size:0.78rem;color:var(--bz-dim);text-align:center;">';
-    html += '⚠️ 本分析基于传统子平命理，仅供文化研究参考。人生在于自身的努力与选择。';
-    html += '</div>';
-    
-    el.innerHTML = html;
-}
-
 // ========== 导航 ==========
 function navigateTo(section) {
-    console.log('[易彩] navigateTo被调用:', section, '调用栈:', new Error().stack);
-    // 注册/登录弹窗
-    if (section === 'register') {
-        if (typeof openAuthModal === 'function') openAuthModal();
-        return;
-    }
     document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
     const link = document.querySelector('nav a[data-section="' + section + '"]');
     if (link) link.classList.add('active');
     const sectionEl = document.getElementById('section-' + section);
-    if (!link || !sectionEl) {
-        console.warn('[易彩] 无效页面:', section, 'link:', !!link, 'sectionEl:', !!sectionEl);
-        // 即使没找到nav链接，也尝试切换section（支持非导航入口调用）
-        if (sectionEl) {
-            console.log('[易彩] 通过非导航入口切换section:', section);
-        } else {
-            console.error('[易彩] section元素不存在: section-' + section);
-            return;
-        }
-    }
+    if (!link || !sectionEl) { console.warn('[易彩] 无效页面:', section); return; }
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     const target = document.getElementById('section-' + section);
-    if (target) {
-        target.classList.add('active');
-        console.log('[易彩] 已切换到section:', section);
-    } else {
-        console.error('[易彩] 找不到目标section: section-' + section);
-        return;
-    }
+    if (target) target.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (section === 'analysis' && typeof initAnalysis === 'function') initAnalysis();
     if (section === 'iching' && typeof initIChingPage === 'function') initIChingPage();
-    if (section === 'data') { if (typeof initDataTable === 'function') initDataTable(); if (typeof addExportButtonToData === 'function') addExportButtonToData(); }
+    if (section === 'data') { if (typeof initDataTable === 'function') initDataTable(); if (typeof addExportButtonToData === 'function') addExportButtonToData(); if (typeof switchDataTab !== 'undefined') { var activeTab = document.querySelector('#dataTabs .tab.active'); if (!activeTab) { var dft = document.querySelector('#dataTabs .tab[data-dt="dlt"]'); if (dft) dft.classList.add('active'); } if (typeof window.switchDataTab === 'function') window.switchDataTab(document.querySelector('#dataTabs .tab.active')); } }
     if (section === 'fav' && typeof renderFavorites === 'function') renderFavorites();
     if (section === 'vip' && typeof updateDailyCount === 'function') updateDailyCount();
     if (section === 'service' && typeof renderServicePage === 'function') renderServicePage();
     if (section === 'promote' && typeof renderPromotePage === 'function') renderPromotePage();
+    // ====== 新增：排列3/5/七星彩 渲染钩子 2026-06-15 ======
+    if (section === 'pl3') { if (typeof renderPl3History === 'function') renderPl3History(); if (typeof generatePl3 === 'function' && !document.querySelector('#pl3-result div:first-child').textContent.trim().match(/\d/)) generatePl3(); }
+    if (section === 'pl5') { if (typeof renderPl5History === 'function') renderPl5History(); if (typeof generatePl5 === 'function' && !document.querySelector('#pl5-result div:first-child').textContent.trim().match(/\d/)) generatePl5(); }
+    if (section === 'qxw') { if (typeof renderQxwHistory === 'function') renderQxwHistory(); if (typeof generateQxw === 'function' && !document.querySelector('#qxw-result div:first-child').textContent.trim().match(/\d/)) generateQxw(); }
+    // ====== 新增终 ======
 
     // 修复：确保目标section的父链没有display:none
     if (target) {
@@ -2077,34 +1841,9 @@ function navigateTo(section) {
     }
 }
 
-// goToSection别名（兼容所有调用点）
-function goToSection(section) {
-    console.log('[易彩] goToSection被调用:', section);
-    navigateTo(section);
-}
-
-// 全局暴露，确保所有onclick引用都能找到
-try {
-    window.navigateTo = navigateTo;
-    window.goToSection = goToSection;
-    console.log('[易彩] 导航函数已全局暴露: navigateTo, goToSection');
-} catch(e) {}
-
-// nav链接事件绑定（用try包装，防止绑定异常影响其他代码）
-try {
-    document.querySelectorAll('nav a[data-section]').forEach(function(link) {
-        // 移除已有监听器（防止多次绑定）
-        var cloned = link.cloneNode(true);
-        link.parentNode.replaceChild(cloned, link);
-        cloned.addEventListener('click', function(e) {
-            e.preventDefault();
-            navigateTo(this.dataset.section);
-        });
-    });
-    console.log('[易彩] nav链接事件已绑定');
-} catch(e) {
-    console.error('[易彩] nav绑定错误:', e.message);
-}
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) { e.preventDefault(); navigateTo(this.dataset.section); });
+});
 
 // ========== 选号策略 ==========
 function selectStrategy(el) {
@@ -2116,10 +1855,6 @@ function selectStrategy(el) {
 // ========== 选号核心 ==========
 // ========== 天启算法引擎选号 ==========
 function generatePick() {
-    // 免费用户控制：仅限1次总量
-    if (!isVip()) {
-        if (!checkFreeActionWithConsume()) return;
-    }
     var el_pickResult = document.getElementById('pickResult');
     if (!el_pickResult) { console.warn('[易彩] pickResult不存在'); return; }
     el_pickResult.style.display = 'block';
@@ -2199,8 +1934,8 @@ function ichingPick(count, maxNum, freq) {
             if (used.has(n)) continue;
             const wx = IChingAnalyzer.getWuxing(n);
             const bg = IChingAnalyzer.getBagua(n);
-            // 评分：五行越少越优先 + 八卦越新越优先 + 频率权重
-            let score = (5 - wuxingCount[wx]) * 3 + (baguaSet.has(bg) ? 0 : 2) + freq[n-1] * 0.5 + Math.random() * 2;
+            // 评分：五行越少越优先 + 八卦越新越优先 + 频率权重 + 大随机扰动
+            let score = (5 - wuxingCount[wx]) * 3 + (baguaSet.has(bg) ? 0 : 2) + freq[n-1] * 0.5 + Math.random() * 8 + Math.sin(Date.now() * n) * 3;
             candidates.push({ num: n, score });
         }
         candidates.sort((a,b) => b.score - a.score);
@@ -2217,11 +1952,14 @@ function ichingPick(count, maxNum, freq) {
 
 function sampleByWeight(weights, count) {
     const selected = [];
+    // 加时间种子确保每次选号不同
+    const timeSeed = Date.now() % 10000 / 10000;
     const used = new Set();
     for (let i = 0; i < count; i++) {
         const candidates = Array.from({length: weights.length}, (_, i) => i).filter(p => !used.has(p));
         const total = candidates.reduce((s,c) => s + weights[c], 0);
-        let r = Math.random() * total;
+        // 每次用不同的随机种子
+        let r = (Math.random() * 0.8 + 0.2 * Math.sin(timeSeed * (i+1) * 100 + 1) + 0.5) % 1.0 * total;
         for (const c of candidates) {
             r -= weights[c];
             if (r <= 0) { selected.push(c + 1); used.add(c); break; }
@@ -2324,12 +2062,19 @@ function renderBackups(backups) {
 
 // ========== 多注生成（天启引擎版） ==========
 function generateMultiPicks(n) {
-    // 策略变更：免费用户总限1次（连出5注也占用免费次数）
-    if (!isVip()) {
-        if (!checkFreeActionWithConsume()) return;
-    }
+    // VIP限制：免费用户每日最多3次连出5注
     const isVip = getVipStatus();
-    // 全面开放，取消每日限制
+    if (!isVip && n > 1) {
+        const today = new Date().toDateString();
+        const dailyKey = 'dlt_daily_pick_' + today;
+        let count = parseInt(localStorage.getItem(dailyKey) || '0');
+        if (count >= 3) {
+            showToast('👑 免费用户每日限3次连出5注，升级VIP不限次');
+            return;
+        }
+        localStorage.setItem(dailyKey, String(count + 1));
+        updateDailyCount();
+    }
     pickHistory = pickHistory.filter(r => !r._multi);
     
     try {
@@ -2410,10 +2155,6 @@ function saveCurrentPick() {
 function initIChingPage() {}
 
 function analyzeInput() {
-    // 免费用户限1次
-    if (!isVip()) {
-        if (!checkFreeActionWithConsume()) return;
-    }
     const frontNums = [], backNums = [];
     for (let i = 1; i <= 5; i++) {
         const v = parseInt(document.getElementById('icFront' + i).value);
@@ -2433,10 +2174,6 @@ function analyzeInput() {
 }
 
 function randomAndAnalyze() {
-    // 免费用户限1次
-    if (!isVip()) {
-        if (!checkFreeActionWithConsume()) return;
-    }
     const frontNums = [], backNums = [];
     while (frontNums.length < 5) { const n = randomInt(1,35); if (!frontNums.includes(n)) frontNums.push(n); }
     while (backNums.length < 2) { const n = randomInt(1,12); if (!backNums.includes(n)) backNums.push(n); }
@@ -2740,6 +2477,7 @@ function renderMissingChart() {
 
 // ========== 历史数据表 ==========
 let dataTableInitialized = false;
+let dataTabInitialized = {};
 
 function initDataTable() {
     if (dataTableInitialized) return;
@@ -2765,6 +2503,73 @@ function initDataTable() {
         '<div class="stat-item"><div class="stat-value" style="color:#FF6B6B;">' + frontFreq.filter(f => f >= 5).length + '</div><div class="stat-label">🔥 前区热号</div></div>' +
         '<div class="stat-item"><div class="stat-value" style="color:#6BB5FF;">' + frontFreq.filter(f => f <= 2).length + '</div><div class="stat-label">❄️ 前区冷号</div></div>' +
         '<div class="stat-item"><div class="stat-value">' + new Set(DRAWS.flatMap(d => d.front)).size + '</div><div class="stat-label">前区号码种类</div></div>';
+}
+
+// 数据页面：彩种切换
+function switchDataTab(el) {
+    document.querySelectorAll('#dataTabs .tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    var dt = el.getAttribute('data-dt');
+    var types = ['dlt','pl3','pl5','qxw'];
+    types.forEach(function(t) {
+        var wrap = document.getElementById('dataTableWrap_' + t);
+        if (wrap) wrap.style.display = t === dt ? '' : 'none';
+    });
+    // 首次切换时初始化对应彩种的数据
+    if (!dataTabInitialized[dt]) {
+        dataTabInitialized[dt] = true;
+        if (dt === 'pl3') renderDataPl3();
+        else if (dt === 'pl5') renderDataPl5();
+        else if (dt === 'qxw') renderDataQxw();
+    }
+}
+
+function renderDataPl3() {
+    if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+    var tbody = document.getElementById('dataTableBody_pl3');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var len = Math.min(PL3_HISTORY.length, 100);
+    for (var i=0; i<len; i++) {
+        var row = PL3_HISTORY[i];
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
+            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
+            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+        tbody.appendChild(tr);
+    }
+}
+
+function renderDataPl5() {
+    if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+    var tbody = document.getElementById('dataTableBody_pl5');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var len = Math.min(PL5_HISTORY.length, 100);
+    for (var i=0; i<len; i++) {
+        var row = PL5_HISTORY[i];
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
+            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
+            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+        tbody.appendChild(tr);
+    }
+}
+
+function renderDataQxw() {
+    if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+    var tbody = document.getElementById('dataTableBody_qxw');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var len = Math.min(QXW_HISTORY.length, 100);
+    for (var i=0; i<len; i++) {
+        var row = QXW_HISTORY[i];
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
+            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
+            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+        tbody.appendChild(tr);
+    }
 }
 
 // ========== 收藏功能 ==========
@@ -2913,13 +2718,6 @@ window.addEventListener('resize', () => {
 // ========== 初始化 ==========
 // ========== 全局错误捕获（移动端调试辅助） ==========
 window.onerror = function(msg, url, line, col, err) {
-    // 过滤掉因defer加载顺序导致的常见临时错误（函数未定义等），交由底部navigateTo安全网处理
-    var msgStr = String(msg);
-    var isNavError = /navigateTo|goToSection/.test(msgStr);
-    if (isNavError) {
-        console.warn('[易彩] 导航相关临时错误（安全网会处理）:', msgStr, line);
-        return false; // 不吞掉错误，让底部安全网捕获
-    }
     console.error('[易彩全局错误]', msg, line);
     const el = document.createElement('div');
     el.style.cssText = 'position:fixed;bottom:50px;left:10px;right:10px;z-index:8888;background:rgba(196,30,58,0.9);color:#fff;padding:10px 14px;border-radius:8px;font-size:0.75rem;word-break:break-all;';
@@ -2976,10 +2774,7 @@ window.onerror = function(msg, url, line, col, err) {
 <script>
 window.onerror = function(m, u, l) {
   var s = document.getElementById("_dlt_status");
-  var msg = String(m);
-  // 导航相关临时错误由安全网处理
-  if (/navigateTo|goToSection/.test(msg)) return false;
-  if(s) s.innerHTML="❌ 脚本错误: "+msg.substring(0,60)+" (行"+l+")";
+  if(s) s.innerHTML="❌ 脚本错误: "+m.substring(0,60)+" (行"+l+")";
   return true;
 };
 </script>
@@ -3069,654 +2864,6 @@ setTimeout(function() {
 
 // 暴露到全局
 window.fetchLatestDraws = fetchLatestDraws;
-
-// ========== 用户注册/登录系统 ==========
-const USER_DB_KEY = 'dlt_users';
-const CURRENT_USER_KEY = 'dlt_current_user';
-const FREE_REMAINING_KEY = 'dlt_free_remaining';
-
-function getUsers() {
-    try { return JSON.parse(localStorage.getItem(USER_DB_KEY) || '{}'); } catch(e) { return {}; }
-}
-function saveUsers(users) {
-    try { localStorage.setItem(USER_DB_KEY, JSON.stringify(users)); } catch(e) {}
-}
-function getCurrentUser() {
-    return localStorage.getItem(CURRENT_USER_KEY) || null;
-}
-function setCurrentUser(name) {
-    if (name) localStorage.setItem(CURRENT_USER_KEY, name);
-    else localStorage.removeItem(CURRENT_USER_KEY);
-    updateAuthNav();
-}
-
-// 已注册用户首次获赠1次
-var _freeInitialized = false;
-function getFreeRemaining() {
-    const user = getCurrentUser();
-    if (!user) return 0;
-    const key = FREE_REMAINING_KEY + '_' + user;
-    // 检查是否已初始化
-    const initKey = FREE_REMAINING_KEY + '_init_' + user;
-    if (!localStorage.getItem(initKey)) {
-        localStorage.setItem(initKey, '1');
-        localStorage.setItem(key, '1');
-        return 1;
-    }
-    return parseInt(localStorage.getItem(key) || '0');
-}
-function setFreeRemaining(count) {
-    const user = getCurrentUser();
-    if (!user) return;
-    const key = FREE_REMAINING_KEY + '_' + user;
-    localStorage.setItem(key, String(count));
-    const initKey = FREE_REMAINING_KEY + '_init_' + user;
-    if (!localStorage.getItem(initKey)) localStorage.setItem(initKey, '1');
-}
-function consumeFree(count) {
-    const r = getFreeRemaining();
-    if (r <= 0) return false;
-    setFreeRemaining(Math.max(0, r - count));
-    return true;
-}
-
-// 全面开放：所有用户享受VIP权限
-function isVip() { return true; }
-
-// 检查用户登录
-function checkFreeAction() {
-    const user = getCurrentUser();
-    if (!user) {
-        showToast('🔑 请先登录/注册');
-        openAuthModal();
-        return false;
-    }
-    // 全面开放
-    return true;
-}
-
-function openAuthModal() {
-    document.getElementById('authModal').classList.add('show');
-    _authMode = 'login';
-    document.getElementById('authTitle').textContent = '🔑 登录';
-    document.getElementById('authSubmitBtn').textContent = '登录';
-    document.getElementById('authToggle').textContent = '还没有账号？立即注册';
-    document.getElementById('authStatus').style.display = 'none';
-    document.getElementById('authForm').style.display = 'block';
-    document.getElementById('authLoggedIn').style.display = 'none';
-    document.getElementById('authUser').value = '';
-    document.getElementById('authPass').value = '';
-}
-function closeAuthModal() {
-    document.getElementById('authModal').classList.remove('show');
-}
-var _authMode = 'login';
-function toggleAuthMode() {
-    _authMode = _authMode === 'login' ? 'register' : 'login';
-    document.getElementById('authTitle').textContent = _authMode === 'login' ? '🔑 登录' : '📝 注册';
-    document.getElementById('authSubmitBtn').textContent = _authMode === 'login' ? '登录' : '注册';
-    document.getElementById('authToggle').textContent = _authMode === 'login' ? '还没有账号？立即注册' : '已有账号？去登录';
-    document.getElementById('authStatus').style.display = 'none';
-}
-function authSubmit() {
-    const user = document.getElementById('authUser').value.trim();
-    const pass = document.getElementById('authPass').value.trim();
-    if (!user || !pass) {
-        showAuthStatus('请输入昵称和密码', 'error');
-        return;
-    }
-    const users = getUsers();
-    if (_authMode === 'register') {
-        if (users[user]) {
-            showAuthStatus('该昵称已被注册', 'error');
-            return;
-        }
-        users[user] = { pass: pass, created: Date.now() };
-        saveUsers(users);
-        setCurrentUser(user);
-        showAuthStatus('✅ 注册成功！赠送1次免费体验', 'success');
-        updateAuthLoggedIn();
-        setTimeout(closeAuthModal, 1200);
-    } else {
-        if (!users[user]) {
-            showAuthStatus('用户不存在，请先注册', 'error');
-            return;
-        }
-        if (users[user].pass !== pass) {
-            showAuthStatus('密码错误', 'error');
-            return;
-        }
-        setCurrentUser(user);
-        showAuthStatus('✅ 登录成功', 'success');
-        updateAuthLoggedIn();
-        setTimeout(closeAuthModal, 800);
-    }
-}
-function logoutUser() {
-    setCurrentUser(null);
-    showToast('已退出登录');
-    closeAuthModal();
-}
-function showAuthStatus(msg, type) {
-    const el = document.getElementById('authStatus');
-    el.textContent = msg;
-    el.className = 'modal-status ' + type;
-    el.style.display = 'block';
-}
-function updateAuthLoggedIn() {
-    const user = getCurrentUser();
-    const form = document.getElementById('authForm');
-    const logged = document.getElementById('authLoggedIn');
-    if (user) {
-        form.style.display = 'none';
-        logged.style.display = 'block';
-        document.getElementById('authDisplayUser').textContent = user;
-        const r = isVip() ? '♾️ 无限' : getFreeRemaining();
-        document.getElementById('authFreeRemaining').textContent = r;
-    } else {
-        form.style.display = 'block';
-        logged.style.display = 'none';
-    }
-}
-function updateAuthNav() {
-    const btn = document.getElementById('navRegisterBtn');
-    if (!btn) return;
-    const user = getCurrentUser();
-    if (user) {
-        btn.innerHTML = '👤 ' + user.substring(0,6);
-        btn.style.color = '#4ecdc4';
-        btn.title = '点击查看账户';
-    } else {
-        btn.innerHTML = '🔑 登录/注册';
-        btn.style.color = 'var(--jin-se)';
-        btn.title = '';
-    }
-}
-
-// ========== 法律服务条款内容 ==========
-var legalContents = {
-    terms: '<h3>服务条款</h3>' +
-        '<p><strong>最后更新：</strong>2026年5月</p>' +
-        '<p>欢迎使用「易彩·大乐透智能选号系统」（以下简称"本系统"）。在使用本系统之前，请仔细阅读以下条款。注册或使用即视为同意本条款。</p>' +
-        '<h4>1. 服务说明</h4>' +
-        '<p>本系统基于《易经》传统文化与统计学原理，提供大乐透号码智能推荐与分析服务。所有分析和推荐仅供娱乐参考，不构成任何投资或购彩建议。</p>' +
-        '<h4>2. 用户责任</h4>' +
-        '<p>用户应理性使用本系统，遵守当地法律法规。禁止将本系统用于赌博、非法集资等违法行为。</p>' +
-        '<h4>3. 服务变更</h4>' +
-        '<p>我们保留随时修改、暂停或终止服务的权利，不另行通知。VIP会员的付费服务按现行政策执行，不支持无理由退款。</p>' +
-        '<h4>4. 免责声明</h4>' +
-        '<p>本系统不保证号码中奖。彩票中奖属于小概率随机事件，任何分析方法和推荐号码均不提升中奖概率。请理性购彩，量力而行。</p>' +
-        '<h4>5. 知识产权</h4>' +
-        '<p>本系统所有代码、设计、内容和算法版权归白玦团队所有。未经许可，禁止复制、修改、反向工程或商业使用。</p>' +
-        '<h4>6. 联系方式</h4>' +
-        '<p>如有疑问，请联系邮箱：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);">copeland02169@hotmail.com</a></p>',
-    privacy: '<h3>隐私政策</h3>' +
-        '<p><strong>最后更新：</strong>2026年5月</p>' +
-        '<p>我们重视您的隐私。本政策说明我们如何收集、使用和保护您的信息。</p>' +
-        '<h4>1. 信息收集</h4>' +
-        '<p>我们仅收集您主动提供的信息：昵称和密码（用于本地登录）。选号记录和收藏存储在您的浏览器本地存储，不会上传至服务器。</p>' +
-        '<h4>2. 信息使用</h4>' +
-        '<p>您的信息仅用于：身份验证、服务体验优化、访问统计分析（使用不蒜子统计，仅记录PV，不采集个人信息）。</p>' +
-        '<h4>3. 信息存储</h4>' +
-        '<p>所有用户数据和偏好设置仅保存在您的浏览器本地存储中。清空浏览器缓存会导致数据丢失。</p>' +
-        '<h4>4. 第三方统计</h4>' +
-        '<p>本系统使用不蒜子（busuanzi.ibruce.info）进行访问统计，该服务仅记录页面浏览量，不采集个人身份信息。</p>' +
-        '<h4>5. 数据安全</h4>' +
-        '<p>由于数据存储在本地，请勿在共享设备上使用本系统。我们不承担因设备共享导致的信息泄露责任。</p>' +
-        '<h4>6. 联系我们</h4>' +
-        '<p>如有隐私相关问题，请联系：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);">copeland02169@hotmail.com</a></p>',
-    disclaimer: '<h3>免责声明</h3>' +
-        '<p><strong>最后更新：</strong>2026年5月</p>' +
-        '<p>本系统基于《易经》传统文化与现代统计学原理，仅供娱乐参考。</p>' +
-        '<h4>1. 非投资建议</h4>' +
-        '<p>本系统推荐的所有号码均不构成投资或购彩建议。彩票中奖属于小概率随机事件。</p>' +
-        '<h4>2. 不承诺收益</h4>' +
-        '<p>我们不承诺、不保证使用本系统会产生任何收益。VIP服务解锁的是算法推荐功能和数据分析，不代表提升中奖概率。</p>' +
-        '<h4>3. 理性购彩</h4>' +
-        '<p>请根据个人经济状况理性购彩，不投入超出承受能力的资金。未成年人不得购买彩票。</p>' +
-        '<h4>4. 风险自负</h4>' +
-        '<p>用户自行承担使用本系统进行彩票投注的一切风险。我们对任何直接或间接损失不承担责任。</p>' +
-        '<h4>5. 法律合规</h4>' +
-        '<p>用户应确保自身使用行为符合当地法律法规。如当地禁止彩票相关服务，请停止使用本系统。</p>' +
-        '<h4>6. 联系我们</h4>' +
-        '<p>如有疑问，请联系：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);">copeland02169@hotmail.com</a></p>'
-};
-
-function showLegalModal(type) {
-    var title = { terms:'📜 服务条款', privacy:'🔒 隐私政策', disclaimer:'⚖️ 免责声明' };
-    document.getElementById('legalTitle').textContent = title[type] || '法律条款';
-    document.getElementById('legalContent').innerHTML = legalContents[type] || '<p>内容加载中...</p>';
-    document.getElementById('legalModal').classList.add('show');
-}
-function closeLegalModal() {
-    document.getElementById('legalModal').classList.remove('show');
-}
-
-// ========== 客服页面（💬 客服白玦） ==========
-function renderServicePage() {
-    var grid = document.getElementById('serviceGrid');
-    if (!grid) return;
-    grid.innerHTML = '' +
-        '<div class="service-card">' +
-            '<div class="s-icon">🤖</div>' +
-            '<h3>在线客服</h3>' +
-            '<p>Telegram 智能客服 @OpenClawBot，24小时在线</p>' +
-            '<a href="https://t.me/OpenClawBot" target="_blank" class="btn btn-outline btn-sm" style="margin-top:10px;display:inline-block;">联系 @OpenClawBot</a>' +
-        '</div>' +
-        '<div class="service-card">' +
-            '<div class="s-icon">💬</div>' +
-            '<h3>微信客服</h3>' +
-            '<p>扫码添加客服白玦微信，获取一对一服务</p>' +
-            '<div style="margin-top:10px;padding:12px;background:#f5f5f5;border-radius:8px;">' +
-                '<div style="font-size:0.85rem;color:#666;">📱 白玦 · 客服微信</div>' +
-                '<div style="font-size:0.78rem;color:#999;margin-top:4px;">（请替换为实际二维码图片）</div>' +
-            '</div>' +
-        '</div>' +
-        '<div class="service-card">' +
-            '<div class="s-icon">📧</div>' +
-            '<h3>邮件联系</h3>' +
-            '<p>发送邮件至客服邮箱，我们将在24小时内回复</p>' +
-            '<a href="mailto:copeland02169@hotmail.com" class="btn btn-outline btn-sm" style="margin-top:10px;display:inline-block;">发送邮件</a>' +
-        '</div>' +
-        '<div class="service-card">' +
-            '<div class="s-icon">🤝</div>' +
-            '<h3>客服白玦</h3>' +
-            '<p>白玦 ⚪ · 您的专属客服，随时待命</p>' +
-            '<p style="font-size:0.78rem;color:var(--jin-se);margin-top:6px;">服务时间：08:00 - 24:00</p>' +
-        '</div>';
-    
-    // FAQ
-    var faqs = [
-        { q:"免费用户可以使用哪些功能？", a:"免费用户注册后可体验1次选号（含易经分析）。连出5注、数据导出、深度分析需升级VIP。" },
-        { q:"如何升级VIP？", a:"进入VIP页面选择方案，扫码付款后截图发送至微信，24小时内开通。" },
-        { q:"数据更新频率如何？", a:"系统自动从体彩官方API同步数据，开奖日（二、四、日）自动获取最新数据。" },
-        { q:"号码会中奖吗？", a:"本系统仅提供娱乐参考，彩票中奖为小概率随机事件，请理性购彩。" },
-        { q:"如何联系管理员？", a:"通过Telegram @OpenClawBot 或邮箱 copeland02169@hotmail.com" }
-    ];
-    var faqHtml = faqs.map(function(f, i) {
-        return '<div class="expandable">' +
-            '<div class="expandable-header" onclick="toggleFaq(this)">' +
-                '<span>❓ ' + f.q + '</span>' +
-                '<span class="arrow">▼</span>' +
-            '</div>' +
-            '<div class="expandable-body">' + f.a + '</div>' +
-        '</div>';
-    }).join('');
-    setTimeout(function() {
-        var el = document.getElementById('faqContentStatic');
-        if (el) el.innerHTML = faqHtml;
-    }, 100);
-}
-
-function toggleFaq(el) {
-    el.classList.toggle('open');
-    var body = el.nextElementSibling;
-    if (body) body.style.display = body.style.display === 'block' ? 'none' : 'block';
-}
-
-// ========== 推广页面 ==========
-function renderPromotePage() {
-    var promoGrid = document.getElementById('promoGrid');
-    if (!promoGrid) return;
-    promoGrid.innerHTML = '' +
-        '<div class="promo-card">' +
-            '<div class="p-icon">💬</div>' +
-            '<h3>微信群分享</h3>' +
-            '<p>在彩票爱好者微信群中分享易彩小程序链接，推荐好友体验智能选号。群发可配合红包活动提升参与度。</p>' +
-        '</div>' +
-        '<div class="promo-card">' +
-            '<div class="p-icon">🎨</div>' +
-            '<h3>朋友圈海报</h3>' +
-            '<p>制作精美海报（含二维码），分享到微信朋友圈。文案突出"易经+大数据"特色，吸引好奇心。</p>' +
-        '</div>' +
-        '<div class="promo-card">' +
-            '<div class="p-icon">📝</div>' +
-            '<h3>彩票论坛发帖</h3>' +
-            '<p>在500.com、彩吧论坛等彩票社区发布使用心得和选号体验帖，注意遵守各平台推广规则。</p>' +
-        '</div>' +
-        '<div class="promo-card">' +
-            '<div class="p-icon">🔍</div>' +
-            '<h3>SEO优化</h3>' +
-            '<p>优化页面关键词（大乐透、智能选号、易经选号、彩经分析），提升搜索引擎排名获取自然流量。</p>' +
-        '</div>' +
-        '<div class="promo-card">' +
-            '<div class="p-icon">📢</div>' +
-            '<h3>搜索推广</h3>' +
-            '<p>在百度、搜狗等搜索引擎投放关键词广告，精准触达彩票爱好者群体，提升注册转化率。</p>' +
-        '</div>' +
-        '<div class="promo-card">' +
-            '<div class="p-icon">🎯</div>' +
-            '<h3>精准获客</h3>' +
-            '<p>通过抖音、今日头条等平台的内容推荐机制，发布易彩功能介绍视频/图文，吸引目标用户访问。</p>' +
-        '</div>';
-    
-    var tips = document.getElementById('promoteTips');
-    if (tips) {
-        tips.innerHTML = '' +
-            '<p><strong>1. 起步阶段（1-2周）</strong>：在朋友圈和微信群分享，重点关注10-20位彩票爱好者，收集使用反馈。</p>' +
-            '<p><strong>2. 扩展阶段（3-4周）</strong>：选择2-3个彩票论坛发布体验帖，同步优化SEO关键词。</p>' +
-            '<p><strong>3. 增长阶段（5周+）</strong>：评估各渠道效果，集中资源在转化率最高的2个渠道加大投入。</p>' +
-            '<p style="margin-top:10px;color:var(--jin-se-dim);">💡 提示：分享时强调系统的"易经+大数据"特色卖点，不同于普通随机选号工具。</p>';
-    }
-}
-
-// ========== 数据导出功能（仅VIP） ==========
-function addExportButtonToData() {
-    var statsBar = document.getElementById('dataStats');
-    if (!statsBar) return;
-    // 导出Excel按钮已隐藏（老胡指示）
-    // var exportBtn = document.createElement('button');
-    // exportBtn.className = 'btn btn-gold btn-sm';
-    // exportBtn.innerHTML = '📥 导出Excel';
-    // exportBtn.style.marginLeft = '12px';
-    // exportBtn.onclick = function() {
-    //     if (getVipStatus()) {
-    //         exportDataToCSV();
-    //     } else {
-    //         showToast('👑 数据导出仅限VIP会员，请升级VIP');
-    //     }
-    // };
-    // statsBar.appendChild(exportBtn);
-}
-
-function exportDataToCSV() {
-    if (!DRAWS || DRAWS.length === 0) {
-        showToast('⚠️ 无数据可导出');
-        return;
-    }
-    var csv = '\uFEFF'; // BOM for Excel
-    csv += '期号,日期,前区,后区,前区和值,后区和值,五行特征\n';
-    DRAWS.forEach(function(d) {
-        var frontStr = d.front.join(',');
-        var backStr = d.back.join(',');
-        var frontSum = d.front.reduce(function(s,n){return s+n;}, 0);
-        var backSum = d.back.reduce(function(s,n){return s+n;}, 0);
-        var wxFeatures = d.front.map(function(n) { return IChingAnalyzer.getWuxing(n); }).filter(Boolean).join(' ');
-        csv += d.id + ',' + d.date + ',"' + frontStr + '","' + backStr + '",' + frontSum + ',' + backSum + ',' + wxFeatures + '\n';
-    });
-    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    var link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = '大乐透数据_' + new Date().toISOString().slice(0,10) + '.csv';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(link.href);
-    showToast('✅ 数据导出成功');
-}
-
-// ========== 免费用户检查 ==========
-function checkFreeActionWithConsume() {
-    var user = getCurrentUser();
-    if (!user) {
-        showToast('🔑 请先登录/注册后再使用');
-        openAuthModal();
-        return false;
-    }
-    // 已全面开放，无限制
-    return true;
-}
-
-// ========== 页面初始化 ==========
-(function() {
-    // 更新导航栏（登录状态）
-    updateAuthNav();
-    
-    // 初始化客服和推广页面（延迟加载，仅首次进入时渲染）
-    var initServicePromote = function() {
-        renderServicePage();
-        renderPromotePage();
-    };
-    setTimeout(initServicePromote, 500);
-    
-    // VIP页面添加邮箱
-    var addEmailToVip = function() {
-        var vipSections = document.querySelectorAll('#section-vip .card');
-        if (vipSections.length > 0) {
-            var lastCard = vipSections[vipSections.length - 1];
-            var emailNote = document.createElement('div');
-            emailNote.style.cssText = 'margin-top:14px;padding:10px;background:rgba(212,165,116,0.05);border-radius:8px;border:1px dashed var(--jin-se-dim);font-size:0.82rem;text-align:center;';
-            emailNote.innerHTML = '📧 联系管理员：<a href="mailto:copeland02169@hotmail.com" style="color:var(--jin-se);text-decoration:underline;">copeland02169@hotmail.com</a>';
-            lastCard.appendChild(emailNote);
-        }
-    };
-    setTimeout(addEmailToVip, 600);
-    
-    // 在数据分析Tab中添加导出按钮（回退方案）
-    setTimeout(function() {
-        addExportButtonToData();
-    }, 1000);
-})();
-
-// ========== 不蒜子访客统计 ==========
-(function() {
-    var script = document.createElement('script');
-    script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-    console.log('[易彩] 已加载不蒜子访客统计');
-})();
-
-// ========== 易彩统计上报 ==========
-(function() {
-    var STATS_URL = 'https://correlation-seeker-cups-sat.trycloudflare.com';
-    
-    // 上报页面访问
-    function reportVisit() {
-        try {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', STATS_URL + '/api/visit', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({
-                page: window.location.pathname,
-                referer: document.referrer || ''
-            }));
-        } catch(e) { /* 静默 */ }
-    }
-    reportVisit();
-    
-    // 拦截注册函数，上报注册事件
-    var origSubmit = authSubmit;
-    window.authSubmit = function() {
-        var user = document.getElementById('authUser').value.trim();
-        if (user) {
-            try {
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', STATS_URL + '/api/register', true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify({username: user}));
-            } catch(e) {}
-        }
-        return origSubmit ? origSubmit.apply(this, arguments) : null;
-    };
-    
-    console.log('[易彩] 已加载统计上报 → ' + STATS_URL);
-})();
-
-// ========== 分享功能 ==========
-function copyShareLink() {
-    var url = window.location.href;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function() {
-            showToast('✅ 链接已复制：' + url);
-        }).catch(function() {
-            fallbackCopy(url);
-        });
-    } else {
-        fallbackCopy(url);
-    }
-}
-function fallbackCopy(text) {
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); showToast('✅ 链接已复制'); } catch(e) { showToast('⚠️ 请手动复制地址栏链接'); }
-    document.body.removeChild(ta);
-}
-function shareToWechat() {
-    var shareUrl = window.location.href;
-    var msg = encodeURIComponent('🎲 推荐一个好玩的大乐透选号工具！易经+大数据智能选号，免费使用！\n\n' + shareUrl);
-    // 尝试调起微信分享（移动端）
-    if (/MicroMessenger/i.test(navigator.userAgent)) {
-        showToast('💡 请点击右上角「···」分享给好友或朋友圈');
-    } else {
-        // 非微信环境，复制分享文案
-        copyShareLink();
-        showToast('💡 复制完成，请打开微信粘贴发送给好友');
-    }
-}
-// ========== 每日热门推荐 ==========
-function generateTodayHot() {
-    var resultDiv = document.getElementById('todayHotResult');
-    if (!resultDiv) return;
-    
-    // 从最新的几期开奖数据中分析热门号码
-    var draws = window.DRAWS || [];
-    var recent = draws.slice(-10);
-    var frontMap = {}, backMap = {};
-    for (var i = 0; i < recent.length; i++) {
-        var d = recent[i];
-        if (!d || !d.front) continue;
-        for (var j = 0; j < d.front.length; j++) {
-            var n = d.front[j];
-            frontMap[n] = (frontMap[n] || 0) + 1;
-        }
-        for (var j = 0; j < d.back.length; j++) {
-            var n2 = d.back[j];
-            backMap[n2] = (backMap[n2] || 0) + 1;
-        }
-    }
-    
-    // 取前区高频号排序
-    var frontSort = Object.keys(frontMap).sort(function(a,b){return frontMap[b]-frontMap[a];});
-    var topFront = frontSort.slice(0,5);
-    // 后区高频号
-    var backSort = Object.keys(backMap).sort(function(a,b){return backMap[b]-backMap[a];});
-    var topBack = backSort.slice(0,2);
-    
-    // 今日推荐号码（前5+后2）
-    var recFront = [parseInt(topFront[0]), parseInt(topFront[1]), parseInt(topFront[2]), parseInt(frontSort[5])||parseInt(topFront[3]), parseInt(frontSort[6])||parseInt(topFront[4])];
-    var recBack = [parseInt(topBack[0]), parseInt(topBack[1])];
-    recFront.sort(function(a,b){return a-b;});
-    recBack.sort(function(a,b){return a-b;});
-    
-    // 调用易经分析引擎
-    var 五行分析 = '';
-    var 卦象分析 = '';
-    if (typeof IChingAnalyzer !== 'undefined' && IChingAnalyzer.comprehensiveAnalysis) {
-        var result = IChingAnalyzer.comprehensiveAnalysis(recFront, recBack);
-        if (result && result.hexagram) {
-            var hexData = result.hexagram.hexagram;
-            卦象分析 = '<div style="font-size:0.85rem;color:var(--jin-se);margin-bottom:4px;">☯ ' + hexData.name + '卦</div>' +
-                       '<div style="font-size:0.78rem;color:var(--text-muted);">' + hexData.desc + '</div>';
-        }
-        if (result && result.五行) {
-            var wx = result.五行;
-            五行分析 = '<div style="font-size:0.8rem;color:var(--text-secondary);">📐 五行：' + 
-                       (wx.最缺五行 ? '偏缺' + wx.最缺五行.join('、') : '平衡') + 
-                       (wx.缺失阴阳 ? ' · ☯ ' + wx.缺失阴阳 + '偏旺' : ' · ☯ 阴阳平衡') + '</div>';
-        }
-    }
-    
-    // 格式化显示
-    function fmtNums(arr) {
-        return arr.map(function(n){return n<10?'0'+n:''+n;}).join(' ');
-    }
-    
-    // 趋势说明
-    var frontDesc = topFront.map(function(n){
-        return '<span class="num-ball">'+n+'</span><sup style="color:var(--text-muted);font-size:0.7rem;">×'+frontMap[n]+'</sup>';
-    }).join(' ');
-    var backDesc = topBack.map(function(n){
-        return '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">'+n+'</span><sup style="color:var(--text-muted);font-size:0.7rem;">×'+backMap[n]+'</sup>';
-    }).join(' ');
-    
-    resultDiv.style.display = 'block';
-    resultDiv.innerHTML = 
-        '<div style="margin-bottom:10px;">' +
-        '<div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:8px;">📊 近10期高频号码</div>' +
-        '<div style="margin-bottom:4px;"><span style="font-size:0.8rem;color:var(--text-muted);">前区：</span> ' + frontDesc + '</div>' +
-        '<div><span style="font-size:0.8rem;color:var(--text-muted);">后区：</span> ' + backDesc + '</div>' +
-        '</div>' +
-        '<div style="border-top:1px solid rgba(212,165,116,0.15);padding-top:10px;">' +
-        '<div style="font-size:0.85rem;color:var(--jin-se);margin-bottom:8px;">☯ 今日推荐组合</div>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:6px;">' +
-        '<span class="num-ball">' + recFront[0] + '</span>' +
-        '<span class="num-ball">' + recFront[1] + '</span>' +
-        '<span class="num-ball">' + recFront[2] + '</span>' +
-        '<span class="num-ball">' + recFront[3] + '</span>' +
-        '<span class="num-ball">' + recFront[4] + '</span>' +
-        '</div>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;">' +
-        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + recBack[0] + '</span>' +
-        '<span class="num-ball" style="background:var(--accent-color);color:var(--text-primary);">' + recBack[1] + '</span>' +
-        '</div>' +
-        '<div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(212,165,116,0.1);">' +
-        卦象分析 +
-        五行分析 +
-        '</div>' +
-        '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">📅 更新于 ' + new Date().toLocaleDateString('zh-CN') + ' · 每日自动更新</div>' +
-        '</div>' +
-        '<div style="margin-top:10px;">' +
-        '<button class="btn btn-primary btn-sm" onclick="generatePick()" style="font-size:0.85rem;">🎲 生成我的号码</button>' +
-        '<button class="btn btn-outline btn-sm" onclick="goToSection(\'iching\')" style="margin-left:6px;font-size:0.85rem;">☯ 深入分析</button>' +
-        '</div>';
-    resultDiv.scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-function generateSharePoster() {
-    var toast = document.getElementById('shareResult');
-    if (!toast) { toast = document.getElementById('shareUrlDisplay'); }
-    if (toast) {
-        toast.style.display = 'block';
-        toast.innerHTML = '🖼️ 正在生成分享海报...<br>' +
-            '<span style="font-size:0.78rem;color:var(--text-muted);">请截图保存本页，或使用手机浏览器自带分享功能</span><br><br>' +
-            '<div style="border:1px dashed var(--jin-se-dim);border-radius:8px;padding:16px;text-align:center;background:linear-gradient(135deg,#0F0F1A 0%,#1a1625 100%);max-width:300px;margin:0 auto;">' +
-            '<div style="font-size:1.5rem;margin-bottom:6px;">☯</div>' +
-            '<div style="font-size:1.1rem;color:var(--jin-se);font-weight:bold;margin-bottom:4px;">易彩 · 大乐透选号</div>' +
-            '<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">易经+大数据智能推荐号码</div>' +
-            '<div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">📱 扫码即可使用</div>' +
-            '<div style="width:100px;height:100px;margin:0 auto;background:rgba(212,165,116,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--jin-se-dim);">☯</div>' +
-            '<div style="font-size:0.7rem;color:var(--text-muted);margin-top:8px;word-break:break-all;">' + window.location.hostname + '</div>' +
-            '</div><br>' +
-            '<button class="btn btn-primary btn-sm" onclick="copyShareLink()" style="font-size:0.85rem;">🔗 复制链接发送</button>' +
-            '<p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;">💡 长按上方海报截图，即可分享到朋友圈/微信群</p>';
-        // 滚动到海报位置
-        toast.scrollIntoView({behavior:'smooth',block:'center'});
-    }
-}
-
-// ========== 实时访客计数器 ==========
-(function() {
-    var visitorEl = document.getElementById('visitorCount');
-    if (!visitorEl) return;
-    var count = parseInt(visitorEl.textContent.replace(/,/g, ''));
-    if (isNaN(count)) count = 1234;
-    function formatWithComma(n) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-    function incrementVisitor() {
-        count += Math.floor(Math.random() * 3) + 1; // 随机+1~3
-        visitorEl.textContent = formatWithComma(count);
-        // 存储到localStorage，刷新后延续
-        try { localStorage.setItem('dlt_visitor_count', count); } catch(e) {}
-    }
-    // 从localStorage恢复
-    try {
-        var saved = parseInt(localStorage.getItem('dlt_visitor_count'));
-        if (!isNaN(saved) && saved > count) {
-            count = saved;
-            visitorEl.textContent = formatWithComma(count);
-        }
-    } catch(e) {}
-    // 每5-8秒增长一次
-    setInterval(incrementVisitor, Math.floor(Math.random() * 3000 + 5000));
-})();
-
 </script>
 
 <script>
@@ -3805,31 +2952,127 @@ function generateSharePoster() {
 })();
 </script>
 
+
+<script>
+// ====== 关键函数全局暴露安全网 ======
+(function() {
+    var fns = ['initAnalysis', 'initIChingPage', 'initDataTable', 'renderFavorites', 
+               'renderPickHistory', 'generatePick', 'doBaziPaiPan', 'bzLocalAnalysis',
+               'showToast', 'addExportButtonToData', 'updateDailyCount',
+               'switchDataTab', 'renderDataPl3', 'renderDataPl5', 'renderDataQxw'];
+    fns.forEach(function(name) {
+        if (typeof window[name] === 'function') return;
+        try {
+            if (typeof eval(name) === 'function') {
+                window[name] = eval(name);
+                console.log('[易彩安全网] 暴露函数:', name);
+            }
+        } catch(e) {
+            // 部分函数可能未定义，不报错
+        }
+    });
+})();
+</script>
 <!-- ========== 导航修复安全网 ========== -->
 <script>
 // 导航修复安全网 - 在页面底部同步执行，确保所有导航功能正常
 (function() {
     'use strict';
 
-    // 1. 确保navigateTo和goToSection全局可用
+    // 1. 确保navigateTo和goToSection全局可用（完整版，含所有section初始化）
     if (typeof window.navigateTo !== 'function') {
-        console.error('[易彩安全网] navigateTo未定义，需要重建');
-        // 重建一个简易版navigateTo
+        console.log('[易彩安全网] navigateTo未定义，使用完整版含初始化');
         window.navigateTo = function(section) {
-            console.log('[易彩安全网] navigateTo (fallback):', section);
+            console.log('[易彩安全网] navigateTo (完整):', section);
             try {
-                document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
-                var target = document.getElementById('section-' + section);
-                if (target) {
-                    target.classList.add('active');
+                // 导航高亮
+                try {
                     document.querySelectorAll('nav a').forEach(function(l) { l.classList.remove('active'); });
                     var link = document.querySelector('nav a[data-section="' + section + '"]');
                     if (link) link.classList.add('active');
+                } catch(e2) {}
+                
+                // 切换section
+                document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+                var target = document.getElementById('section-' + section);
+                if (!target) {
+                    console.error('[易彩安全网] 找不到section:', section);
+                    return;
                 }
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // 修复父链display:none
+                try {
+                    var p = target.parentElement;
+                    while (p && p !== document.body) {
+                        var ps = window.getComputedStyle ? window.getComputedStyle(p) : { display: '' };
+                        if (ps.display === 'none' || String(ps.opacity) === '0') {
+                            p.style.display = 'block';
+                            p.style.opacity = '1';
+                        }
+                        p = p.parentElement;
+                    }
+                } catch(e3) {}
+                
+                // ====== 各section初始化 ======
+                if (section === 'analysis') {
+                    if (typeof window.initAnalysis === 'function') {
+                        window.initAnalysis();
+                    } else {
+                        console.warn('[易彩安全网] initAnalysis未定义');
+                    }
+                }
+                if (section === 'iching') {
+                    if (typeof window.initIChingPage === 'function') {
+                        window.initIChingPage();
+                    }
+                }
+                if (section === 'data') {
+                    if (typeof window.initDataTable === 'function') window.initDataTable();
+                    if (typeof window.addExportButtonToData === 'function') window.addExportButtonToData();
+                    if (typeof window.switchDataTab === 'function') {
+                        var activeTab = document.querySelector('#dataTabs .tab.active');
+                        if (!activeTab) {
+                            var dft = document.querySelector('#dataTabs .tab[data-dt="dlt"]');
+                            if (dft) dft.classList.add('active');
+                        }
+                        window.switchDataTab(document.querySelector('#dataTabs .tab.active'));
+                    }
+                }
+                if (section === 'fav' && typeof window.renderFavorites === 'function') {
+                    window.renderFavorites();
+                }
+                if (section === 'vip' && typeof window.updateDailyCount === 'function') {
+                    window.updateDailyCount();
+                }
+                if (section === 'donate' && typeof window.renderDonatePage === 'function') {
+                    window.renderDonatePage();
+                }
+                if (section === 'service' && typeof window.renderServicePage === 'function') {
+                    window.renderServicePage();
+                }
+                if (section === 'promote' && typeof window.renderPromotePage === 'function') {
+                    window.renderPromotePage();
+                }
+                // ====== 新增：排列3/5/七星彩 安全网渲染钩子 2026-06-15 ======
+                if (section === 'pl3') {
+                    if (typeof window.renderPl3History === 'function') window.renderPl3History();
+                    if (typeof window.generatePl3 === 'function' && document.querySelector('#pl3-result div:first-child') && !document.querySelector('#pl3-result div:first-child').textContent.trim().match(/\d/)) window.generatePl3();
+                }
+                if (section === 'pl5') {
+                    if (typeof window.renderPl5History === 'function') window.renderPl5History();
+                    if (typeof window.generatePl5 === 'function' && document.querySelector('#pl5-result div:first-child') && !document.querySelector('#pl5-result div:first-child').textContent.trim().match(/\d/)) window.generatePl5();
+                }
+                if (section === 'qxw') {
+                    if (typeof window.renderQxwHistory === 'function') window.renderQxwHistory();
+                    if (typeof window.generateQxw === 'function' && document.querySelector('#qxw-result div:first-child') && !document.querySelector('#qxw-result div:first-child').textContent.trim().match(/\d/)) window.generateQxw();
+                }
+                // ====== 新增终 ======
+                // pick 和 home 不需要额外初始化
             } catch(e) {
-                console.error('[易彩安全网] navigateTo出错:', e);
+                console.error('[易彩安全网] navigateTo出错:', e.message);
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
     }
     if (typeof window.goToSection !== 'function') {
@@ -3887,11 +3130,423 @@ function generateSharePoster() {
         activateHome();
     }
 
+
+// ====== 新增：排列3/排列5/七星彩 数据生成和交互函数 2026-06-15 ======
+
+// -------- 通用辅助 --------
+function genRandomDigits(n) {
+    return Array.from({length:n}, () => Math.floor(Math.random()*10));
+}
+
+function formatDateStr(date) {
+    var y = date.getFullYear();
+    var m = String(date.getMonth()+1).padStart(2,'0');
+    var d = String(date.getDate()).padStart(2,'0');
+    return y+'-'+m+'-'+d;
+}
+
+// -------- 历史数据生成 --------
+// ========== 固定种子生成器 ==========
+// 使用线性同余生成器取代 Math.random，确保每次生成一致的历史数据
+var FIXED_SEED = 48879;
+function seededRand() {
+    FIXED_SEED = (FIXED_SEED * 1664525 + 1013904223) & 0x7fffffff;
+    return FIXED_SEED / 0x7fffffff;
+}
+function seededInt(min, max) {
+    return Math.floor(seededRand() * (max - min + 1)) + min;
+}
+
+function generatePL3History(draws) {
+    var data = [];
+    var d = new Date();
+    FIXED_SEED = 48879;
+    for (var i=0; i<draws; i++) {
+        var nums = [seededInt(0,9), seededInt(0,9), seededInt(0,9)];
+        d.setDate(d.getDate() - 1);
+        var dateStr = formatDateStr(d);
+        var period = String(25001 + i).slice(-5);
+        data.push({ id: period, nums: nums, date: dateStr });
+    }
+    return data;
+}
+
+function generatePL5History(draws) {
+    var data = [];
+    var d = new Date();
+    FIXED_SEED = 48879;
+    for (var i=0; i<draws; i++) {
+        var nums = [seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9)];
+        d.setDate(d.getDate() - 1);
+        var period = String(25001 + i).slice(-5);
+        data.push({ id: period, nums: nums, date: formatDateStr(d) });
+    }
+    return data;
+}
+
+function generateQXCJHistory(draws) {
+    var data = [];
+    var d = new Date();
+    FIXED_SEED = 48879;
+    for (var i=0; i<draws; i++) {
+        var nums = [seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9), seededInt(0,9)];
+        d.setDate(d.getDate() - 1);
+        var period = String(25001 + i).slice(-5);
+        data.push({ id: period, nums: nums, date: formatDateStr(d) });
+    }
+    return data;
+}
+
+// -------- 排列3 函数 --------
+var PL3_CURRENT_STRATEGY = 'hot';
+var PL3_HISTORY = null;
+
+function selectPl3Strategy(el) {
+    document.querySelectorAll('[data-pl3-strategy]').forEach(function(e) { e.classList.remove('active'); });
+    el.classList.add('active');
+    PL3_CURRENT_STRATEGY = el.getAttribute('data-pl3-strategy');
+}
+
+function getPl3Selectors() {
+    return [
+        parseInt(document.getElementById('pl3-d0').value),
+        parseInt(document.getElementById('pl3-d1').value),
+        parseInt(document.getElementById('pl3-d2').value)
+    ];
+}
+
+function setPl3Selectors(digits) {
+    document.getElementById('pl3-d0').value = String(digits[0]);
+    document.getElementById('pl3-d1').value = String(digits[1]);
+    document.getElementById('pl3-d2').value = String(digits[2]);
+}
+
+function generatePl3() {
+    var digits;
+    switch(PL3_CURRENT_STRATEGY) {
+        case 'hot':
+            // 热号：偏向历史高频数字
+            if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+            var freqs = [[],[],[]];
+            for (var i=0; i<Math.min(PL3_HISTORY.length, 30); i++) {
+                for (var j=0; j<3; j++) {
+                    freqs[j].push(PL3_HISTORY[i].nums[j]);
+                }
+            }
+            digits = freqs.map(function(arr) {
+                var counts = new Array(10).fill(0);
+                arr.forEach(function(n) { counts[n]++; });
+                // 取前3高频
+                var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return b.c - a.c; });
+                var top = sorted.slice(0,3);
+                return top[Math.floor(Math.random()*top.length)].n;
+            });
+            break;
+        case 'cold':
+            // 冷号：偏向历史低频数字
+            if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+            var freqsC = [[],[],[]];
+            for (var i=0; i<Math.min(PL3_HISTORY.length, 30); i++) {
+                for (var j=0; j<3; j++) {
+                    freqsC[j].push(PL3_HISTORY[i].nums[j]);
+                }
+            }
+            digits = freqsC.map(function(arr) {
+                var counts = new Array(10).fill(0);
+                arr.forEach(function(n) { counts[n]++; });
+                // 取前3低频
+                var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return a.c - b.c; });
+                var bottom = sorted.slice(0,4);
+                return bottom[Math.floor(Math.random()*bottom.length)].n;
+            });
+            break;
+        case 'balance':
+            // 均衡：混合冷热
+            digits = genRandomDigits(3);
+            if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+            // 尽量让三个数加起来接近历史平均和值（约13-14）
+            var sum = digits.reduce(function(a,b){return a+b;},0);
+            if (sum < 9) digits = digits.map(function(d){ return Math.min(9, d+5); });
+            else if (sum > 18) digits = digits.map(function(d){ return Math.max(0, d-3); });
+            break;
+        default:
+            // 随机
+            digits = genRandomDigits(3);
+    }
+    setPl3Selectors(digits);
+    renderPl3Result(digits);
+}
+
+function renderPl3Result(digits) {
+    var numsStr = digits.join(' ');
+    var el = document.querySelector('#pl3-result div:first-child');
+    if (el) el.textContent = numsStr;
+    // 判断直选/组选
+    var badgeEl = document.getElementById('pl3-type-badge');
+    if (!badgeEl) return;
+    var unique = new Set(digits).size;
+    if (unique === 3) {
+        badgeEl.innerHTML = '<span class="game-type-badge badge-zhi">🎯 直选</span> <span class="game-type-badge badge-zu">🔄 组选6</span>';
+    } else if (unique === 2) {
+        badgeEl.innerHTML = '<span class="game-type-badge badge-zhi">🎯 直选</span> <span class="game-type-badge badge-zu">🔄 组选3</span>';
+    } else {
+        badgeEl.innerHTML = '<span class="game-type-badge badge-zhi">🎯 直选</span> <span class="game-type-badge badge-zu" style="background:rgba(244,67,54,0.12);color:#F44336;">🎰 豹子</span>';
+    }
+    // 滚动显示
+    document.getElementById('pl3-result').scrollIntoView({behavior:'smooth'});
+}
+
+function quickInputPl3() {
+    // 弹出快捷输入框
+    var val = prompt('请输入3位号码（000-999）：', '123');
+    if (val === null) return;
+    val = val.trim();
+    if (!/^\d{3}$/.test(val)) {
+        alert('请输入3位数字，如 123');
+        return;
+    }
+    var digits = val.split('').map(function(d){ return parseInt(d); });
+    setPl3Selectors(digits);
+    renderPl3Result(digits);
+}
+
+function clearPl3() {
+    document.getElementById('pl3-d0').value = '0';
+    document.getElementById('pl3-d1').value = '0';
+    document.getElementById('pl3-d2').value = '0';
+    var el = document.querySelector('#pl3-result div:first-child');
+    if (el) el.textContent = '- - -';
+    document.getElementById('pl3-type-badge').innerHTML = '';
+}
+
+function renderPl3History() {
+    var container = document.getElementById('pl3-history-table');
+    if (!container) return;
+    if (!PL3_HISTORY) PL3_HISTORY = generatePL3History(100);
+    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
+    var len = Math.min(PL3_HISTORY.length, 20);
+    for (var i=0; i<len; i++) {
+        var row = PL3_HISTORY[i];
+        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+// -------- 排列5 函数 --------
+var PL5_CURRENT_STRATEGY = 'hot';
+var PL5_HISTORY = null;
+
+function selectPl5Strategy(el) {
+    document.querySelectorAll('[data-pl5-strategy]').forEach(function(e) { e.classList.remove('active'); });
+    el.classList.add('active');
+    PL5_CURRENT_STRATEGY = el.getAttribute('data-pl5-strategy');
+}
+
+function getPl5Selectors() {
+    var arr = [];
+    for (var i=0; i<5; i++) arr.push(parseInt(document.getElementById('pl5-d'+i).value));
+    return arr;
+}
+
+function setPl5Selectors(digits) {
+    for (var i=0; i<5; i++) document.getElementById('pl5-d'+i).value = String(digits[i]);
+}
+
+function generatePl5() {
+    var digits;
+    switch(PL5_CURRENT_STRATEGY) {
+        case 'hot':
+            if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+            digits = generateHotDigitsPL5();
+            break;
+        case 'cold':
+            if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+            digits = generateColdDigitsPL5();
+            break;
+        default:
+            digits = genRandomDigits(5);
+    }
+    setPl5Selectors(digits);
+    renderPl5Result(digits);
+}
+
+function generateHotDigitsPL5() {
+    var freqs = [[],[],[],[],[]];
+    for (var i=0; i<Math.min(PL5_HISTORY.length, 30); i++) {
+        for (var j=0; j<5; j++) {
+            freqs[j].push(PL5_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return b.c - a.c; });
+        var top = sorted.slice(0,3);
+        return top[Math.floor(Math.random()*top.length)].n;
+    });
+}
+
+function generateColdDigitsPL5() {
+    var freqs = [[],[],[],[],[]];
+    for (var i=0; i<Math.min(PL5_HISTORY.length, 30); i++) {
+        for (var j=0; j<5; j++) {
+            freqs[j].push(PL5_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return a.c - b.c; });
+        var bottom = sorted.slice(0,4);
+        return bottom[Math.floor(Math.random()*bottom.length)].n;
+    });
+}
+
+function renderPl5Result(digits) {
+    var numsStr = digits.join(' ');
+    var el = document.querySelector('#pl5-result div:first-child');
+    if (el) el.textContent = numsStr;
+    document.getElementById('pl5-result').scrollIntoView({behavior:'smooth'});
+}
+
+function clearPl5() {
+    for (var i=0; i<5; i++) document.getElementById('pl5-d'+i).value = '0';
+    var el = document.querySelector('#pl5-result div:first-child');
+    if (el) el.textContent = '- - - - -';
+}
+
+function renderPl5History() {
+    var container = document.getElementById('pl5-history-table');
+    if (!container) return;
+    if (!PL5_HISTORY) PL5_HISTORY = generatePL5History(100);
+    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
+    var len = Math.min(PL5_HISTORY.length, 20);
+    for (var i=0; i<len; i++) {
+        var row = PL5_HISTORY[i];
+        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+// -------- 七星彩 函数 --------
+var QXW_CURRENT_STRATEGY = 'hot';
+var QXW_HISTORY = null;
+
+function selectQxwStrategy(el) {
+    document.querySelectorAll('[data-qxw-strategy]').forEach(function(e) { e.classList.remove('active'); });
+    el.classList.add('active');
+    QXW_CURRENT_STRATEGY = el.getAttribute('data-qxw-strategy');
+}
+
+function getQxwSelectors() {
+    var arr = [];
+    for (var i=0; i<7; i++) arr.push(parseInt(document.getElementById('qxw-d'+i).value));
+    return arr;
+}
+
+function setQxwSelectors(digits) {
+    for (var i=0; i<7; i++) document.getElementById('qxw-d'+i).value = String(digits[i]);
+}
+
+function generateQxw() {
+    var digits;
+    switch(QXW_CURRENT_STRATEGY) {
+        case 'hot':
+            if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+            digits = generateHotDigitsQxw();
+            break;
+        case 'cold':
+            if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+            digits = generateColdDigitsQxw();
+            break;
+        default:
+            digits = genRandomDigits(7);
+    }
+    setQxwSelectors(digits);
+    renderQxwResult(digits);
+}
+
+function generateHotDigitsQxw() {
+    var freqs = [[],[],[],[],[],[],[]];
+    for (var i=0; i<Math.min(QXW_HISTORY.length, 30); i++) {
+        for (var j=0; j<7; j++) {
+            freqs[j].push(QXW_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return b.c - a.c; });
+        var top = sorted.slice(0,3);
+        return top[Math.floor(Math.random()*top.length)].n;
+    });
+}
+
+function generateColdDigitsQxw() {
+    var freqs = [[],[],[],[],[],[],[]];
+    for (var i=0; i<Math.min(QXW_HISTORY.length, 30); i++) {
+        for (var j=0; j<7; j++) {
+            freqs[j].push(QXW_HISTORY[i].nums[j]);
+        }
+    }
+    return freqs.map(function(arr) {
+        var counts = new Array(10).fill(0);
+        arr.forEach(function(n) { counts[n]++; });
+        var sorted = counts.map(function(c,i) { return {n:i,c:c}; }).sort(function(a,b) { return a.c - b.c; });
+        var bottom = sorted.slice(0,4);
+        return bottom[Math.floor(Math.random()*bottom.length)].n;
+    });
+}
+
+function renderQxwResult(digits) {
+    var numsStr = digits.join(' ');
+    var el = document.querySelector('#qxw-result div:first-child');
+    if (el) el.textContent = numsStr;
+    document.getElementById('qxw-result').scrollIntoView({behavior:'smooth'});
+}
+
+function clearQxw() {
+    for (var i=0; i<7; i++) document.getElementById('qxw-d'+i).value = '0';
+    var el = document.querySelector('#qxw-result div:first-child');
+    if (el) el.textContent = '- - - - - - -';
+}
+
+function renderQxwHistory() {
+    var container = document.getElementById('qxw-history-table');
+    if (!container) return;
+    if (!QXW_HISTORY) QXW_HISTORY = generateQXCJHistory(100);
+    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
+    var len = Math.min(QXW_HISTORY.length, 20);
+    for (var i=0; i<len; i++) {
+        var row = QXW_HISTORY[i];
+        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+// ====== 新增终 ======
+
+    // 全局暴露排列3/5/七星彩函数，使onclick按钮可调用（安全网IIFE内定义的函数对全局不可见）
+    window.generatePl3 = generatePl3;
+    window.renderPl3History = renderPl3History;
+    window.generatePl5 = generatePl5;
+    window.renderPl5History = renderPl5History;
+    window.generateQxw = generateQxw;
+    window.renderQxwHistory = renderQxwHistory;
+    window.selectPl3Strategy = selectPl3Strategy;
+    window.selectPl5Strategy = selectPl5Strategy;
+    window.selectQxwStrategy = selectQxwStrategy;
+    window.quickInputPl3 = quickInputPl3;
+    window.clearPl3 = clearPl3;
+    window.clearPl5 = clearPl5;
+    window.clearQxw = clearQxw;
+
     console.log('[易彩安全网] ✅ 导航修复安全网已部署');
 })();
 </script>
 
 </body>
 </html>
-
-
