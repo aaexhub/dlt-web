@@ -820,11 +820,7 @@ window.QXW_DRAWS = [{"id": "26001", "nums": [0, 8, 1, 2, 4, 8, 5], "date": "2026
             <button class="btn btn-outline btn-sm" onclick="clearPl3()">🗑️ 清空</button>
         </div>
 
-        <!-- 历史数据 -->
-        <div style="margin-top:28px;">
-            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">排列3 · 模拟数据</span></div>
-            <div id="pl3-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
-        </div>
+
     </div>
 </div>
 
@@ -868,11 +864,7 @@ window.QXW_DRAWS = [{"id": "26001", "nums": [0, 8, 1, 2, 4, 8, 5], "date": "2026
             <button class="btn btn-outline btn-sm" onclick="clearPl5()">🗑️ 清空</button>
         </div>
 
-        <!-- 历史数据 -->
-        <div style="margin-top:28px;">
-            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">排列5 · 模拟数据</span></div>
-            <div id="pl5-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
-        </div>
+
     </div>
 </div>
 
@@ -918,11 +910,7 @@ window.QXW_DRAWS = [{"id": "26001", "nums": [0, 8, 1, 2, 4, 8, 5], "date": "2026
             <button class="btn btn-outline btn-sm" onclick="clearQxw()">🗑️ 清空</button>
         </div>
 
-        <!-- 历史数据 -->
-        <div style="margin-top:28px;">
-            <div class="card-title">📋 近期开奖 <span style="font-size:0.72rem;color:var(--text-muted);font-weight:400;">七星彩 · 模拟数据</span></div>
-            <div id="qxw-history-table" style="overflow-x:auto;font-size:0.9rem;"></div>
-        </div>
+
     </div>
 </div>
 
@@ -1423,9 +1411,9 @@ function navigateTo(section) {
     if (section === 'service' && typeof renderServicePage === 'function') renderServicePage();
     if (section === 'promote' && typeof renderPromotePage === 'function') renderPromotePage();
     // ====== 新增：排列3/5/七星彩 渲染钩子 2026-06-15 ======
-    if (section === 'pl3') { if (typeof renderPl3History === 'function') renderPl3History(); if (typeof generatePl3 === 'function' && !document.querySelector('#pl3-result div:first-child').textContent.trim().match(/\d/)) generatePl3(); }
-    if (section === 'pl5') { if (typeof renderPl5History === 'function') renderPl5History(); if (typeof generatePl5 === 'function' && !document.querySelector('#pl5-result div:first-child').textContent.trim().match(/\d/)) generatePl5(); }
-    if (section === 'qxw') { if (typeof renderQxwHistory === 'function') renderQxwHistory(); if (typeof generateQxw === 'function' && !document.querySelector('#qxw-result div:first-child').textContent.trim().match(/\d/)) generateQxw(); }
+    if (section === 'pl3') { if (typeof generatePl3 === 'function' && !document.querySelector('#pl3-result div:first-child').textContent.trim().match(/\d/)) generatePl3(); }
+    if (section === 'pl5') { if (typeof generatePl5 === 'function' && !document.querySelector('#pl5-result div:first-child').textContent.trim().match(/\d/)) generatePl5(); }
+    if (section === 'qxw') { if (typeof generateQxw === 'function' && !document.querySelector('#qxw-result div:first-child').textContent.trim().match(/\d/)) generateQxw(); }
     // ====== 新增终 ======
 
     // 修复：确保目标section的父链没有display:none
@@ -2658,15 +2646,12 @@ window.fetchLatestDraws = fetchLatestDraws;
                 }
                 // ====== 新增：排列3/5/七星彩 安全网渲染钩子 2026-06-15 ======
                 if (section === 'pl3') {
-                    if (typeof window.renderPl3History === 'function') window.renderPl3History();
                     if (typeof window.generatePl3 === 'function' && document.querySelector('#pl3-result div:first-child') && !document.querySelector('#pl3-result div:first-child').textContent.trim().match(/\d/)) window.generatePl3();
                 }
                 if (section === 'pl5') {
-                    if (typeof window.renderPl5History === 'function') window.renderPl5History();
                     if (typeof window.generatePl5 === 'function' && document.querySelector('#pl5-result div:first-child') && !document.querySelector('#pl5-result div:first-child').textContent.trim().match(/\d/)) window.generatePl5();
                 }
                 if (section === 'qxw') {
-                    if (typeof window.renderQxwHistory === 'function') window.renderQxwHistory();
                     if (typeof window.generateQxw === 'function' && document.querySelector('#qxw-result div:first-child') && !document.querySelector('#qxw-result div:first-child').textContent.trim().match(/\d/)) window.generateQxw();
                 }
                 // ====== 新增终 ======
@@ -2869,19 +2854,6 @@ function clearPl3() {
     document.getElementById('pl3-type-badge').innerHTML = '';
 }
 
-function renderPl3History() {
-    var container = document.getElementById('pl3-history-table');
-    if (!container) return;
-    var draws3 = window.PL3_DRAWS || [];
-    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
-    var len = Math.min(draws3.length, 20);
-    for (var i=0; i<len; i++) {
-        var row = draws3[i];
-        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
-    }
-    html += '</tbody></table>';
-    container.innerHTML = html;
-}
 
 // -------- 排列5 函数 --------
 var PL5_CURRENT_STRATEGY = 'hot';
@@ -2964,19 +2936,6 @@ function clearPl5() {
     if (el) el.textContent = '- - - - -';
 }
 
-function renderPl5History() {
-    var container = document.getElementById('pl5-history-table');
-    if (!container) return;
-    var draws5 = window.PL5_DRAWS || [];
-    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
-    var len = Math.min(draws5.length, 20);
-    for (var i=0; i<len; i++) {
-        var row = draws5[i];
-        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
-    }
-    html += '</tbody></table>';
-    container.innerHTML = html;
-}
 
 // -------- 七星彩 函数 --------
 var QXW_CURRENT_STRATEGY = 'hot';
@@ -3059,29 +3018,13 @@ function clearQxw() {
     if (el) el.textContent = '- - - - - - -';
 }
 
-function renderQxwHistory() {
-    var container = document.getElementById('qxw-history-table');
-    if (!container) return;
-    var drawsQxw = window.QXW_DRAWS || [];
-    var html = '<table class="history-table"><thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead><tbody>';
-    var len = Math.min(drawsQxw.length, 20);
-    for (var i=0; i<len; i++) {
-        var row = drawsQxw[i];
-        html += '<tr><td>' + row.id + '</td><td class="num-cell">' + row.nums.join(' ') + '</td><td>' + row.date + '</td></tr>';
-    }
-    html += '</tbody></table>';
-    container.innerHTML = html;
-}
 
 // ====== 新增终 ======
 
     // 全局暴露排列3/5/七星彩函数，使onclick按钮可调用（安全网IIFE内定义的函数对全局不可见）
     window.generatePl3 = generatePl3;
-    window.renderPl3History = renderPl3History;
     window.generatePl5 = generatePl5;
-    window.renderPl5History = renderPl5History;
     window.generateQxw = generateQxw;
-    window.renderQxwHistory = renderQxwHistory;
     window.selectPl3Strategy = selectPl3Strategy;
     window.selectPl5Strategy = selectPl5Strategy;
     window.selectQxwStrategy = selectQxwStrategy;
