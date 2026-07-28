@@ -722,19 +722,19 @@ window.QXW_DRAWS = [{"id": "26001", "nums": [0, 8, 1, 2, 4, 8, 5], "date": "2026
         </div>
         <div class="data-table-wrap" id="dataTableWrap_pl3" style="display:none;">
             <table class="data-table">
-                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <thead><tr><th>期号</th><th>日期</th><th>号码</th><th>特征</th></tr></thead>
                 <tbody id="dataTableBody_pl3"></tbody>
             </table>
         </div>
         <div class="data-table-wrap" id="dataTableWrap_pl5" style="display:none;">
             <table class="data-table">
-                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <thead><tr><th>期号</th><th>日期</th><th>号码</th><th>特征</th></tr></thead>
                 <tbody id="dataTableBody_pl5"></tbody>
             </table>
         </div>
         <div class="data-table-wrap" id="dataTableWrap_qxw" style="display:none;">
             <table class="data-table">
-                <thead><tr><th>期号</th><th>开奖号码</th><th>日期</th></tr></thead>
+                <thead><tr><th>期号</th><th>日期</th><th>号码</th><th>特征</th></tr></thead>
                 <tbody id="dataTableBody_qxw"></tbody>
             </table>
         </div>
@@ -2113,6 +2113,19 @@ function switchDataTab(el) {
     }
 }
 
+function smallNumFeatures(nums) {
+    var odd = 0, big = 0, sum = 0;
+    for (var i = 0; i < nums.length; i++) {
+        var n = nums[i];
+        sum += n;
+        if (n % 2 === 1) odd++;
+        if (n >= 5) big++;
+    }
+    return '<span style="color:var(--accent);">奇' + odd + '/' + (nums.length-odd) + '偶</span>' +
+        ' <span style="color:var(--shan);margin-left:4px;">大' + big + '/' + (nums.length-big) + '小</span>' +
+        ' <span class="num-hint" style="margin-left:4px;">和' + sum + '</span>';
+}
+
 function renderDataPl3() {
     var draws = window.PL3_DRAWS || [];
     var tbody = document.getElementById('dataTableBody_pl3');
@@ -2123,8 +2136,9 @@ function renderDataPl3() {
         var row = draws[i];
         var tr = document.createElement('tr');
         tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
-            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
-            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+            '<td style="color:var(--text-muted);">' + row.date + '</td>' +
+            '<td>' + getBallsHTML(row.nums, 'front', 'sm') + '</td>' +
+            '<td style="font-size:0.75rem;">' + smallNumFeatures(row.nums) + '</td>';
         tbody.appendChild(tr);
     }
 }
@@ -2139,8 +2153,9 @@ function renderDataPl5() {
         var row = draws[i];
         var tr = document.createElement('tr');
         tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
-            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
-            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+            '<td style="color:var(--text-muted);">' + row.date + '</td>' +
+            '<td>' + getBallsHTML(row.nums, 'front', 'sm') + '</td>' +
+            '<td style="font-size:0.75rem;">' + smallNumFeatures(row.nums) + '</td>';
         tbody.appendChild(tr);
     }
 }
@@ -2155,8 +2170,9 @@ function renderDataQxw() {
         var row = draws[i];
         var tr = document.createElement('tr');
         tr.innerHTML = '<td><strong style="color:var(--jin-se);">' + row.id + '</strong></td>' +
-            '<td class="num-cell" style="letter-spacing:4px;font-weight:600;color:var(--jin-se);">' + row.nums.join(' ') + '</td>' +
-            '<td style="color:var(--text-muted);">' + row.date + '</td>';
+            '<td style="color:var(--text-muted);">' + row.date + '</td>' +
+            '<td>' + getBallsHTML(row.nums, 'front', 'sm') + '</td>' +
+            '<td style="font-size:0.75rem;">' + smallNumFeatures(row.nums) + '</td>';
         tbody.appendChild(tr);
     }
 }
